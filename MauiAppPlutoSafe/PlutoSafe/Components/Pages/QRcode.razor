@@ -1,0 +1,31 @@
+@page "/qr-code"
+@inject NavigationManager Nav
+
+<div class="qr-page">
+
+    <!-- BACK BUTTON -->
+    <div class="qr-header">
+        <span class="back" @onclick="GoBack">&larr;</span>
+    </div>
+
+    <!-- QR IMAGE -->
+    <div class="qr-btn">
+        <img src="images/qrcode.svg" />
+    </div>
+
+</div>
+
+@code {
+    void GoBack()
+    {
+        Nav.NavigateTo("/dashboard"); // change if needed
+    }
+}
+<style>
+   .qr-btn {
+        min-height: 100vh;          /* full screen height */
+        display: flex;
+        align-items: center;        /* vertical center */
+        justify-content: center;    /* horizontal center */
+    }
+</style>

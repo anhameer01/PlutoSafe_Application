@@ -1,0 +1,706 @@
+
+.ud-bg {
+  background: #f6f7fb;
+  min-height: 100vh;
+  padding: 12px 12px;   /* reduced left/right */
+}
+
+/* HEADER */
+.ud-header {
+  display: flex;
+  align-items: center; 
+  justify-content: flex-start;
+  /* margin-bottom: 14px; */
+  gap:8px;
+  margin-left:0;
+}
+
+.ud-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-left:0px;
+}
+
+.back {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.tab {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.tab.inactive {
+  color: #aaa;
+}
+
+/* CARD */
+.ud-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+}
+
+/* TOP */
+.ud-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.name-box h4 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.unlock-btn {
+  margin-left: auto;
+  background: #e9f7ef;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #2e7d32;
+}
+
+/* BADGES */
+.badge-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.badge {
+  background: #f1f3f8;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  font-size: 12px;
+}
+
+/* INFO */
+.info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* QUICK ACTIONS */
+.quick-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quick-actions div {
+  flex: 1;
+  background: #f1f2f6;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+/* FEATURES */
+.section {
+  margin: 16px 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.unlock-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ud-tabs {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.ud-tabs span {
+  font-size: 14px;
+  color: #999;
+}
+
+.ud-tabs .active {
+  color: #0b1d4a;
+  font-weight: 600;
+  border-bottom: 2px solid #0b1d4a;
+  padding-bottom: 4px;
+}
+
+/* =========================
+   CREATE LOAN (merged here)
+   ========================= */
+
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.upload-item {
+  background: #f1f2f6;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.upload-item img {
+  width: 24px;
+  height: 24px;
+}
+
+.cl-bg {
+  padding: 16px;
+}
+
+.guarantor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 2px solid #7c3aed;
+  border-radius: 12px;
+  background: #f3f1ff;
+}
+
+.guarantor-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #7c3aed;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #7c3aed;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.add-btn img {
+  width: 14px;
+  height: 14px;
+}
+
+.guarantor-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.guarantor-section label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+.g-input {
+  width: 100%;
+  height: 46px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #eef0f4;
+  font-size: 14px;
+}
+
+/* Agreement */
+.agreement-box {
+  margin-top: 30px;
+}
+
+.agreement-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.agreement-text {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.see-more {
+  color: #7c3aed;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.agreement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.agreement p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* Signature */
+.signature-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.signature-box {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  background: #f3f3f5;
+  border-radius: 14px;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 22px;
+  height: 22px;
+}
+
+/* Agreement Modal */
+.agreement-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.agreement-modal {
+  width: 90%;
+  max-height: 80vh;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.agreement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.agreement-header .close {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.agreement-body {
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.agreement-body p {
+  margin-bottom: 12px;
+}
+
+/* Spacing helpers */
+label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.input-box,
+.plain-input,
+.upload-grid {
+  margin-bottom: 14px;
+}
+
+.section,
+label + .upload-grid {
+  margin-top: 10px;
+}
+/* Blur ONLY the background content */
+.blur-bg {
+  filter: blur(2px);
+}
+
+/* Agreement overlay sits ABOVE blur */
+.agreement-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Explicitly remove blur from modal */
+.agreement-modal {
+  filter: none !important;
+}
+
+/* Keep modal clickable */
+.agreement-overlay,
+.agreement-modal {
+  pointer-events: auto;
+}
+
+/* User Details heading turns blue behind modal */
+.blur-bg .ud-header h3 {
+  color: #2563eb;
+}
+/* =========================
+   BLUR BACKGROUND (MODAL)
+   ========================= */
+
+.agreement-overlay {
+  pointer-events: auto;
+}
+
+/* User Details heading blue behind modal */
+.blur-bg .ud-header h3 {
+  color: #2563eb;
+}
+
+/* Wrapper to control spacing */
+.docs-single {
+  padding: 0 16px;          /* equal left & right spacing */
+  margin-top: 12px;
+}
+
+/* Combined document image */
+.docs-image {
+  width: 100%;              /* responsive */
+  max-width: 100%;          /* prevents overflow */
+  display: block;           /* removes inline gaps */
+  border-radius: 14px;      /* optional: match UI */
+}
+
+/* SHOW LOAN */
+.show-loan {
+  margin-top: 12px;
+}
+
+/* PROFILE */
+.show-profile {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.show-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
+
+/* LOAN CARD */
+.show-card {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.show-item {
+  flex: 1;
+  padding: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.show-item:not(:last-child) {
+  border-right: 1px solid #e5e7eb;
+}
+
+.show-item span {
+  font-size: 12px;
+  color: #555;
+}
+
+.show-item strong {
+  font-size: 14px;
+}
+
+.unlock {
+  color: #ef4444;
+}
+
+/* SECTIONS */
+.show-section {
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.show-section h5 {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+/* DEVICE ROW */
+.show-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* LOAN GRID */
+.loan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.loan-grid div {
+  font-size: 13px;
+}
+
+/* DOWNLOAD */
+.download-btn {
+  width: 100%;
+  border: 1px solid #ef4444;
+  background: #fff;
+  color: #000;
+  padding: 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+/* DOCUMENT */
+.doc-title {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* EMI LIST */
+.emi-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* EMI CARD */
+.emi-card {
+  position: relative;
+  display: flex;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+/* PAID / UNPAID BACKGROUND */
+.emi-card.paid {
+  background: #e9f6ea;
+}
+
+.emi-card.highlight {
+  background: #fdeeee;
+}
+
+/* INDEX */
+.emi-index {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  background: #ffffff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* LEFT */
+.emi-left {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+}
+
+/* BADGE */
+.emi-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+.emi-badge.paid {
+  background: #c8eacc;
+  color: #1e7a34;
+}
+
+.emi-badge.unpaid {
+  background: #ffd1d1;
+  color: #c62828;
+}
+
+/* INFO LABELS */
+.emi-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* RIGHT */
+.emi-right {
+  text-align: right;
+  font-size: 13px;
+}
+
+.emi-right p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* UPDATE BUTTON */
+.update-btn {
+  margin-top: 6px;
+  border: 1px solid #ef4444;
+  background: #fff;
+  color: #ef4444;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+/* PAID / UNPAID STAMP IMAGE */
+.emi-stamp {
+  width: 56px;        /* matches Figma */
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* Documents container (4 items) */
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-left: 8px; 
+}
+
+/* Single document card */
+.doc-item {
+  background: #f1f2f6;
+  border-radius: 14px; 
+  display:flex;
+  padding: 12px;
+  flex-direction:column;
+  align-items: center;
+}
+
+/* PNG image */
+.doc-item img {
+  width: 40px;
+  height:auto;
+  margin: 6px;
+}
+
+/* Label below image */
+.doc-item p {
+  margin: 0;
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* HEADER */
+.ud-header {
+  display: flex;
+  align-items: center;   /* arrow + heading same line */
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ud-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;             /* 🔑 REQUIRED */
+}
+
+.ud-header .back {
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;        /* optional but improves centering */
+}

@@ -1,0 +1,40 @@
+@page "/pending-phone"
+@inject NavigationManager Nav
+
+<link href="css/user-activation.css" rel="stylesheet" />
+<link href="css/user-details.css" rel="stylesheet" />
+
+<div class="pending-page">
+
+    <div class="ud-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Pending Phone</h3>
+    </div>
+
+    <!-- cards -->
+    <UserActivationCard EnableNavigation="false" />
+    <UserActivationCard EnableNavigation="false" />
+
+</div>
+
+<style>
+    /* ===== PENDING PAGE HEADER FIX ONLY ===== */
+.pending-page .ud-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.pending-page .ud-header .back {
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pending-page .ud-header h3 {
+  margin: 0;          /* critical */
+  font-size: 20px;
+  font-weight: 600;
+}
+</style>

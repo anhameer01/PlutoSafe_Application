@@ -1,0 +1,37 @@
+@page "/unlock-phone"
+@inject NavigationManager Nav
+
+<link href="css/user-details.css" rel="stylesheet" />
+
+<div class="unlock-page">
+
+    <div class="unlock-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Unlock Phone</h3>
+    </div>
+
+    <UserActivationCard EnableNavigation="true"
+                        UserName="Karan Mehta" />
+
+    <UserActivationCard EnableNavigation="true"
+                        UserName="Neha Singh" />
+
+</div>
+
+<style>
+.unlock-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.unlock-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.unlock-page {
+  padding-bottom: 16px;
+}
+</style>

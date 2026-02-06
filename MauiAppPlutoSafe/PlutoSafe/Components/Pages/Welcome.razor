@@ -1,0 +1,34 @@
+@page "/dashboard-welcome"
+@inject NavigationManager Nav
+
+<link href="css/dashboard.css" rel="stylesheet" />
+
+<div class="dash-bg">
+
+    <div class="top-bar">
+        <span class="back" @onclick='() => Nav.NavigateTo("/login")'>&lt;</span>
+        <span class="title">Hi, Pooja Puttichai</span>
+        <img src="images/avatar-girl.svg" class="avatar" />
+    </div>
+
+    <div class="content">
+
+        <div class="phone-frame">
+            <img src="images/icon-phone.svg" />
+            <span class="dot blue"></span>
+            <span class="dot red"></span>
+            <span class="dot green"></span>
+        </div>
+
+        <p class="welcome-title">Welcome To MDM Secure Portal</p>
+
+        <div class="welcome-card">
+            <img src="images/icon-dots.svg" class="dots-icon" />
+            <button class="dash-btn" @onclick='() => Nav.NavigateTo("/dashboard")'>
+                Go To Dashboard
+            </button>
+        </div>
+
+    </div>
+
+</div>

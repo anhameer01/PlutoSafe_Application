@@ -1,0 +1,305 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= ROOT ================= */
+
+.db-bg {
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 140px;
+}
+
+/* ================= HEADER ================= */
+
+.db-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info h3 {
+  font-size: 18px;
+}
+
+.welcome {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ================= DEVICE BUTTON ================= */
+
+.device-btn {
+  display: flex;
+  height:32px;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 10px;
+  border: none;
+  background: #0b1d4a;
+}
+
+.device-btn img {
+  width: auto;
+  height: 32px;   
+}
+/* ================= MAIN CARD ================= */
+
+/* LOCK CARD – FIXED HEIGHT & CENTER CONTENT */
+.lock-card {
+  background: #193a7a;
+  border-radius: 20px;
+
+  width: calc(100% - 42px);
+  margin: 0 16px 20px;
+
+  height: 150px;                 /* same height as before */
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;           /* 🔑 vertical centering */
+  justify-content: center;       /* 🔑 horizontal centering */
+  text-align: center;
+}
+
+.main-icon {
+  width: 64px;          /* adjust if needed */
+  height: auto;
+  margin-bottom: 12px;;
+  margin: 0 auto 16px;  /* space below image */
+  display: block;
+}
+
+/* ================= STATUS LIST ================= */
+
+.status-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+/* STATUS ITEM */
+.status-list > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  /* margin-right:16px; */
+  margin: 0 18px 24px;
+  padding: 16px 18px 16px 96px; /* space for half moon */
+  border-radius: 18px;
+  overflow: hidden; /* 🔑 IMPORTANT for half-moon cut */
+}
+
+/* HALF MOON SHAPE */
+.status-list > div::before {
+  content: "";
+  position: absolute;
+  left: -36px;              /* 🔑 pushes circle half outside */
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+/* ICON INSIDE HALF MOON – INCREASED SIZE */
+.status-list > div img {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 68px;     /* increased */
+  height: 76px;    /*  increased */
+  transform: translateY(-50%);
+}
+.status-list span {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
+}
+
+.status-list b {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ================= STATUS COLORS ================= */
+
+.status-blue   { background: linear-gradient(180deg, #c5d5f8, #f6f8ff); }
+.status-purple{ background: linear-gradient(180deg, #fdd2ea, #faf6ff); }
+.status-green { background: linear-gradient(180deg, #c4f8d9, #f6fff9); }
+.status-cyan  { background: linear-gradient(180deg, #c1eaf6, #f6fdff); }
+.status-yellow{ background: linear-gradient(180deg, #fbf0bb, #fffef6); }
+.status-lime  { background: linear-gradient(180deg, #d9fbc5, #f9fff6); }
+.status-orange{ background: linear-gradient(180deg, #f8cbb6, #fff7f2); }
+.status-pink  { background: linear-gradient(180deg, #f9d4e2, #fff6fa); }
+
+/* ================= QUICK ACTION (ONE ROW – NO GRID) ================= */
+
+.section {
+  margin: 15px 0;
+  padding-left: 16px;
+  font-size: 16px;
+  font-weight: 700;
+}
+/* ================= QUICK ACTION ================= */
+/* QUICK ACTION GRID – FIXED 4 PER ROW */
+.quick-actions-new {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 🔑 ALWAYS 4 in first row */
+  gap: 16px;
+  padding: 0 12px;
+}
+
+/* QUICK ACTION ITEM */
+.quick-actions-new .qa-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+}
+
+/* ICON SIZE */
+.quick-actions-new .qa-item img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+/* TEXT */
+.quick-actions-new .qa-item p {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 400; 
+  color: #2a2929;   /* text */
+  text-align: center;
+}
+/* ================= FOOTER ================= */
+
+.db-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f6f7fb;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0 10px;
+  border-top: 1px solid #e5e5e5;
+  z-index: 100;
+}
+
+.footer-btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.footer-btn img {
+  width: 80px;
+  height: 80px;
+}
+
+.lock-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  text-align: center;
+}
+/* DOTS BELOW LOCK TEXT */
+.lock-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lock-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor:pointer;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.lock-dots .dot.active {
+  background: #193a7a;
+}
+.lock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* ===== LOCK WRAPPER ===== */
+.lock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* SLIDE ANIMATION */
+.slide {
+  animation: slideFade 0.8s ease-in-out;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* DOTS */
+.lock-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lock-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.5s ease; /* slow dot movement */
+}
+
+.lock-dots .dot.active {
+  background: #193a7a;
+}
+/* 2nd slide image – fills card but DOES NOT change card size */
+.full-slide {
+  position: absolute;
+  inset: 0;                 /* top:0 right:0 bottom:0 left:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  /* transform: scale(0.94); */
+}
+/* CONTENT FOR ICON + TEXT */
+.lock-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

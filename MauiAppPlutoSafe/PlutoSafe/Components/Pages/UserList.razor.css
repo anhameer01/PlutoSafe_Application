@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system;
+}
+
+.userlist-page {
+  background: #f6f7fb;
+  padding: 16px;
+}
+
+/* HEADER */
+.ul-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.back-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.ul-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* SEARCH */
+.search-box input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #ffffff;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+/* CARD */
+.user-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+}
+
+/* TOP */
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+/* AVATAR (INCREASED) */
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-top h4 {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.arrow {
+  width: 22px;
+  height: 22px;
+}
+
+/* BADGES */
+.badge-row {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  padding: 8px; 
+  border-radius: 10px;
+}
+
+/* DATE ICON BIGGER */
+.badge img {
+  width: 300px;
+  height: 90px;
+}
+
+.blue {
+  background: #e7f0ff;
+}
+
+/* INFO LIST */
+.info-list p {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* INFO ICONS BIGGER */
+.info-list img {
+  width: 22px;
+  height: 22px;
+}
+
+/* QR BUTTON */
+.qr-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #f1f2f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #2563eb;
+}
+
+/* QR ICON BIGGER */
+.qr-btn img {
+  width: 100px;
+  height: 64px;
+}
+.action-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.lock-btn,
+.unlock-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lock-btn {
+  background: #fff;
+  border: 1px solid #e53935;
+  color: #e53935;
+}
+
+.unlock-btn {
+  background: #fff;
+  border: 1px solid #2e7d32;
+  color: #2e7d32;
+}
+
+.lock-btn img,
+.unlock-btn img {
+  width: 22px;
+  height: 22px;
+}
+.back-symbol {
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}

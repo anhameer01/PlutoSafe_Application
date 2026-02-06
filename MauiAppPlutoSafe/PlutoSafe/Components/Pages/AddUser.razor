@@ -1,0 +1,157 @@
+@page "/add-user"
+@inject NavigationManager Nav
+
+<link href="css/add-user.css" rel="stylesheet" />
+
+<div class="adduser-bg">
+
+    <!-- HEADER -->
+    <div class="adduser-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Add User</h3>
+    </div>
+
+    <!-- PROFILE IMAGE -->
+    <div class="profile-section">
+        <img src="images/avatar-girl.svg" class="profile-img" />
+        <div class="camera-icon">
+            <img src="images/icon-camera.svg" />
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form">
+
+        <label>Registration Number</label>
+        <div class="input-box @(string.IsNullOrEmpty(regError) ? "" : "error")">
+            <img src="images/icon-mobile.svg" />
+            <input placeholder="Enter Registration Number" @bind="RegNo" />
+            @if (!string.IsNullOrEmpty(regError))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+
+        <label>User Name</label>
+        <div class="input-box @(string.IsNullOrEmpty(nameError) ? "" : "error")">
+            <img src="images/icon-user.svg" />
+            <input placeholder="Enter User Name" @bind="UserName" />
+            @if (!string.IsNullOrEmpty(nameError))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+
+        <label>Enter Mobile Number</label>
+        <div class="input-box @(string.IsNullOrEmpty(mobileError) ? "" : "error")">
+            <img src="images/icon-mobile.svg" />
+            <input placeholder="Enter Mobile Number" @bind="Mobile" />
+            @if (!string.IsNullOrEmpty(mobileError))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+
+        <label>User Email Address</label>
+        <div class="input-box @(string.IsNullOrEmpty(emailError) ? "" : "error")">
+            <img src="images/icon-email.svg" />
+            <input placeholder="Enter Email" @bind="Email" />
+            @if (!string.IsNullOrEmpty(emailError))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+
+        <label>First Device IMEI Number</label>
+        <div class="imei-box @(string.IsNullOrEmpty(imei1Error) ? "" : "error")">
+            <img src="images/icon-qr.svg" class="imei-icon" />
+            <img src="images/icon-registration.svg" class="imei-icon" />
+            <input placeholder="Enter first IMEI number" @bind="Imei1" />
+            @if (!string.IsNullOrEmpty(imei1Error))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+
+        <label>Second Device IMEI Number</label>
+        <div class="imei-box @(string.IsNullOrEmpty(imei2Error) ? "" : "error")">
+            <img src="images/icon-qr.svg" class="imei-icon" />
+            <img src="images/icon-registration.svg" class="imei-icon" />
+            <input placeholder="Enter Second IMEI Number" @bind="Imei2" />
+            @if (!string.IsNullOrEmpty(imei2Error))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+
+        <button class="submit-btn" @onclick="Submit">
+            Submit
+        </button>
+
+    </div>
+
+</div>
+
+@code {
+    string RegNo = "";
+    string UserName = "";
+    string Mobile = "";
+    string Email = "";
+    string Imei1 = "";
+    string Imei2 = "";
+
+    string regError = "";
+    string nameError = "";
+    string mobileError = "";
+    string emailError = "";
+    string imei1Error = "";
+    string imei2Error = "";
+
+    void Submit()
+    {
+        regError = nameError = mobileError = emailError = imei1Error = imei2Error = "";
+
+        bool hasError = false;
+
+        if (string.IsNullOrWhiteSpace(RegNo))
+        {
+            regError = "error";
+            hasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(UserName))
+        {
+            nameError = "error";
+            hasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(Mobile))
+        {
+            mobileError = "error";
+            hasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            emailError = "error";
+            hasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(Imei1))
+        {
+            imei1Error = "error";
+            hasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(Imei2))
+        {
+            imei2Error = "error";
+            hasError = true;
+        }
+
+        if (hasError)
+            return;
+
+        Nav.NavigateTo("/dashboard");
+    }
+}

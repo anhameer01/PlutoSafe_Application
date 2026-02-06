@@ -1,0 +1,42 @@
+@inject NavigationManager Nav
+
+<div class="ud-card">
+
+    <div class="ud-top">
+        <img src="images/avatar-girl.svg" class="avatar" />
+
+        <div class="name-box">
+            <h4>@UserName</h4>
+        </div>
+
+        @if (EnableNavigation)
+        {
+            <button class="details-btn" @onclick='() => Nav.NavigateTo("/user-details")'>
+                →
+            </button>
+        }
+    </div>
+
+    <div class="badge-row">
+        <div class="badge blue">
+            <img src="images/icon-date.svg" />
+        </div>
+    </div>
+
+    <div class="info">
+        <p><img src="images/register.svg" /> Registration Number : @RegNo</p>
+        <p><img src="images/icon-registration.svg" /> First Device IMEI Number : @Imei1</p>
+        <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : @Imei2</p>
+        <p><img src="images/call.svg" /> Alternate Mobile Number : @Phone</p>
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public bool EnableNavigation { get; set; }
+    [Parameter] public string UserName { get; set; } = "Pooja Sharma";
+    [Parameter] public string RegNo { get; set; } = "124545445";
+    [Parameter] public string Imei1 { get; set; } = "1545454545";
+    [Parameter] public string Imei2 { get; set; } = "1545454545";
+    [Parameter] public string Phone { get; set; } = "+91 1234567892";
+}

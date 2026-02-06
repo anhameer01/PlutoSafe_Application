@@ -1,0 +1,130 @@
+@page "/user-list"
+@inject NavigationManager Nav
+
+<link href="css/user-list.css" rel="stylesheet" />
+
+<div class="userlist-page">
+
+    <!-- HEADER -->
+    <div class="ul-header">
+        <span class="back-icon"
+            @onclick='() => Nav.NavigateTo("/dashboard")'>
+            &larr;
+        </span>
+
+        <h3>User List</h3>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <input
+            type="text"
+            placeholder="Search .." />
+    </div>
+
+    <!-- ================= CARD 1 : QR ONLY ================= -->
+    <div class="user-card">
+
+        <div class="user-top">
+            <img src="images/avatar-girl.svg" class="avatar" />
+            <h4>Hi, Pooja Sharma</h4>
+        </div>
+
+        <div class="badge-row">
+            <div class="badge blue">
+                <img src="images/icon-date.svg" />
+            </div>
+        </div>
+
+        <div class="info-list">
+            <p><img src="images/register.svg" /> Registration Number : 124545445</p>
+            <p><img src="images/icon-registration.svg" /> First Device IMEI Number : 1545454545</p>
+            <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
+            <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
+        </div>
+
+        <button class="qr-btn">
+            <img src="images/icon-qr.svg" />
+            <span>Scan QR Code</span>
+        </button>
+
+    </div>
+
+    <!-- ================= CARD 2 : LOCK / UNLOCK ================= -->
+    <div class="user-card">
+
+        <div class="user-top">
+            <img src="images/avatar-girl.svg" class="avatar" />
+            <h4>Hi, Pooja Sharma</h4>
+
+            <button class="arrow-btn"
+                    @onclick='() => Nav.NavigateTo("/user-details")'>
+                →
+            </button>
+        </div>
+
+        <div class="badge-row">
+            <div class="badge blue">
+                <img src="images/icon-date.svg" />
+            </div>
+        </div>
+
+        <div class="info-list">
+            <p><img src="images/register.svg" /> Registration Number : 124545445</p>
+            <p><img src="images/icon-registration.svg" /> First Device IMEI Number : 1545454545</p>
+            <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
+            <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
+        </div>
+
+        <div class="action-row">
+            <button class="lock-btn">
+                <img src="images/lock.svg" />
+                Lock
+            </button>
+
+            <button class="unlock-btn">
+                <img src="images/unlock.svg" />
+                Unlock
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= CARD 3 : LOCK / UNLOCK ================= -->
+    <div class="user-card">
+
+        <div class="user-top">
+            <img src="images/avatar-girl.svg" class="avatar" />
+            <h4>Hi, Pooja Sharma</h4>
+
+            <button class="arrow-btn"
+                    @onclick='() => Nav.NavigateTo("/user-details")'>
+                →
+            </button>
+        </div>
+        <div class="badge-row">
+            <div class="badge blue">
+                <img src="images/icon-date.svg" />
+            </div>
+        </div>
+
+        <div class="info-list">
+            <p><img src="images/register.svg" /> Registration Number : 124545445</p>
+            <p><img src="images/icon-registration.svg" /> First Device IMEI Number : 1545454545</p>
+            <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
+            <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
+        </div>
+
+        <div class="action-row">
+            <button class="lock-btn">
+                Lock
+            </button>
+
+            <button class="unlock-btn">
+                Unlock
+            </button>
+        </div>
+    </div>
+
+</div>

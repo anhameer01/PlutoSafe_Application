@@ -1,0 +1,76 @@
+@page "/my-profile"
+@inject NavigationManager Nav
+
+<div class="profile-page">
+
+    <!-- HEADER -->
+    <div class="profile-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>My Profile</h3>
+    </div>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+
+        <img src="images/avatar-girl.svg" class="profile-avatar" />
+        <h4>Pooja Puttichai</h4>
+        <p class="mobile">+91 1234567896</p>
+
+        <div class="profile-field">
+            <label>Email</label>
+            <div class="field-box">
+                <img src="images/email.svg" />
+                <span>poojaputtichai14@gmail.com</span>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label>Dealer Code</label>
+            <div class="field-box">
+                <img src="images/dealer.svg" />
+                <span>#154545545</span>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label>Agency Name</label>
+            <div class="field-box">
+                <img src="images/address.svg" />
+                <span>Demo Industries</span>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label>Address</label>
+            <div class="field-box">
+                <img src="images/address.svg" />
+                <span>Indore</span>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label>City</label>
+            <div class="field-box">
+                <img src="images/city.svg" />
+                <span>Indore</span>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label>State</label>
+            <div class="field-box">
+                <img src="images/state.svg" />
+                <span>Madhya Pradesh</span>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label>Pin Code</label>
+            <div class="field-box">
+                <img src="images/pincode.svg" />
+                <span>4521454</span>
+            </div>
+        </div>
+
+    </div>
+</div>

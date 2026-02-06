@@ -1,0 +1,46 @@
+@page "/remaining-key"
+@inject NavigationManager Nav
+
+<div class="rk-bg">
+
+    <!-- HEADER -->
+    <div class="rk-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Remaining Key</h3>
+    </div>
+
+    <!-- COLOURED KEY BAR -->
+    <div class="rk-status">
+        <span>Remaining Key</span>
+        <b>4</b>
+    </div>
+
+    <!-- REMAINING KEYS LIST (REUSED FROM REMAINING DEVICES) -->
+    <div class="rd-list">
+        <div class="rd-item">
+            <img src="images/icon-clock.svg" />
+            <span>4PNUPAHGTRFS</span>
+        </div>
+
+        <div class="rd-item">
+            <img src="images/icon-clock.svg" />
+            <span>245RTDDW5854</span>
+        </div>
+
+        <div class="rd-item">
+            <img src="images/icon-clock.svg" />
+            <span>4755WQSDDADF</span>
+        </div>
+
+        <div class="rd-item">
+            <img src="images/icon-clock.svg" />
+            <span>4PNUPAHGTRFSX</span>
+        </div>
+
+        <div class="rd-item">
+            <img src="images/icon-clock.svg" />
+            <span>87WSDAKSDLASK</span>
+        </div>
+    </div>
+
+</div>

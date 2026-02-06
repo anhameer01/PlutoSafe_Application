@@ -1,0 +1,77 @@
+@using Microsoft.AspNetCore.Components
+
+<div class="user-card">
+
+    <div class="user-top">
+        <img src="@Avatar" class="avatar" />
+        <h4>@UserName</h4>
+
+        @if (ShowArrow)
+        {
+            <img src="images/icon-arrow-right.svg" class="arrow" />
+        }
+    </div>
+
+    <div class="badge-row">
+        <div class="badge blue">
+            <img src="images/icon-date.svg" />
+            @Date
+        </div>
+
+        <div class="badge purple">
+            <img src="images/icon-time.svg" />
+            @Time
+        </div>
+
+        <div class="badge green">
+            <img src="images/icon-secure.svg" />
+            @SecureCode
+        </div>
+    </div>
+
+    <div class="info-list">
+        <p><img src="images/register.svg" /> Registration Number : @Registration</p>
+        <p><img src="images/icon-registration.svg" /> First Device IMEI Number : @FirstImei</p>
+        <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : @SecondImei</p>
+        <p><img src="images/call.svg" /> Alternate Mobile Number : @Mobile</p>
+    </div>
+
+    @if (ShowQr)
+    {
+        <button class="qr-btn">
+            <img src="images/icon-qr.svg" />
+            Scan QR Code
+        </button>
+    }
+
+    @if (ShowLockButtons)
+    {
+        <div class="action-row">
+            <button class="lock-btn">
+                <img src="images/icon-lock-red.svg" />
+                Lock
+            </button>
+
+            <button class="unlock-btn">
+                <img src="images/icon-unlock-green.svg" />
+                Unlock
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Avatar { get; set; }
+    [Parameter] public string UserName { get; set; }
+    [Parameter] public string Date { get; set; }
+    [Parameter] public string Time { get; set; }
+    [Parameter] public string SecureCode { get; set; }
+    [Parameter] public string Registration { get; set; }
+    [Parameter] public string FirstImei { get; set; }
+    [Parameter] public string SecondImei { get; set; }
+    [Parameter] public string Mobile { get; set; }
+
+    [Parameter] public bool ShowArrow { get; set; }
+    [Parameter] public bool ShowQr { get; set; }
+    [Parameter] public bool ShowLockButtons { get; set; }
+}

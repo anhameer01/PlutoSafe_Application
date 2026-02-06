@@ -1,0 +1,112 @@
+.lh-bg {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding: 12px;
+}
+
+/* HEADER */
+.lh-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lh-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin:0;
+}
+
+.back {
+  font-size: 22px;
+  cursor: pointer;
+  line-height:1;
+}
+
+/* SUMMARY */
+.lh-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.lh-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #eef2ff;
+}
+
+.lh-card img {
+  width: 34px;
+  height: 34px;
+}
+
+.lh-card span {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lh-card b {
+  font-size: 14px;
+}
+
+.lh-card.blue { background: linear-gradient(180deg,#acccfa,#e8efff); }
+.lh-card.purple { background: linear-gradient(180deg,#c7f6f8,#f1e9ff); }
+.lh-card.green { background: linear-gradient(180deg,#b8f6d5,#e6fff2); }
+
+/* LIST */
+.lh-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lh-item {
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+.lh-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.lh-row:last-child {
+  margin-bottom: 0;
+}
+
+.lh-row img {
+  width: 22px;
+  height: 22px;
+}
+
+.lh-row span {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.lh-row b {
+  font-size: 13px;
+  font-weight: 600;
+}
+/* ONLY increase icon-activation.svg size (no card impact) */
+img[src$="icon-activation.svg"] {
+  width: 48px;
+  height: 48px;
+}
+/* Reduce color grid (card) size WITHOUT affecting image */
+.lh-card {
+  padding: 6px 8px;     /* reduce height */
+  min-height: auto;
+}

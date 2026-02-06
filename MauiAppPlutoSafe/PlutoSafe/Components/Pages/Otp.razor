@@ -1,0 +1,103 @@
+@page "/otp"
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<link href="css/forgot.css" rel="stylesheet" />
+
+<div class="login-bg">
+
+    <button class="back-btn" @onclick="GoBack">&lt;</button>
+
+    <div class="login-header">
+        <img src="images/logo.svg" />
+    </div>
+
+    <div class="login-card">
+        <h2>OTP Verification</h2>
+        <p class="sub">
+            Enter the verification code from your email to continue.
+        </p>
+
+        <!-- TIMER -->
+        <p style="text-align:center;font-weight:600;margin-bottom:16px;">
+            @TimeLeft
+        </p>
+
+        <!-- OTP INPUT -->
+        <div class="otp-row">
+            <input maxlength="1" @bind="otp1" />
+            <input maxlength="1" @bind="otp2" />
+            <input maxlength="1" @bind="otp3" />
+            <input maxlength="1" @bind="otp4" />
+        </div>
+
+        <!-- RESEND -->
+        <p class="recover" style="cursor:pointer;" @onclick="ResendOtp">
+            Resend OTP
+        </p>
+
+        <!-- VERIFY -->
+        <button class="login-btn" @onclick="Verify">
+            Verify
+        </button>
+    </div>
+
+</div>
+
+@code {
+    string otp1 = "";
+    string otp2 = "";
+    string otp3 = "";
+    string otp4 = "";
+
+    int seconds = 236;
+    string TimeLeft = "03:56";
+    System.Timers.Timer timer;
+
+    protected override void OnInitialized()
+    {
+        StartTimer();
+    }
+
+    void StartTimer()
+    {
+        seconds = 236;
+        UpdateTime();
+
+        timer?.Stop();
+        timer = new System.Timers.Timer(1000);
+
+        timer.Elapsed += (s, e) =>
+        {
+            if (seconds > 0)
+            {
+                seconds--;
+                UpdateTime();
+                InvokeAsync(StateHasChanged);
+            }
+        };
+
+        timer.Start();
+    }
+
+    void UpdateTime()
+    {
+        TimeLeft = $"{seconds / 60:D2}:{seconds % 60:D2}";
+    }
+
+    void ResendOtp()
+    {
+        otp1 = otp2 = otp3 = otp4 = "";
+        StartTimer();
+    }
+
+    async Task GoBack()
+    {
+        await JS.InvokeVoidAsync("history.back");
+    }
+
+    void Verify()
+    {
+        Nav.NavigateTo("/dashboard");
+    }
+}

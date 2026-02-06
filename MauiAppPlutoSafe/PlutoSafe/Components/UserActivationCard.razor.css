@@ -1,0 +1,80 @@
+/* ===== USER ACTIVATION CARD BORDER ===== */
+/* ===== TOP ROW ===== */
+.ud-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* name stretches so arrow goes right */
+.name-box {
+  flex: 1;
+}
+
+/* arrow button */
+.details-btn {
+  margin-left: auto;
+  background: #000;
+  color: #fff;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== USER DETAILS CARD SPACING ===== */
+.ud-card {
+  margin: 18px 16px;        /* more vertical + side spacing */
+  padding: 18px;            /* better inner breathing space */
+  border-radius: 18px;
+}
+
+/* space between avatar/name row and chips */
+.ud-top {
+  margin-bottom: 14px;
+}
+
+/* DATE / TIME / CODE chips spacing */
+.ud-meta {
+  display: flex;
+  gap: 12px;                /* space between chips */
+  margin: 12px 0 16px;
+}
+
+/* keep label + number in one line */
+.ud-details > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* space between two cards */
+.ud-card + .ud-card {
+  margin-top: 22px;
+}
+/* allow long numbers without wrapping */
+.ud-details span,
+.ud-details p {
+  white-space: nowrap;
+}
+/* meta chips icon size */
+.ud-meta img,
+.ud-meta svg {
+  width: 18px;
+  height: 18px;
+}
+/* MOVE PROFILE IMAGE + NAME LEFT */
+.ud-top {
+  margin-left: -16px;   /* increase to -20px if needed */
+}
+
+/* EXTRA: move avatar slightly more than text */
+.ud-top img {
+  margin-left: -8px;
+}

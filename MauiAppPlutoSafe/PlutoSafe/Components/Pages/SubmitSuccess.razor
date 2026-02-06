@@ -1,0 +1,22 @@
+@page "/submit-success"
+@inject NavigationManager Nav
+
+<div class="success-bg">
+
+    <!-- HEADER -->
+    <div class="success-header">
+        <span class="back"
+              @onclick='() => Nav.NavigateTo("/user-details")'>
+            &larr;
+        </span>
+        <h3>User Details</h3>
+    </div>
+
+    <!-- CENTER CONTENT -->
+    <div class="success-content">
+        <img src="images/icon-pdf.svg" class="success-img" />
+        <h4>Loan Submitted Successfully</h4>
+        <p>User details have been saved.</p>
+    </div>
+
+</div>

@@ -1,0 +1,96 @@
+@page "/license-history"
+@inject NavigationManager Nav
+
+<link href="css/license-history.css" rel="stylesheet" />
+
+<div class="lh-bg">
+
+    <!-- HEADER -->
+    <div class="lh-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Licenses History</h3>
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="lh-summary">
+
+        <div class="lh-card blue">
+            <img src="images/icon-activation.svg" />
+            <span>Total Key Assign</span>
+            <b>5</b>
+        </div>
+
+        <div class="lh-card purple">
+            <img src="images/icon-activation.svg" />
+            <span>Remaining Key Assign</span>
+            <b>5</b>
+        </div>
+
+        <div class="lh-card green">
+            <img src="images/icon-activation.svg" />
+            <span>Total Allotted Key</span>
+            <b>10</b>
+        </div>
+
+    </div>
+
+    <!-- HISTORY LIST -->
+    <div class="lh-list">
+
+        <div class="lh-item">
+            <div class="lh-row">
+                <img src="images/icon-info.svg" />
+                <span>Sr. No</span>
+                <b>5</b>
+            </div>
+            <div class="lh-row">
+                <img src="images/icon-key.svg" />
+                <span>Device</span>
+                <b>5</b>
+            </div>
+            <div class="lh-row">
+                <img src="images/icon-calendar.svg" />
+                <span>Date</span>
+                <b>21-08-2024 21:52:02</b>
+            </div>
+        </div>
+
+        <div class="lh-item">
+            <div class="lh-row">
+                <img src="images/icon-info.svg" />
+                <span>Sr. No</span>
+                <b>5</b>
+            </div>
+            <div class="lh-row">
+                <img src="images/icon-key.svg" />
+                <span>Device</span>
+                <b>5</b>
+            </div>
+            <div class="lh-row">
+                <img src="images/icon-calendar.svg" />
+                <span>Date</span>
+                <b>05-08-2024 21:52:02</b>
+            </div>
+        </div>
+
+        <div class="lh-item">
+            <div class="lh-row">
+                <img src="images/icon-info.svg" />
+                <span>Sr. No</span>
+                <b>5</b>
+            </div>
+            <div class="lh-row">
+                <img src="images/icon-key.svg" />
+                <span>Device</span>
+                <b>5</b>
+            </div>
+            <div class="lh-row">
+                <img src="images/icon-calendar.svg" />
+                <span>Date</span>
+                <b>07-08-2024 21:52:02</b>
+            </div>
+        </div>
+
+    </div>
+
+</div>

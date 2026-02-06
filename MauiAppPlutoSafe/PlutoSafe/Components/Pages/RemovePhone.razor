@@ -1,0 +1,41 @@
+@page "/removed-phone"
+@inject NavigationManager Nav
+
+<link href="css/user-details.css" rel="stylesheet" />
+
+<div class="remove-page">
+
+    <div class="remove-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Removed Phone</h3>
+    </div>
+
+    <!-- Non-navigating cards -->
+    <UserActivationCard EnableNavigation="false"
+                        UserName="Pooja Sharma" />
+
+    <UserActivationCard EnableNavigation="false"
+                        UserName="Sunita Agrawal" />
+
+</div>
+
+<style>
+/* ===== HEADER ===== */
+.remove-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.remove-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ===== PAGE ===== */
+.remove-page {
+  padding-bottom: 16px;
+}
+</style>

@@ -1,0 +1,37 @@
+@page "/active-phone"
+@inject NavigationManager Nav
+
+<link href="css/user-details.css" rel="stylesheet" />
+
+<div class="ap-page">
+
+    <div class="ap-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Active Phone</h3>
+    </div>
+
+    <UserActivationCard EnableNavigation="true"
+                        UserName="Pooja Sharma" />
+
+    <UserActivationCard EnableNavigation="true"
+                        UserName="Sunita Agrawal" />
+
+</div>
+
+<style>
+.ap-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.ap-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.ap-page {
+  padding-bottom: 16px;
+}
+</style>

@@ -1,0 +1,56 @@
+﻿@page "/"
+@inject NavigationManager Nav
+
+<div class="carousel">
+
+    <div class="slides" style="transform:translateX(-@(index * 100)%);">
+        <div class="slide">
+            <img src="images/onbording1.svg" />
+            <h3>Secure Corporate Devices</h3>
+            <p>Secure Corporate Devices individual apps on the device to prevent unauthorized access.</p>
+        </div>
+
+        <div class="slide">
+            <img src="images/onbording1.svg" />
+            <h3>Secure Corporate Devices</h3>
+            <p>Admin can track the live location of devices in real time.</p>
+        </div>
+
+        <div class="slide">
+            <img src="images/onbording1.svg" />
+            <h3>Usage Monitoring</h3>
+            <p>Track device usage and app activity to ensure responsible usage.</p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="dots">
+            <span class="dot @(index==0?"active":"")"></span>
+            <span class="dot @(index==1?"active":"")"></span>
+            <span class="dot @(index==2?"active":"")"></span>
+        </div>
+
+        <div class="buttons">
+            <button class="next" @onclick="Next">Next</button>
+            <button class="skip" @onclick="Skip">Skip</button>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    int index = 0;
+
+    void Next()
+    {
+        if (index == 2)
+            Nav.NavigateTo("/login");
+        else
+            index++;
+    }
+
+    void Skip()
+    {
+        Nav.NavigateTo("/login");
+    }
+}

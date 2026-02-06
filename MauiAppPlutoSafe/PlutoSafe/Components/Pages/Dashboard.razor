@@ -1,0 +1,195 @@
+@page "/dashboard"
+@inject NavigationManager Nav
+<link href="css/dashboard-main.css" rel="stylesheet" />
+
+<div class="db-bg">
+
+    <!-- HEADER -->
+    <div class="db-header">
+        <div class="user-info">
+            <p class="welcome">Welcome To iPhone Dashboard</p>
+            <h3>Pooja Puttichai</h3>
+        </div>
+
+        <button class="device-btn" @onclick="ToggleDevice">
+            <img src="@DeviceImage" />
+        </button>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="db-scroll">
+
+        <!-- MAIN LOCK CARD WITH DOTS -->
+        <div class="lock-wrapper">
+            <div class="lock-card">
+
+                @if (activeIndex != 1)
+                {
+                    <div class="lock-content">
+                        <img src="@CurrentImage" class="main-icon slide" />
+                        <p class="lock-text">All Your Loans, One Smart Locker</p>
+                    </div>
+                }
+                else
+                {
+                    <img src="@CurrentImage" class="full-slide slide" />
+                }
+
+            </div>
+
+            <!-- DOTS -->
+            <div class="lock-dots">
+                <span class="dot @(activeIndex == 0 ? "active" : "")"></span>
+                <span class="dot @(activeIndex == 1 ? "active" : "")"></span>
+            </div>
+        </div>
+
+        <!-- STATUS LIST -->
+        <div class="status-list">
+
+            <div class="status-blue" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/today-activation")'>
+                <img src="images/icon-activation.svg" />
+                <span>Today's Activation</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-purple" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/pending-phone")'>
+                <img src="images/icon-pending-phone.svg" />
+                <span>Pending Phone</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-green" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/active-phone")'>
+                <img src="images/icon-active-phone.svg" />
+                <span>Active Phone</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-cyan" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/lock-phone")'>
+                <img src="images/icon-lock-phone.svg" />
+                <span>Lock Phone</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-yellow" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/removed-phone")'>
+                <img src="images/icon-removed-phone.svg" />
+                <span>Removed Phone</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-lime" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/unlock-phone")'>
+                <img src="images/icon-unlock-phone.svg" />
+                <span>Unlock Phone</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-orange" style="cursor:pointer;" @onclick='() => Nav.NavigateTo("/remaining-key")'>
+                <img src="images/icon-remaining-phone.svg" />
+                <span>Remaining Key</span>
+                <b>450</b>
+            </div>
+
+            <div class="status-pink">
+                <img src="images/icon-unassigned-phone.svg" />
+                <span>Unassigned Phone</span>
+                <b>450</b>
+            </div>
+        </div>
+        <h4 class="section">Quick Action</h4>
+
+        <div class="quick-actions-new">
+
+            <button class="qa-item" @onclick='() => Nav.NavigateTo("/user-list")'>
+                <img src="images/userlist.svg" />
+                <p>User List</p>
+            </button>
+
+            <button class="qa-item" @onclick='() => Nav.NavigateTo("/my-profile")'>
+                <img src="images/userprofile.svg" />
+                <p>User Profile</p>
+            </button>
+
+            <button class="qa-item" @onclick='() => Nav.NavigateTo("/remaining-devices")'>
+                <img src="images/remainingdevice.svg" />
+                <p>Remaining Devices</p>
+            </button>
+
+            <button class="qa-item" @onclick='() => Nav.NavigateTo("/video-training")'>
+                <img src="images/videotraining.svg" />
+                <p>Trainee Videos</p>
+            </button>
+
+            <button class="qa-item" @onclick='() => Nav.NavigateTo("/license-history")'>
+                <img src="images/licenseshistory.svg" />
+                <p>Licenses History</p>
+            </button>
+
+        </div>
+
+
+    </div> <!-- ✅ db-scroll CLOSED PROPERLY -->
+
+    <!-- FIXED FOOTER -->
+    <div class="db-footer">
+        <button class="footer-btn" @onclick='() => Nav.NavigateTo("/add-user")'>
+            <img src="images/icon-add-user.svg" />
+        </button>
+
+        <button class="footer-btn" @onclick='() => Nav.NavigateTo("/qr-code")'>
+            <img src="images/icon-qr-code.svg" />
+        </button>
+
+        <button class="footer-btn" @onclick='() => Nav.NavigateTo("/qr-code")'>
+            <img src="images/icon-running-qr.svg" />
+        </button>
+
+        <button class="footer-btn logout" @onclick="Logout">
+            <img src="images/icon-logout.svg" />
+        </button>
+    </div>
+
+</div>
+
+@code {
+    bool isIphone = 
+    true;
+
+    string DeviceImage => isIphone
+        ? "images/iphone.svg"
+        : "images/android.svg";
+
+    void ToggleDevice()
+    {
+        isIphone = !isIphone;
+    }
+
+    int activeIndex = 0;
+
+    string[] images =
+    {
+        "images/icon-all-loans.png",
+        "images/image2.svg"
+    };
+
+    string CurrentImage => images[activeIndex];
+
+    protected override void OnInitialized()
+    {
+        StartSlider();
+    }
+
+    async void StartSlider()
+    {
+        while (true)
+        {
+            await Task.Delay(2300);
+            activeIndex = (activeIndex + 1) % images.Length;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    void Logout()
+    {
+        Nav.NavigateTo("/login");
+    }
+}

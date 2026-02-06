@@ -1,0 +1,45 @@
+@page "/today-activation"
+@inject NavigationManager Nav
+
+<link href="css/user-activation.css" rel="stylesheet" />
+@* <link href="css/user-details.css" rel="stylesheet" /> *@
+
+<div class="ud-bg">
+
+    <div class="ud-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>Today's Activation</h3>
+    </div>
+
+    <!-- Navigating cards -->
+    <UserActivationCard EnableNavigation="true"
+                        UserName="Pooja Sharma" />
+
+    <UserActivationCard EnableNavigation="true"
+                        UserName="Sunita Agrawal" />
+
+</div>
+
+<style>
+    /* ===== FIX HEADER ROW (ARROW + TITLE SAME LINE) ===== */
+.ud-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+/* back arrow */
+.ud-header .back {
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* remove default margins that break layout */
+.ud-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+</style>

@@ -1,0 +1,460 @@
+@page "/user-details"
+@inject NavigationManager Nav
+
+<link href="css/user-details.css" rel="stylesheet" />
+
+<!-- ================= PAGE CONTENT (BLURRED) ================= -->
+<div class="ud-bg @(showAgreement ? "blur-bg" : "")">
+
+    <!-- HEADER -->
+    <div class="ud-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <h3>User Details</h3>
+    </div>
+
+    <!-- USER CARD -->
+    <div class="ud-card">
+
+        <!-- TABS -->
+        <div class="ud-tabs">
+            <span class="@(activeTab == "details" ? "active" : "")"
+                  @onclick='() => activeTab = "details"'>
+                User Details
+            </span>
+
+            <span class="@(activeTab == "loan" ? "active" : "")"
+                  @onclick='() => activeTab = "loan"'>
+                Create Loan
+            </span>
+
+            <span class="@(activeTab == "show" ? "active" : "")"
+                  @onclick='() => activeTab = "show"'>
+                Show Loan
+            </span>
+
+            <span class="@(activeTab == "emi" ? "active" : "")"
+                  @onclick='() => activeTab = "emi"'>
+                EMI Reminder
+            </span>
+        </div>
+
+    @if (activeTab == "show")
+    {
+        <div class="show-loan">
+
+            <!-- PROFILE -->
+            <div class="show-profile">
+                <img src="images/avatar-girl.svg" class="show-avatar" />
+                <h4>Sunita Agrawal</h4>
+            </div>
+
+            <!-- LOAN + STATUS CARD -->
+            <div class="show-card">
+                <div class="show-item">
+                    <img src="images/down.svg" />
+                    <div>
+                        <span>Loan ID</span>
+                        <strong>1235456545</strong>
+                    </div>
+                </div>
+
+                <div class="show-item">
+                    <img src="images/lockstatus.svg" />
+                    <div>
+                        <span>Phone Lock Status</span>
+                        <strong class="unlock">Unlock</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEVICE DETAILS -->
+            <div class="show-section">
+                <h5>Device Details</h5>
+
+                <div class="show-row">
+                    <img src="images/devicedetail.svg" />
+                    <div>
+                        <p>EMEI NO.</p>
+                        <strong>895656655455</strong>
+                    </div>
+                </div>
+
+                <div class="show-row">
+                    <img src="images/devicedetail.svg" />
+                    <div>
+                        <p>Device info</p>
+                        <span>Model No - OPPO A78 5G</span><br />
+                        <span>Android Version - 14, SDK - 34</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOAN DETAILS GRID -->
+            <div class="show-section">
+                <h5>Device Details</h5>
+
+                <div class="loan-grid">
+                    <div>Product Price <strong>₹ 15,000.00</strong></div>
+                    <div>Down Payment <strong>₹ 15,000.00</strong></div>
+
+                    <div>EMI Amount <strong>₹ 15,000.00</strong></div>
+                    <div>Number Of EMI <strong>15</strong></div>
+
+                    <div>Processing fees <strong>₹ 15,000.00</strong></div>
+                    <div>Loan Amount <strong>₹ 15,000.00</strong></div>
+
+                    <div>Total Paid Amount <strong>₹ 15,000.00</strong></div>
+                    <div>Balance Amount <strong>₹ 15,000.00</strong></div>
+
+                    <div>EMI Due Amount <strong>₹ 0.00</strong></div>
+                    <div>Penalty Amount <strong>₹ 15,000.00</strong></div>
+                </div>
+            </div>
+
+            <!-- DOWNLOAD -->
+            <button class="download-btn">Download PDF</button>
+
+            <!-- DOCUMENT -->
+           <h5 class="doc-title">View Document's</h5>
+
+            <div class="doc-grid">
+                <div class="doc-item">
+                    <img src="images/eye.png" />
+                    <p>Aadhar front</p>
+                </div>
+
+                <div class="doc-item">
+                    <img src="images/eye.png" />
+                    <p>Aadhar back</p>
+                </div>
+
+                <div class="doc-item">
+                    <img src="images/eye.png" />
+                    <p>Photo</p>
+                </div>
+
+                <div class="doc-item">
+                    <img src="images/eye.png" />
+                    <p>PAN</p>
+                </div>
+                </div>
+            </div>
+    }
+
+    @if (activeTab == "emi")
+    {
+        <div class="emi-list">
+
+            <!-- EMI ITEM 1 : PAID -->
+            <div class="emi-card paid">
+                <span class="emi-index">1</span>
+
+                <div class="emi-left">
+                    <img src="images/paid.svg" class="emi-stamp" />
+
+                    <div class="emi-info">
+                        <p>Date</p>
+                        <p>Mode</p>
+                        <p>Amount</p>
+                    </div>
+                </div>
+
+                <div class="emi-right">
+                    <p>20/08/2025</p>
+                    <p>Online</p>
+                    <p>3254</p>
+                </div>
+            </div>
+
+            <!-- EMI ITEM 2 : UNPAID WITH UPDATE -->
+            <div class="emi-card unpaid highlight">
+                <span class="emi-index">2</span>
+
+                <div class="emi-left">
+                    <img src="images/unpaid.svg" class="emi-stamp" />
+
+                    <div class="emi-info">
+                        <p>Date</p>
+                        <p>Mode</p>
+                        <p>Amount</p>
+                    </div>
+                </div>
+
+                <div class="emi-right">
+                    <p>20/09/2025</p>
+                    <p>—</p>
+                    <p>3254</p>
+                    <button class="update-btn">Update</button>
+                </div>
+            </div>
+
+            <!-- EMI ITEM 3 -->
+            <div class="emi-card unpaid highlight">
+                <span class="emi-index">2</span>
+
+                <div class="emi-left">
+                    <img src="images/unpaid.svg" class="emi-stamp" />
+
+                    <div class="emi-info">
+                        <p>Date</p>
+                        <p>Mode</p>
+                        <p>Amount</p>
+                    </div>
+                </div>
+
+                <div class="emi-right">
+                    <p>20/09/2025</p>
+                    <p>—</p>
+                    <p>3254</p>
+                    <button class="update-btn">Update</button>
+                </div>
+            </div>
+
+            <!-- EMI ITEM 4 -->
+            <div class="emi-card unpaid highlight">
+                <span class="emi-index">2</span>
+
+                <div class="emi-left">
+                    <img src="images/unpaid.svg" class="emi-stamp" />
+
+                    <div class="emi-info">
+                        <p>Date</p>
+                        <p>Mode</p>
+                        <p>Amount</p>
+                    </div>
+                </div>
+
+                <div class="emi-right">
+                    <p>20/09/2025</p>
+                    <p>—</p>
+                    <p>3254</p>
+                    <button class="update-btn">Update</button>
+                </div>
+            </div>
+
+            <!-- EMI ITEM 5 -->
+            <div class="emi-card unpaid highlight">
+                <span class="emi-index">2</span>
+
+                <div class="emi-left">
+                    <img src="images/unpaid.svg" class="emi-stamp" />
+
+                    <div class="emi-info">
+                        <p>Date</p>
+                        <p>Mode</p>
+                        <p>Amount</p>
+                    </div>
+                </div>
+
+                <div class="emi-right">
+                    <p>20/09/2025</p>
+                    <p>—</p>
+                    <p>3254</p>
+                    <button class="update-btn">Update</button>
+                </div>
+            </div>
+
+            <div class="emi-card unpaid highlight">
+                <span class="emi-index">2</span>
+
+                <div class="emi-left">
+                    <img src="images/unpaid.svg" class="emi-stamp" />
+
+                    <div class="emi-info">
+                        <p>Date</p>
+                        <p>Mode</p>
+                        <p>Amount</p>
+                    </div>
+                </div>
+
+                <div class="emi-right">
+                    <p>20/09/2025</p>
+                    <p>—</p>
+                    <p>3254</p>
+                    <button class="update-btn">Update</button>
+                </div>
+            </div>
+        </div>
+    }
+
+        <!-- USER DETAILS -->
+        @if (activeTab == "details")
+        {
+            <div class="ud-top">
+                <img src="images/avatar-girl.svg" class="avatar" />
+                <div class="name-box">
+                    <h4>Pooja Sharma</h4>
+                </div>
+                <button class="unlock-btn">
+                    <img src="images/unlock.svg" />
+                    Unlock
+                </button>
+            </div>
+            <div class="badge-row">
+                <div class="badge blue">
+                    <img src="images/icon-date.svg" />
+                </div>
+            </div>
+
+            <div class="info">
+                <p><img src="images/register.svg" /> Registration Number : 124545445</p>
+                <p><img src="images/icon-registration.svg" /> First Device IMEI Number : 1545454545</p>
+                <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
+                <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
+            </div>
+
+            <div class="quick-actions">
+                <div><img src="images/icon-contact.svg" /></div>
+                <div><img src="images/icon-location.svg" /></div>
+            </div>
+
+            <h4 class="section">Features</h4>
+            <div class="feature-list">
+                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
+                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
+                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
+                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
+            </div>
+        }
+    </div>
+
+    <!-- CREATE LOAN -->
+    @if (activeTab == "loan")
+    {
+        <div class="cl-bg">
+            <div class="cl-form">
+
+                <label>Product Name</label>
+                <div class="input-box">
+                    <img src="images/icon-box.svg" />
+                    <input placeholder="Enter Product Name" />
+                </div>
+
+                <label>Product Price</label>
+                <div class="input-box">
+                    <img src="images/icon-rupee.svg" />
+                    <input placeholder="Enter Product Price" />
+                </div>
+
+                <label>Processing Fees</label>
+                <div class="input-box">
+                    <img src="images/icon-rupee.svg" />
+                    <input placeholder="Enter Processing Fees" />
+                </div>
+
+                <label>Down Payment</label>
+                <div class="input-box">
+                    <img src="images/icon-wallet.svg" />
+                    <input placeholder="Enter Down Payment" />
+                </div>
+
+                <label>Loan Amount</label>
+                <div class="input-box">
+                    <img src="images/icon-rupee.svg" />
+                    <input placeholder="Enter Loan Amount" />
+                </div>
+
+                <label>Number Of EMI</label>
+                <div class="input-box">
+                    <img src="images/icon-emi.svg" />
+                    <input placeholder="Enter No. of EMI" />
+                </div>
+
+                <label>Actual EMI</label>
+                <div class="input-box">
+                    <img src="images/emi-no.svg" />
+                    <input placeholder="Enter Actual EMI" />
+                </div>
+
+                <label>First EMI Date</label>
+                <div class="input-box">
+                    <img src="images/icon-calendar.svg" />
+                    <input placeholder="Enter First EMI Date" />
+                </div>
+
+                <label>Upload Document’s</label>
+                <div class="upload-grid">
+                    <button class="upload-item"><img src="images/plus.svg" /><span>Aadhaar Front</span></button>
+                    <button class="upload-item"><img src="images/plus.svg" /><span>Aadhaar Back</span></button>
+                    <button class="upload-item"><img src="images/plus.svg" /><span>Pan Card</span></button>
+                    <button class="upload-item"><img src="images/plus.svg" /><span>Photo</span></button>
+                </div>
+
+                <div class="guarantor-row">
+                    <span class="guarantor-text">Do You Want To Add A Guarantor?</span>
+                    <button class="add-btn"><span>+ADD</span></button>
+                </div>
+
+                <div class="agreement-box">
+                    <p class="agreement-title">Agreement</p>
+                    <p class="agreement-text">
+                        This Loan Agreement is made and entered into by and between the Lender
+                        and the Borrower for the purpose of providing a personal or business loan.
+                        The Borrower hereby acknowledges the receipt of the loan amount and agrees
+                        to repay the same, along with the applicable interest rate
+                    </p>
+
+                    <span class="see-more" @onclick="OpenAgreement">See More</span>
+
+                    <div class="agreement">
+                        <input type="checkbox" />
+                        <p>I have read and understood the above loan agreement.</p>
+                    </div>
+                </div>
+
+                <label class="signature-title">Signature</label>
+                <div class="signature-box">
+                    <img src="images/icon-edit.svg" class="edit-icon" />
+                </div>
+
+                <button class="submit-btn"
+                    @onclick='() => Nav.NavigateTo("/submit-success")'>
+                    Submit
+                </button>
+
+            </div>
+        </div>
+    }
+</div>
+
+<!-- ================= AGREEMENT MODAL (NOT BLURRED) ================= -->
+@if (showAgreement)
+{
+    <div class="agreement-overlay">
+        <div class="agreement-modal">
+            <div class="agreement-header">
+                <span>Agreement</span>
+                <span class="close" @onclick="CloseAgreement">×</span>
+            </div>
+
+            <div class="agreement-body">
+                <p>
+                    this loan agreement is made and entered into by and between the lender
+                    and the borrower for the purpose of providing a personal or business loan.
+                    the borrower hereby acknowledges the receipt of the loan amount and agrees
+                    to repay the same, along with the applicable interest rate, within the
+                    period mutually agreed upon by both parties.
+                </p>
+
+                <p>
+                    in the event of any delay or failure to make timely payments, the borrower
+                    shall be liable to pay late fees or additional charges in accordance with
+                    the lender’s policy.
+                </p>
+
+                <p>
+                    both parties confirm that the details and information shared during this
+                    agreement are accurate and truthful to the best of their knowledge.
+                </p>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    string activeTab = "details";
+    bool showAgreement = false;
+
+    void OpenAgreement() => showAgreement = true;
+    void CloseAgreement() => showAgreement = false;
+}

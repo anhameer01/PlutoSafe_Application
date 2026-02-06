@@ -1,0 +1,79 @@
+
+/* ===== PAGE ===== */
+.rk-bg {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding: 12px;
+}
+
+/* ===== HEADER ===== */
+.rk-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.rk-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.back {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===== COLOURED KEY CARD ===== */
+.rk-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-radius: 18px;
+  margin-bottom: 16px;
+
+  /* SAME STYLE AS DASHBOARD STATUS LIST */
+  background: linear-gradient(180deg, #f8cbb6, #fff7f2);
+}
+
+.rk-status span {
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
+}
+
+.rk-status b {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ===== LIST (FROM REMAINING DEVICES) ===== */
+.rd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rd-item {
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+.rd-item img {
+  width: 28px;
+  height: 28px;
+}
+
+.rd-item span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}

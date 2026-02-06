@@ -1,0 +1,81 @@
+@page "/video-training"
+@inject NavigationManager Nav
+
+<div class="vt-bg">
+
+    <!-- HEADER WITH BACK -->
+    <div class="vt-header">
+        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+    </div>
+
+    <!-- CENTER IMAGE BUTTON -->
+    <div class="vt-center" @onclick='() => Nav.NavigateTo("/video-player")'>
+        <img src="images/videotraining.png" class="video-training-img" />
+        <div class="vt-btn">
+            <span>See Video</span>
+            <span class="vt-arrow">→</span>
+        </div>
+    </div>
+
+</div>
+
+<style>
+/* PAGE */
+.vt-bg {
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.vt-header {
+  padding: 12px 16px;
+}
+
+.back {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* CENTER CARD */
+.vt-center {
+  margin: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  width: 400px;
+  height: auto;
+  text-align: center;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.vt-center img {
+  width: 400px;
+  height:auto;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* BUTTON */
+.vt-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0b1d4a;
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vt-arrow {
+  font-size: 18px;
+}
+.video-training-img {
+  margin-left: 16px;   /* adjust value as needed */
+}
+</style>

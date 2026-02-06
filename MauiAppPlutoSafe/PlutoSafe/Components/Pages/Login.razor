@@ -1,0 +1,87 @@
+@page "/login"
+@inject NavigationManager Nav
+
+<link href="css/login.css" rel="stylesheet" />
+
+<div class="login-bg">
+    <button class="back-btn" @onclick='() => Nav.NavigateTo("/")'>&lt;</button>
+
+    <div class="login-header">
+        <img src="images/logo.svg" />
+    </div>
+
+    <div class="login-card">
+        <h2>Log In</h2>
+        <p class="sub">Please Login To Your Account</p>
+
+        <label>EMAIL OR USERNAME</label>
+        <input type="email"
+               placeholder="johnsondoe@nomail.com"
+               @bind="Email" />
+
+        @if (!string.IsNullOrEmpty(emailError))
+        {
+            <p class="error-text">@emailError</p>
+        }
+
+        <label>PASSWORD</label>
+        <input type="password"
+               placeholder="************"
+               @bind="Password" />
+
+        @if (!string.IsNullOrEmpty(passwordError))
+        {
+            <p class="error-text">@passwordError</p>
+        }
+
+        <div class="recover" @onclick='() => Nav.NavigateTo("/forgot")'>
+            Recover Password?
+        </div>
+
+        <button class="login-btn" @onclick="logintoHome">
+            Log In
+        </button>
+    </div>
+</div>
+
+
+@code {
+    string Email = "";
+    string Password = "";
+
+    string emailError = "";
+    string passwordError = "";
+
+    void logintoHome()
+    {
+        emailError = "";
+        passwordError = "";
+
+        // EMAIL compulsory
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            emailError = "Email is required";
+        }
+        else if (!Email.Contains("@"))
+        {
+            emailError = "Enter a valid email address";
+        }
+
+        // PASSWORD compulsory
+        if (string.IsNullOrWhiteSpace(Password))
+        {
+            passwordError = "Password is required";
+        }
+        else if (Password.Length < 6)
+        {
+            passwordError = "Password must be at least 6 characters";
+        }
+
+        // stop navigation if any error
+        if (!string.IsNullOrEmpty(emailError) || !string.IsNullOrEmpty(passwordError))
+            return;
+
+        // success
+        Nav.NavigateTo("/dashboard-welcome");
+    }
+}
