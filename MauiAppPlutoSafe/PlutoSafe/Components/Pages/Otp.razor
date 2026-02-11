@@ -6,7 +6,11 @@
 
 <div class="login-bg">
 
-    <button class="back-btn" @onclick="GoBack">&lt;</button>
+    @* <button class="back-btn" @onclick="GoBack">&lt;</button> *@
+
+    <span class="back-icon left" @onclick='() => Nav.NavigateTo("/forget")'>
+        &#8592;
+    </span>
 
     <div class="login-header">
         <img src="images/logo.svg" />

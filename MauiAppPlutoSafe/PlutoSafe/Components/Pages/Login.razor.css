@@ -1,3 +1,4 @@
+
 .login-bg {
     min-height: 100vh;
     background: linear-gradient(180deg, #020c2a 0%, #020b22 100%);
@@ -79,9 +80,63 @@ input {
     color: #fff;
     font-size: 16px;
 }
-/* error message */
+.back-icon {
+  font-size: 24px;      /* arrow size */
+  color: #fff;
+  left:16px;
+            /* white */
+  cursor: pointer;
+  display: inline-flex;
+  position:absolute;
+}
+
+/* Login subtitle text */
+.sub {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;        /* Semi Bold */
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize; /* Title case */
+ color: #555;   /*            */
+   /* keep existing color */
+}
+/* email ans pass */
+.login-card label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize;
+  color: #555;  
+}
+
+/* validation error */
 .error-text {
   color: #d93025;
   font-size: 12px;
-  margin: -12px 0 12px;
+  margin: 4px 0 10px;
+}
+/* RED CIRCULAR INFO (i) ICON */
+.error-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #e53935; /* 🔴 red */
+  color: #ffffff;            /* white i */
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-70%);
+}
+.input-box,
+.password-box {
+  position: relative;   /* 🔑 REQUIRED */
 }

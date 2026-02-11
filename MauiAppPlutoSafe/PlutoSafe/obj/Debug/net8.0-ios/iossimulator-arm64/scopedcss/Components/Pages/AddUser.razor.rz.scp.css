@@ -1,0 +1,208 @@
+*[b-he2r6tpsxe] {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.adduser-bg[b-he2r6tpsxe] {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+}
+/* HEADER */
+.adduser-header[b-he2r6tpsxe] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.back[b-he2r6tpsxe] {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.adduser-header h3[b-he2r6tpsxe] {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* PROFILE */
+.profile-section[b-he2r6tpsxe] {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  /* margin-bottom: 24px; */
+  margin:0 auto;
+}
+
+.profile-img[b-he2r6tpsxe] {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.camera-icon[b-he2r6tpsxe] {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 32px;
+  right: calc(50% - 48px);
+  background: #0b1d4a;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-icon img[b-he2r6tpsxe] {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* FORM */
+.form label[b-he2r6tpsxe] {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 12px 0 6px;
+  display: block;
+}
+
+.input-box[b-he2r6tpsxe],
+.imei-box[b-he2r6tpsxe] {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  gap: 10px;
+}
+
+.input-box img[b-he2r6tpsxe] {
+  width: 20px;
+}
+
+.input-box input[b-he2r6tpsxe],
+.imei-box input[b-he2r6tpsxe] {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 18px;
+}
+
+/* IMEI */
+/* IMEI – scan button */
+.scan-btn[b-he2r6tpsxe] {
+  background: #0b1d4a;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  width: 56px;      /* fixed unit */
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* 🔥 Bigger scan image */
+.scan-btn img[b-he2r6tpsxe] {
+  width: 36px;      /* increase this */
+  height: 36px;     /* keep equal for no distortion */
+  object-fit: contain;
+}
+
+.submit-btn[b-he2r6tpsxe] {
+  margin-top: 24px; 
+  width: 100%;
+  height: 48px;
+  background: #0b1d4a;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.input-box[b-he2r6tpsxe] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* IMEI ICON FIX */
+.imei-box[b-he2r6tpsxe] {
+  gap: 16px;
+}
+
+.imei-icon[b-he2r6tpsxe] {
+  width: 22px;          /* visible size register icon like Figma */
+  height: 22px;
+  flex-shrink: 0;
+}
+.form[b-he2r6tpsxe] {
+  display: flex;
+  flex-direction: column;
+}
+.section[b-he2r6tpsxe] {
+  margin-left: 20px;
+}
+/* validation error */
+.error-text[b-he2r6tpsxe] {
+  color: #d93025;
+  font-size: 12px;
+  margin: 4px 0 10px;
+}
+/* RED CIRCULAR INFO (i) ICON */
+.error-icon[b-he2r6tpsxe] {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #e53935; /* 🔴 red */
+  color: #ffffff;            /* white i */
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+}
+  /* this is for qr code image */
+.imei-box img:first-child[b-he2r6tpsxe] {
+  width: 60px;
+  height: 64px;
+}
+
+.profile-section[b-he2r6tpsxe] {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.profile-img[b-he2r6tpsxe] {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.camera-icon[b-he2r6tpsxe] {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #0b1d4a;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

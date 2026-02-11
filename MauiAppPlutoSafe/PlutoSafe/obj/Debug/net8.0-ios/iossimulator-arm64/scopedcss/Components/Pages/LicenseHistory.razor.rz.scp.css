@@ -1,0 +1,112 @@
+.lh-bg[b-20fke0tnf1] {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding: 12px;
+}
+
+/* HEADER */
+.lh-header[b-20fke0tnf1] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lh-header h3[b-20fke0tnf1] {
+  font-size: 16px;
+  font-weight: 600;
+  margin:0;
+}
+
+.back[b-20fke0tnf1] {
+  font-size: 22px;
+  cursor: pointer;
+  line-height:1;
+}
+
+/* SUMMARY */
+.lh-summary[b-20fke0tnf1] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.lh-card[b-20fke0tnf1] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #eef2ff;
+}
+
+.lh-card img[b-20fke0tnf1] {
+  width: 34px;
+  height: 34px;
+}
+
+.lh-card span[b-20fke0tnf1] {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lh-card b[b-20fke0tnf1] {
+  font-size: 14px;
+}
+
+.lh-card.blue[b-20fke0tnf1] { background: linear-gradient(180deg,#acccfa,#e8efff); }
+.lh-card.purple[b-20fke0tnf1] { background: linear-gradient(180deg,#c7f6f8,#f1e9ff); }
+.lh-card.green[b-20fke0tnf1] { background: linear-gradient(180deg,#b8f6d5,#e6fff2); }
+
+/* LIST */
+.lh-list[b-20fke0tnf1] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lh-item[b-20fke0tnf1] {
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+.lh-row[b-20fke0tnf1] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.lh-row:last-child[b-20fke0tnf1] {
+  margin-bottom: 0;
+}
+
+.lh-row img[b-20fke0tnf1] {
+  width: 22px;
+  height: 22px;
+}
+
+.lh-row span[b-20fke0tnf1] {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.lh-row b[b-20fke0tnf1] {
+  font-size: 13px;
+  font-weight: 600;
+}
+/* ONLY increase icon-activation.svg size (no card impact) */
+img[src$="icon-activation.svg"][b-20fke0tnf1] {
+  width: 48px;
+  height: 48px;
+}
+/* Reduce color grid (card) size WITHOUT affecting image */
+.lh-card[b-20fke0tnf1] {
+  padding: 6px 8px;     /* reduce height */
+  min-height: auto;
+}

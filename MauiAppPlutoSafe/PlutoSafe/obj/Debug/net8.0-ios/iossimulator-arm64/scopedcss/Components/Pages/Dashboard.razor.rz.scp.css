@@ -1,0 +1,409 @@
+*[b-m65nqcwqjt] {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= ROOT ================= */
+
+.db-bg[b-m65nqcwqjt] {
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 140px;
+}
+
+/* ================= HEADER ================= */
+
+.db-header[b-m65nqcwqjt] {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info h3[b-m65nqcwqjt] {
+  font-size: 18px;
+}
+
+.welcome[b-m65nqcwqjt] {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ================= DEVICE BUTTON ================= */
+
+.device-btn[b-m65nqcwqjt] {
+  display: flex;
+  height:32px;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 10px;
+  border: none;
+  background: #0b1d4a;
+}
+
+.device-btn img[b-m65nqcwqjt] {
+  width: auto;
+  height: 32px;   
+}
+/* ================= MAIN CARD ================= */
+
+/* LOCK CARD – FIXED HEIGHT & CENTER CONTENT */
+.lock-card[b-m65nqcwqjt] {
+  background: #193a7a;
+  border-radius: 20px;
+
+  width: calc(100% - 42px);
+  margin: 0 16px 20px;
+
+  height: 150px;                 /* same height as before */
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;           /* 🔑 vertical centering */
+  justify-content: center;       /* 🔑 horizontal centering */
+  text-align: center;
+}
+
+.main-icon[b-m65nqcwqjt] {
+  width: 64px;          /* adjust if needed */
+  height: auto;
+  margin-bottom: 12px;;
+  margin: 0 auto 16px;  /* space below image */
+  display: block;
+}
+
+/* ================= STATUS LIST ================= */
+
+.status-list[b-m65nqcwqjt] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+/* STATUS ITEM */
+.status-list > div[b-m65nqcwqjt] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  /* margin-right:16px; */
+  margin: 0 18px 24px;
+  padding: 16px 18px 16px 96px; /* space for half moon */
+  border-radius: 18px;
+  overflow: hidden; /* 🔑 IMPORTANT for half-moon cut */
+}
+
+/* HALF MOON SHAPE */
+.status-list > div[b-m65nqcwqjt]::before {
+  content: "";
+  position: absolute;
+  left: -36px;              /* 🔑 pushes circle half outside */
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+/* ICON INSIDE HALF MOON – INCREASED SIZE */
+.status-list > div img[b-m65nqcwqjt] {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 68px;     /* increased */
+  height: 76px;    /*  increased */
+  transform: translateY(-50%);
+}
+.status-list span[b-m65nqcwqjt] {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
+}
+
+.status-list b[b-m65nqcwqjt] {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ================= STATUS COLORS ================= */
+
+.status-blue[b-m65nqcwqjt]   { background: linear-gradient(180deg, #c5d5f8, #f6f8ff); }
+.status-purple[b-m65nqcwqjt]{ background: linear-gradient(180deg, #fdd2ea, #faf6ff); }
+.status-green[b-m65nqcwqjt] { background: linear-gradient(180deg, #c4f8d9, #f6fff9); }
+.status-cyan[b-m65nqcwqjt]  { background: linear-gradient(180deg, #c1eaf6, #f6fdff); }
+.status-yellow[b-m65nqcwqjt]{ background: linear-gradient(180deg, #fbf0bb, #fffef6); }
+.status-lime[b-m65nqcwqjt]  { background: linear-gradient(180deg, #d9fbc5, #f9fff6); }
+.status-orange[b-m65nqcwqjt]{ background: linear-gradient(180deg, #f8cbb6, #fff7f2); }
+.status-pink[b-m65nqcwqjt]  { background: linear-gradient(180deg, #f9d4e2, #fff6fa); }
+
+/* ================= QUICK ACTION (ONE ROW – NO GRID) ================= */
+
+.section[b-m65nqcwqjt] {
+  margin: 15px 0;
+  padding-left: 16px;
+  font-size: 16px;
+  font-weight: 700;
+}
+/* ================= QUICK ACTION ================= */
+/* QUICK ACTION GRID – FIXED 4 PER ROW */
+.quick-actions-new[b-m65nqcwqjt] {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 🔑 ALWAYS 4 in first row */
+  gap: 16px;
+  padding: 0 12px;
+}
+
+/* QUICK ACTION ITEM */
+.quick-actions-new .qa-item[b-m65nqcwqjt] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+}
+
+/* ICON SIZE */
+.quick-actions-new .qa-item img[b-m65nqcwqjt] {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+/* ===== QUICK ACTION TEXT – EXACT SPEC ===== */
+.quick-actions-new .qa-item p[b-m65nqcwqjt] {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;          /* Semi Bold */
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: capitalize; /* Title Case */
+
+  margin-top: 6px;           /* tight spacing under icon */
+  color: #000;
+}
+/* ================= FOOTER ================= */
+
+.db-footer[b-m65nqcwqjt] {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f6f7fb;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0 10px;
+  border-top: 1px solid #e5e5e5;
+  z-index: 100;
+}
+
+.footer-btn[b-m65nqcwqjt] {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.footer-btn img[b-m65nqcwqjt] {
+  width: 80px;
+  height: 80px;
+}
+
+.lock-text[b-m65nqcwqjt] {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  text-align: center;
+}
+/* DOTS BELOW LOCK TEXT */
+.lock-dots[b-m65nqcwqjt] {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lock-dots .dot[b-m65nqcwqjt] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor:pointer;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.lock-dots .dot.active[b-m65nqcwqjt] {
+  background: #193a7a;
+}
+.lock-wrapper[b-m65nqcwqjt] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* ===== LOCK WRAPPER ===== */
+.lock-wrapper[b-m65nqcwqjt] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* SLIDE ANIMATION */
+.slide[b-m65nqcwqjt] {
+  animation: slideFade-b-m65nqcwqjt 0.8s ease-in-out;
+}
+
+@keyframes slideFade-b-m65nqcwqjt {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* DOTS */
+.lock-dots[b-m65nqcwqjt] {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lock-dots .dot[b-m65nqcwqjt] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.5s ease; /* slow dot movement */
+}
+
+.lock-dots .dot.active[b-m65nqcwqjt] {
+  background: #193a7a;
+}
+/* 2nd slide image – fills card but DOES NOT change card size */
+.full-slide[b-m65nqcwqjt] {
+  position: absolute;
+  inset: 0;                 /* top:0 right:0 bottom:0 left:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  /* transform: scale(0.94); */
+}
+/* CONTENT FOR ICON + TEXT */
+.lock-content[b-m65nqcwqjt] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* ===== IPHONE STATUS IMAGE ===== */
+.iphone-status-banner[b-m65nqcwqjt] {
+  display: flex;
+  justify-content: flex-start;
+  padding-left:30px;
+  margin: 14px 0 10px;   /* spacing above status list */
+}
+
+.iphone-status-banner img[b-m65nqcwqjt] {
+  width: 178px;          /* adjust if needed */
+  height: auto;
+  display: block;
+}
+/* ================= IPHONE LOGOUT BUTTON – STRETCHED ================= */
+
+.db-bg.iphone .db-footer[b-m65nqcwqjt] {
+  justify-content: center;        /* keep centered */
+}
+
+/* ===== IPHONE LOGOUT PILL ===== */
+.db-bg.iphone .footer-btn.iphone-logout[b-m65nqcwqjt] {
+  min-width: 260px;
+  padding: 14px 0;
+  border-radius: 999px;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* icon smaller */
+.db-bg.iphone .footer-btn.iphone-logout img[b-m65nqcwqjt] {
+  width: auto;
+  height: 24px;
+}
+
+/* text */
+.db-bg.iphone .footer-btn.iphone-logout span[b-m65nqcwqjt] {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ===== IPHONE LOGOUT FOOTER ===== */
+.db-bg.iphone .db-footer[b-m65nqcwqjt] {
+  justify-content: center;
+}
+
+.iphone-logout-btn[b-m65nqcwqjt] {
+  min-width: 260px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  border: none;
+  background: #000;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.iphone-logout-btn img[b-m65nqcwqjt] {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== IPHONE LOGOUT BUTTON (RED CTA) ===== */
+
+.iphone-logout-wrapper[b-m65nqcwqjt] {
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.iphone-logout-btn[b-m65nqcwqjt] {
+  width: 100%;
+  height: 52px;
+
+  background: #ef3e36;       /* red like screenshot */
+  border: none;
+  border-radius: 12px;
+
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.iphone-logout-btn:active[b-m65nqcwqjt] {
+  opacity: 0.9;
+}

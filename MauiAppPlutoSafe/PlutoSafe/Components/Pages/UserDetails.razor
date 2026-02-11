@@ -1,5 +1,6 @@
 @page "/user-details"
 @inject NavigationManager Nav
+@* @inject JSRuntime JS *@
 
 <link href="css/user-details.css" rel="stylesheet" />
 
@@ -404,7 +405,27 @@
 
                 <label class="signature-title">Signature</label>
                 <div class="signature-box">
-                    <img src="images/icon-edit.svg" class="edit-icon" />
+                    <img src="images/icon-edit.svg" class="edit-icon" /> 
+                    <div class="signature-border">
+         
+@* <div class="signature-border">
+    <div class="signature-container">
+        <canvas id="signatureCanvas"
+                class="signature-canvas"
+                @onpointerdown="StartDraw"
+                @onpointermove="Draw"
+                @onpointerup="EndDraw"
+                @onpointerleave="EndDraw">
+        </canvas>
+
+        @if (!hasSignature)
+        {
+            <div class="signature-placeholder">Sign here.</div>
+        }
+</div> *@
+
+    <button class="clear-btn" @onclick="ClearSignature">Clear</button>
+</div>        
                 </div>
 
                 <button class="submit-btn"
@@ -454,7 +475,75 @@
 @code {
     string activeTab = "details";
     bool showAgreement = false;
-
+ bool hasSignature = false;
     void OpenAgreement() => showAgreement = true;
     void CloseAgreement() => showAgreement = false;
+
+    // ===== Signature state =====
+   
+    @* bool isDrawing = false; *@
+
+    
+@* DateTime SignatureDate = DateTime.Today; *@
+    // ===== Signature events =====
+    @* void StartDraw()
+    {
+        isDrawing = true;
+        hasSignature = true;
+    }
+
+    void Draw()
+    {
+        if (!isDrawing)
+            return;
+
+        // Drawing will be handled via JS later
+    }
+
+    void EndDraw()
+    {
+        isDrawing = false;
+    } 
+
+    void ClearSignature()
+    {
+        hasSignature = false;
+        // Canvas clear via JS (optional later)
+    }
+
+   
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initSignaturePad");
+        }
+    }
+
+    async Task StartDraw(PointerEventArgs e)
+    {
+        hasSignature = true;
+        await JS.InvokeVoidAsync("startDraw", e.OffsetX, e.OffsetY);
+    }
+
+    async Task Draw(PointerEventArgs e)
+    {
+        await JS.InvokeVoidAsync("draw", e.OffsetX, e.OffsetY);
+    }
+
+    async Task EndDraw(PointerEventArgs e)
+    {
+        await JS.InvokeVoidAsync("endDraw");
+    } *@
+    void ClearSignature()
+    {
+        hasSignature = false;
+        // Canvas clear via JS (optional later)
+    }
+
+
 }
+ 
+    
+
+    

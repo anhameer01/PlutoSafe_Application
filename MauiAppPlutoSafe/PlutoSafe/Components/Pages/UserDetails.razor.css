@@ -1,4 +1,3 @@
-
 .ud-bg {
   background: #f6f7fb;
   min-height: 100vh;
@@ -39,7 +38,9 @@
 .ud-card {
   background: #fff;
   border-radius: 18px;
-  padding: 16px;
+  padding-left:22px;
+  padding-right:22px;
+  /* padding: 16px; */
 }
 
 /* TOP */
@@ -55,22 +56,19 @@
   height: 56px;
   border-radius: 50%;
 }
-
+/* User name heading */
 .name-box h4 {
-  font-size: 15px;
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;          /* Semi Bold */
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize; /* Title case */
+  margin: 0;
 }
-
-.unlock-btn {
-  margin-left: auto;
-  background: #e9f7ef;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #2e7d32;
+/* Space between tabs and user name */
+.name-box {
+  margin-top: -8px;   /* increase vertical gap */
 }
 
 /* BADGES */
@@ -90,21 +88,24 @@
   flex: 1;
   font-size: 12px;
 }
-
 /* INFO */
 .info p {
+  font-family: 'Inter', !important;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.41px;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
 /* QUICK ACTIONS */
 .quick-actions {
   display: flex;
   gap: 10px;
-  margin-top: 12px;
+  margin-top: 30px;
 }
 
 .quick-actions div {
@@ -117,55 +118,130 @@
   gap: 8px;
   font-size: 13px;
 }
-
-/* FEATURES */
+/* Features heading */
 .section {
-  margin: 16px 0 10px;
-  font-size: 15px;
-  font-weight: 600;
+  margin-top:50px;
+  margin-left:-10px;
+  padding-left: 0;
+  width: 350px;
+  height: 23px;
+  font-family: 'InterSemiBold';
+  font-weight: 700;          /* Bold / Semi Bold */
+  font-size: 20px;
+  line-height: 1;            /* 100% */
+  letter-spacing: 0;
 }
 
 .feature-list {
+  margin-left:16px;
+  padding-left:0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 
 .feature {
   background: #fff;
   border-radius: 14px;
-  padding: 14px;
+  margin-left:8px;
+  padding: 0;
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 14px;
+  line-height:100%;
+  font-family: 'InterSemiBold';
+  font-weight: 600;
+  letter-spacing:0 ;
 }
 
+/* Unlock phone button – fixed size */
 .unlock-btn {
-  flex: 1;
-  padding: 14px;
+  width: 117px;
+  height: 45px;
+
+  margin-left: auto;
+  background: #dff0e3;          /* 🔥 darker than before */
+  border: 1px solid #1b5e20;
   border-radius: 999px;
-  border: none;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-}
+  gap: 6px;
 
+  color: #1b5e20;
+  font-size: 14px;
+}
+.unlock-btn img {
+  width: 30px;
+  height: 30px;
+}
 .ud-tabs {
   display: flex;
-  gap: 24px;
-  justify-content: space-between;
-  margin-top: 12px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  -webkit-overflow-scrolling:touch;
+  gap: 56px;
+  padding-right:16px;
+  justify-content: flex-start;
+  margin-top: 30px;
   margin-bottom: 16px;
-  margin-left: 0;
-  padding-left: 0;
+  margin-left: 20px;   /* 🔥 shifts whole tab row left */
+  margin-bottom: 16px;
+}
+/* Show Loan – Phone Lock Status vertical layout */
+.show-card .show-item:last-child {
+  flex-direction: column;     /* stack items vertically */
+  align-items: center;        /* center horizontally */
+  text-align: center;
+  padding-left: 12px;
 }
 
+.show-card .show-item:last-child img {
+  margin-bottom: 6px;   /* small visual separation */
+  align-self: center;
+}
+.show-card .show-item:last-child > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Show Loan – stack Loan ID & Phone Lock Status vertically */
+.show-card .show-item {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.show-card .show-item img {
+  margin-bottom: 4px;   /* visual separation only */
+  align-self: center;
+}
+
+/* Shift Features items towards the right */
+.feature-list {
+  margin-left: 24px;   /* increase to move right */
+}
+
+.show-card .show-item span {
+  margin-bottom: 2px;
+}
+/* Show Loan – stack content vertically inside each column */
+.show-card .show-item > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.show-card .show-item:last-child span {
+  margin-bottom: 2px;
+}
 .ud-tabs span {
-  font-size: 14px;
+  font-size: 18px;
+  padding:8px 4px;
   color: #999;
 }
 
@@ -206,9 +282,66 @@
 }
 
 .cl-bg {
-  padding: 16px;
+  padding-left: 12px;   /* was more */
+  padding-right: 12px;
+}
+/* Create Loan form alignment */
+.cl-form {
+  margin-left: 12px;    /* nudges inputs left */
+}
+/* Create Loan – input text font */
+.cl-form .input-box input {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;          /* Medium */
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+  padding-left:20px;
+  text-transform: capitalize; /* Title case */
 }
 
+/* Space between input box and next label */
+.cl-form .input-box {
+  margin-bottom: 30px;   /* 🔥 adds vertical gap below each input */
+}
+
+/* Create Loan – move input icons to the right */
+.cl-form .input-box img {
+  margin-left: 16px;   /* 🔥 shifts icon right */
+}
+
+/* Space between label text and input box */
+.cl-form label + .input-box {
+  margin-top: 30px;   /* 🔥 vertical gap */
+}
+/* Create Loan – field headings (labels) */
+.cl-form label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;           /* Semi Bold */
+  font-size: 14px;
+  line-height: 100%;          /* exact */
+  letter-spacing: 0;
+  text-transform: capitalize; /* Title case */
+}
+/* Create Loan – input placeholder font */
+.cl-form .input-box input::placeholder {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;           /* Medium */
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize; /* Title case */
+  color: #1f2937;             /* 🔥 dark grey (readable) */
+  opacity: 1;
+}
+.cl-form .input-box input::-webkit-input-placeholder {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize;
+}
 .guarantor-row {
   display: flex;
   align-items: center;
@@ -472,14 +605,18 @@ label + .upload-grid {
   background: #f3f4f6;
   border-radius: 14px;
   margin-bottom: 16px;
+  padding-top: 10px;
+  padding-bottom:10px;
 }
 
 .show-item {
   flex: 1;
-  padding: 14px;
+  padding: 10px 14px;
   display: flex;
   gap: 10px;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom:10px;
 }
 
 .show-item:not(:last-child) {
@@ -506,7 +643,10 @@ label + .upload-grid {
   padding: 14px;
   margin-bottom: 16px;
 }
-
+/* Move ONLY first Device Details up */
+.show-loan .show-section:first-of-type {
+  margin-top: -12px;
+}
 .show-section h5 {
   font-size: 14px;
   margin-bottom: 12px;
@@ -516,7 +656,39 @@ label + .upload-grid {
 .show-row {
   display: flex;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
+}
+
+.show-row p {
+  margin: 0 0 2px 0;    /* tight label spacing */
+}
+
+/* Device info – reduce vertical spacing (EXACT SAME EFFECT) */
+
+.show-row div p {
+  margin-bottom:2px;
+  font-weight: 600;
+  margin: 0 0 2px 0;         /* label close to value */
+}
+
+.show-row div span {
+  line-height: 1.1;
+  margin-top: -2px;           /* pull Android version up */
+}
+
+.show-row span {
+  display: block;
+  margin-top: 2px;     /* brings Android version up */
+}
+
+/* Keep normal stacking */
+.show-row div {
+  display: flex;
+  flex-direction: column;
+}
+/* Kill extra space caused by <br> */
+.show-row div br {
+  display: none;
 }
 
 /* LOAN GRID */
@@ -527,7 +699,16 @@ label + .upload-grid {
 }
 
 .loan-grid div {
-  font-size: 13px;
+  font-size: 15px;        /* increase from 13px */
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make values slightly bigger & clearer */
+.loan-grid strong {
+  font-size: 16px;        /* bigger numbers */
+  font-weight: 400;
 }
 
 /* DOWNLOAD */
@@ -543,8 +724,15 @@ label + .upload-grid {
 
 /* DOCUMENT */
 .doc-title {
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;        /* Bold */
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0;
+  text-align: left;
+  margin-top: 16px;        /* space from Download PDF */
+  margin-bottom: 12px;     /* space before icons */
+
 }
 
 /* EMI LIST */
@@ -658,6 +846,7 @@ label + .upload-grid {
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin-left: 8px; 
+  padding-left: 16px;   /* increase to move right */
 }
 
 /* Single document card */
@@ -665,9 +854,8 @@ label + .upload-grid {
   background: #f1f2f6;
   border-radius: 14px; 
   display:flex;
-  padding: 12px;
+  padding: 4px;
   flex-direction:column;
-  align-items: center;
 }
 
 /* PNG image */
@@ -675,14 +863,18 @@ label + .upload-grid {
   width: 40px;
   height:auto;
   margin: 6px;
+  align-items: flex-start
 }
 
 /* Label below image */
 .doc-item p {
-  margin: 0;
+  /* margin: 0; */
   font-size: 12px;
   color: #333;
+  width: 100%;
+  text-align:center;
   white-space: nowrap;
+  margin-top:6px;
 }
 
 /* HEADER */
@@ -704,3 +896,108 @@ label + .upload-grid {
   cursor: pointer;
   line-height: 1;        /* optional but improves centering */
 }
+
+/* Audio Message – Feature text only */
+.feature {
+  font-family: 'InterSemiBold';
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  margin-left:0;
+  letter-spacing: 0;
+  text-transform: capitalize; /* Title Case */
+}
+/* Space between the two Device Details rows */
+.show-section .show-row + .show-row {
+  margin-top: 16px;   /* adjust: 10–16px if needed */
+}
+/* Bold ONLY the labels: "EMEI NO." and "Device info" */
+.show-row div > p {
+  font-weight: 600;
+}
+
+/* Ensure numbers remain unchanged */
+.show-row div > strong,
+.show-row div > span {
+  font-weight: normal;
+}
+
+/* Keep Android Version ABOVE Model No (ONLY spans) */
+.show-row div span:first-of-type {
+  margin-top: 2px;
+}
+
+.show-row div span:last-of-type {
+  margin-top: 2px;
+}
+
+/* Device Details section heading */
+.show-section h5 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0;
+  text-align: left;
+  margin-bottom: 12px; /* keep spacing clean */
+}
+
+/* Loan ID & Phone Lock Status labels */
+.show-card .show-item span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;        /* slightly bigger = visible bold */
+  color: #000;            /* bold needs contrast */
+  display: block;
+}
+
+/* Loan ID & Phone Lock Status labels */
+.show-card .show-item span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;        /* slightly bigger = visible bold */
+  color: #000;            /* bold needs contrast */
+  display: block;
+}
+
+
+/* ===== Signature Pad ===== */
+
+/* .signature-border {
+    border: 1px solid #2f2f2f;
+    border-radius: 8px;
+    padding: 6px;
+    background: #ffffff;
+}
+
+.signature-container {
+    position: relative;
+    width: 100%;
+}
+
+.signature-canvas {
+    width: 100%;
+    height: 140px;
+    background: #ce3838;
+    border-radius: 6px;
+    touch-action: none; 
+}
+
+.signature-placeholder {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #999;
+    pointer-events: none;
+}
+
+.clear-btn {
+    background: transparent;
+    border: none;
+    color: #777;
+    font-size: 12px;
+    float: right;
+    margin-top: 6px;
+}  */

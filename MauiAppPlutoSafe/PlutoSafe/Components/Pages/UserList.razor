@@ -44,10 +44,12 @@
             <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
         </div>
 
-        <button class="qr-btn">
-            <img src="images/icon-qr.svg" />
-            <span>Scan QR Code</span>
-        </button>
+        <div class="qr-wrapper">
+            <button class="qr-btn">
+                <img src="images/icon-qr.svg" alt="QR" />
+            </button>
+            <p class="qr-text">Scan QR Code</p>
+        </div>
 
     </div>
 
@@ -58,7 +60,7 @@
             <img src="images/avatar-girl.svg" class="avatar" />
             <h4>Hi, Pooja Sharma</h4>
 
-            <button class="arrow-btn"
+            <button class="details-btn"
                     @onclick='() => Nav.NavigateTo("/user-details")'>
                 →
             </button>
@@ -77,7 +79,8 @@
             <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
         </div>
 
-        <div class="action-row">
+        @* commenting this part to see the ui fix else it was correct
+         <div class="action-row">
             <button class="lock-btn">
                 <img src="images/lock.svg" />
                 Lock
@@ -87,8 +90,23 @@
                 <img src="images/unlock.svg" />
                 Unlock
             </button>
-        </div>
+        </div> *@
+        <!-- 🔥 REPLACE your action-row HTML with THIS exactly -->
+        <div class="action-row">
+        <button class="lock-btn pill">
+            <span class="pill-circle red">
+            <img src="images/lock.svg" />
+            </span>
+            Lock
+        </button>
 
+        <button class="unlock-btn pill">
+            <span class="pill-circle green"> 
+            <img src="images/unlock.svg" />
+            </span> 
+            Unlock
+        </button>
+        </div>
     </div>
 
     <!-- ================= CARD 3 : LOCK / UNLOCK ================= -->
@@ -98,10 +116,15 @@
             <img src="images/avatar-girl.svg" class="avatar" />
             <h4>Hi, Pooja Sharma</h4>
 
-            <button class="arrow-btn"
+            @* <button class="arrow-btn"
                     @onclick='() => Nav.NavigateTo("/user-details")'>
                 →
+            </button> *@
+            <button class="details-btn" @onclick='() => Nav.NavigateTo("/user-details")'>
+                →
             </button>
+
+            
         </div>
         <div class="badge-row">
             <div class="badge blue">
@@ -115,15 +138,21 @@
             <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
             <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
         </div>
-
+        <!-- 🔥 REPLACE your action-row HTML with THIS exactly -->
         <div class="action-row">
-            <button class="lock-btn">
-                Lock
-            </button>
+        <button class="lock-btn pill">
+            <span class="pill-circle red">
+            <img src="images/lock.svg" />
+            </span>
+            Lock
+        </button>
 
-            <button class="unlock-btn">
-                Unlock
-            </button>
+        <button class="unlock-btn pill">
+            <span class="pill-circle green"> 
+            <img src="images/unlock.svg" />
+            </span> 
+            Unlock
+        </button>
         </div>
     </div>
 

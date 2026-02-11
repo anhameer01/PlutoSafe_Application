@@ -116,3 +116,11 @@ input {
   outline: none;
   border: 2px solid #000;
 }
+.back-icon.left {
+  position: absolute;
+  top: 16px;        /* adjust if needed */
+  left: 16px;       /* LEFT SIDE */
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}

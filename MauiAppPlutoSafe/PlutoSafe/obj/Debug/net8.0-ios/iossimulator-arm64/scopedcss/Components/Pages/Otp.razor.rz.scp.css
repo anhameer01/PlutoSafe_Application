@@ -1,0 +1,126 @@
+/* ===== BASE (same as forgot.css) ===== */
+
+.login-bg[b-g0hgbvrcb5] {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #020c2a 0%, #020b22 100%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.back-btn[b-g0hgbvrcb5] {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+}
+
+.login-header[b-g0hgbvrcb5] {
+  height: 230px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px; 
+}
+
+.login-header img[b-g0hgbvrcb5] {
+  width: 287px;
+  height: 96px;
+}
+
+.login-card[b-g0hgbvrcb5] {
+  background: #f5f6f8;
+  flex: 1;
+  padding: 32px 24px;
+  border-top-left-radius: 50px;
+}
+
+.login-card h2[b-g0hgbvrcb5] {
+  margin-bottom: 6px;
+}
+
+.sub[b-g0hgbvrcb5] {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+label[b-g0hgbvrcb5] {
+  font-size: 12px;
+  color: #666;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input[b-g0hgbvrcb5] {
+  width: 100%;
+  height: 48px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #eef0f4;
+  margin-bottom: 18px;
+}
+
+.login-btn[b-g0hgbvrcb5] {
+  width: 100%;
+  height: 54px;
+  border-radius: 12px;
+  border: none;
+  background: #0b1d4a;
+  color: #fff;
+  font-size: 16px;
+}
+
+/* ===== OTP SPECIFIC ===== */
+
+.otp-row[b-g0hgbvrcb5] {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.otp-row input[b-g0hgbvrcb5] {
+  flex: 1;
+
+  height: 48px;
+  border-radius: 10px;
+  border:1.5px solid #000 ;
+  background:  #ffffff;
+  text-align: center;
+  font-size: 18px;
+  color: #000;               /* black text */
+  font-weight: 600;
+}
+
+.timer[b-g0hgbvrcb5] {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0b1d4a;
+  margin-bottom: 16px;
+}
+
+.recover[b-g0hgbvrcb5] {
+  text-align: right;
+  font-size: 13px;
+  color: #0b1d4a;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+/* optional: focus state (still black) */
+.otp-row input:focus[b-g0hgbvrcb5] {
+  outline: none;
+  border: 2px solid #000;
+}
+.back-icon.left[b-g0hgbvrcb5] {
+  position: absolute;
+  top: 16px;        /* adjust if needed */
+  left: 16px;       /* LEFT SIDE */
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}

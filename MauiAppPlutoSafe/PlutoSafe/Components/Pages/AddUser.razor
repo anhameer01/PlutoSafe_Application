@@ -1,6 +1,5 @@
 @page "/add-user"
 @inject NavigationManager Nav
-
 <link href="css/add-user.css" rel="stylesheet" />
 
 <div class="adduser-bg">
@@ -15,7 +14,7 @@
     <div class="profile-section">
         <img src="images/avatar-girl.svg" class="profile-img" />
         <div class="camera-icon">
-            <img src="images/icon-camera.svg" />
+            <img src="images/camera_icon.svg" />
         </div>
     </div>
 
@@ -62,37 +61,45 @@
             }
         </div>
 
-        <label>First Device IMEI Number</label>
+        <!-- DEVICE IDENTIFIER -->
+        <label>
+            @(isIphone ? "Device Serial Number" : "First Device IMEI Number")
+        </label>
         <div class="imei-box @(string.IsNullOrEmpty(imei1Error) ? "" : "error")">
             <img src="images/icon-qr.svg" class="imei-icon" />
             <img src="images/icon-registration.svg" class="imei-icon" />
-            <input placeholder="Enter first IMEI number" @bind="Imei1" />
+            <input placeholder="Enter @(isIphone ? "serial number" : "first IMEI number")"
+                   @bind="Imei1" />
             @if (!string.IsNullOrEmpty(imei1Error))
             {
                 <span class="error-icon">i</span>
             }
         </div>
 
-        <label>Second Device IMEI Number</label>
-        <div class="imei-box @(string.IsNullOrEmpty(imei2Error) ? "" : "error")">
-            <img src="images/icon-qr.svg" class="imei-icon" />
-            <img src="images/icon-registration.svg" class="imei-icon" />
-            <input placeholder="Enter Second IMEI Number" @bind="Imei2" />
-            @if (!string.IsNullOrEmpty(imei2Error))
-            {
-                <span class="error-icon">i</span>
-            }
-        </div>
+        @if (!isIphone)
+        {
+            <label>Second Device IMEI Number</label>
+            <div class="imei-box @(string.IsNullOrEmpty(imei2Error) ? "" : "error")">
+                <img src="images/icon-qr.svg" class="imei-icon" />
+                <img src="images/icon-registration.svg" class="imei-icon" />
+                <input placeholder="Enter second IMEI number" @bind="Imei2" />
+                @if (!string.IsNullOrEmpty(imei2Error))
+                {
+                    <span class="error-icon">i</span>
+                }
+            </div>
+        }
 
-        <button class="submit-btn" @onclick="Submit">
-            Submit
-        </button>
-
+        <button class="submit-btn" @onclick="Submit">Submit</button>
     </div>
-
 </div>
 
 @code {
+    [SupplyParameterFromQuery]
+    public string? device { get; set; }
+
+    bool isIphone => device == "iphone";
+
     string RegNo = "";
     string UserName = "";
     string Mobile = "";
@@ -110,47 +117,16 @@
     void Submit()
     {
         regError = nameError = mobileError = emailError = imei1Error = imei2Error = "";
-
         bool hasError = false;
 
-        if (string.IsNullOrWhiteSpace(RegNo))
-        {
-            regError = "error";
-            hasError = true;
-        }
+        if (string.IsNullOrWhiteSpace(RegNo)) { regError = "error"; hasError = true; }
+        if (string.IsNullOrWhiteSpace(UserName)) { nameError = "error"; hasError = true; }
+        if (string.IsNullOrWhiteSpace(Mobile)) { mobileError = "error"; hasError = true; }
+        if (string.IsNullOrWhiteSpace(Email)) { emailError = "error"; hasError = true; }
+        if (string.IsNullOrWhiteSpace(Imei1)) { imei1Error = "error"; hasError = true; }
+        if (!isIphone && string.IsNullOrWhiteSpace(Imei2)) { imei2Error = "error"; hasError = true; }
 
-        if (string.IsNullOrWhiteSpace(UserName))
-        {
-            nameError = "error";
-            hasError = true;
-        }
-
-        if (string.IsNullOrWhiteSpace(Mobile))
-        {
-            mobileError = "error";
-            hasError = true;
-        }
-
-        if (string.IsNullOrWhiteSpace(Email))
-        {
-            emailError = "error";
-            hasError = true;
-        }
-
-        if (string.IsNullOrWhiteSpace(Imei1))
-        {
-            imei1Error = "error";
-            hasError = true;
-        }
-
-        if (string.IsNullOrWhiteSpace(Imei2))
-        {
-            imei2Error = "error";
-            hasError = true;
-        }
-
-        if (hasError)
-            return;
+        if (hasError) return;
 
         Nav.NavigateTo("/dashboard");
     }

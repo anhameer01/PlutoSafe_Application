@@ -11,9 +11,9 @@
 
         @if (EnableNavigation)
         {
-            <button class="details-btn" @onclick='() => Nav.NavigateTo("/user-details")'>
+       <button class="details-btn" @onclick='() => Nav.NavigateTo("/user-details")'>
                 →
-            </button>
+            </button>     
         }
     </div>
 
@@ -30,6 +30,45 @@
         <p><img src="images/call.svg" /> Alternate Mobile Number : @Phone</p>
     </div>
 
+@if (ShowQrButton)
+{
+    <div class="qr-wrapper">
+        <button class="qr-btn">
+            <img src="images/icon-qr.svg" alt="QR" />
+        </button>
+        <p class="qr-text">Scan QR Code</p>
+    </div>
+}
+@if (ShowLockActions)
+{
+    @* <div class="action-row dual">
+        <button class="lock-btn">
+            <img src="images/lock.svg" />
+            <span>Lock</span>
+        </button>
+
+        <button class="unlock-btn">
+            <img src="images/unlock.svg" />
+            <span>Unlock</span>
+        </button>
+    </div> *@
+        <div class="action-row">
+        <button class="lock-btn pill">
+            <span class="pill-circle red">
+                <img src="images/lock.svg" />
+            </span>
+            Lock
+        </button>
+
+        <button class="unlock-btn pill">
+            <span class="pill-circle green">
+                <img src="images/unlock.svg" />
+            </span>
+            Unlock
+        </button>
+    </div>
+}
+
 </div>
 
 @code {
@@ -39,4 +78,6 @@
     [Parameter] public string Imei1 { get; set; } = "1545454545";
     [Parameter] public string Imei2 { get; set; } = "1545454545";
     [Parameter] public string Phone { get; set; } = "+91 1234567892";
+    [Parameter] public bool ShowQrButton { get; set; }
+    [Parameter] public bool ShowLockActions { get; set; }
 }

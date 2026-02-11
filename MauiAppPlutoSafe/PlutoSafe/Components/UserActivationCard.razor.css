@@ -78,3 +78,136 @@
 .ud-top img {
   margin-left: -8px;
 }
+/* space between date/time chips and the 4 info rows */
+.info {
+  margin-top: 20px;   /* increase/decrease as needed */
+}
+/* === USER DETAILS TEXT (match User Details page exactly) === */
+.info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;          /* same weight */
+  font-size: 14px;           /* same size */
+  line-height: 150%;         /* same spacing */
+  letter-spacing: -0.41px;   /* same letter spacing */
+  color: #111;
+
+  margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+/* icons size aligned with User Details */
+.info img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+/* ===== QR ACTION (USER ACTIVATION CARD) ===== */
+
+.qr-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 28px;
+}
+
+/* PERFECT ROUND QR BUTTON – smaller circle */
+.qr-btn {
+  width: 50px;          /*⬇ reduced from 72px */
+  height: 50px;
+  border-radius: 50%;
+  background: #000;
+  border: none;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* QR ICON – bigger inside the circle */
+.qr-btn img {
+  width: 80%;          /* ⬆ increased from 32px */
+  height: 100%;
+  border-radius: 50%;
+  margin-top:25%;
+  object-fit: cover;
+}
+
+/* text below QR */
+.qr-text {
+  margin-top: 12px;
+  text-align: center;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.41px;
+  color: #000;
+}
+
+/* ===== LOCK / UNLOCK ACTION ROW ===== */
+.action-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+/* PILL BASE */
+.action-row .pill {
+  position: relative;
+  width: 160px;
+  height: 48px;
+  padding-top:30px;
+  border-radius: 999px;
+  background: #fff;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+/* LOCK */
+.action-row .lock-btn.pill {
+  border: 2px solid #e53935;
+  color: #e53935;
+}
+
+/* UNLOCK */
+.action-row .unlock-btn.pill {
+  border: 2px solid #2e7d32;
+  color: #2e7d32;
+}
+
+/* FLOATING ICON CIRCLE */
+.pill-circle {
+  position: absolute;
+  top: -22px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center; */
+}
+
+/* COLORS */
+/* .pill-circle.red { background: #e53935; }
+.pill-circle.green { background: #2e7d32; } */
+/* REMOVE colored background behind lock/unlock icons */
+
+.pill-circle img {
+  width: 44px;     /* bigger icon */
+  height: 32px;    /* prevent squashing */
+  object-fit: contain;
+}

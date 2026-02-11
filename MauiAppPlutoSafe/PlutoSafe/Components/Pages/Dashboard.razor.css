@@ -175,13 +175,18 @@
   object-fit: contain;
 }
 
-/* TEXT */
+/* ===== QUICK ACTION TEXT – EXACT SPEC ===== */
 .quick-actions-new .qa-item p {
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 400; 
-  color: #2a2929;   /* text */
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;          /* Semi Bold */
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0;
   text-align: center;
+  text-transform: capitalize; /* Title Case */
+
+  margin-top: 6px;           /* tight spacing under icon */
+  color: #000;
 }
 /* ================= FOOTER ================= */
 
@@ -302,4 +307,103 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+/* ===== IPHONE STATUS IMAGE ===== */
+.iphone-status-banner {
+  display: flex;
+  justify-content: flex-start;
+  padding-left:30px;
+  margin: 14px 0 10px;   /* spacing above status list */
+}
+
+.iphone-status-banner img {
+  width: 178px;          /* adjust if needed */
+  height: auto;
+  display: block;
+}
+/* ================= IPHONE LOGOUT BUTTON – STRETCHED ================= */
+
+.db-bg.iphone .db-footer {
+  justify-content: center;        /* keep centered */
+}
+
+/* ===== IPHONE LOGOUT PILL ===== */
+.db-bg.iphone .footer-btn.iphone-logout {
+  min-width: 260px;
+  padding: 14px 0;
+  border-radius: 999px;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* icon smaller */
+.db-bg.iphone .footer-btn.iphone-logout img {
+  width: auto;
+  height: 24px;
+}
+
+/* text */
+.db-bg.iphone .footer-btn.iphone-logout span {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ===== IPHONE LOGOUT FOOTER ===== */
+.db-bg.iphone .db-footer {
+  justify-content: center;
+}
+
+.iphone-logout-btn {
+  min-width: 260px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  border: none;
+  background: #000;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.iphone-logout-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== IPHONE LOGOUT BUTTON (RED CTA) ===== */
+
+.iphone-logout-wrapper {
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.iphone-logout-btn {
+  width: 100%;
+  height: 52px;
+
+  background: #ef3e36;       /* red like screenshot */
+  border: none;
+  border-radius: 12px;
+
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.iphone-logout-btn:active {
+  opacity: 0.9;
 }
