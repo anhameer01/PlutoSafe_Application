@@ -1,0 +1,88 @@
+<div class="toggle-wrapper">
+    <label class="switch">
+        <input type="checkbox"
+               checked="@isChecked"
+               @onclick="HandleClick"
+               @onclick:preventDefault="true" />
+        <span class="slider"></span>
+    </label>
+</div>
+
+<WarningPopUp
+    IsOpen="@showPopup"
+    OnClose="ClosePopup"
+    OnConfirm="ConfirmAction" />
+
+@code {
+
+    private bool isChecked;
+    private bool showPopup;
+    private bool pendingValue;
+
+    private void HandleClick()
+    {
+        // Store requested new value manually
+        pendingValue = !isChecked;
+
+        // Open popup
+        showPopup = true;
+    }
+
+    private void ClosePopup()
+    {
+        // Do NOTHING to isChecked
+        showPopup = false;
+    }
+
+    private void ConfirmAction()
+    {
+        // Apply change ONLY if user clicks YES
+        isChecked = pendingValue;
+        showPopup = false;
+    }
+}
+
+<style>
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #cbd5e1;
+  border-radius: 34px;
+  transition: .3s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  top: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+/* When Checked */
+.switch input:checked + .slider {
+  background-color: #071a3d;  /* deep blue */
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+</style>

@@ -1,0 +1,39 @@
+@if (IsOpen)
+{
+    <div class="command-overlay">
+        <div class="command-modal">
+
+            <div class="command-header">
+                <span>Warning</span>
+                <span class="close" @onclick="Close">✕</span>
+            </div>
+
+            <div class="command-body">
+                
+                <p>Are you sure you want to proceed?</p>
+
+                <div class="command-actions">
+                    <button class="yes-btn" @onclick="Confirm">Yes</button>
+                    <button class="no-btn" @onclick="Close">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback OnConfirm { get; set; }
+
+    private async Task Close()
+    {
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task Confirm()
+    {
+        await OnConfirm.InvokeAsync();
+    }
+}

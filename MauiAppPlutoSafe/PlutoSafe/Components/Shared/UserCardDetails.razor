@@ -1,0 +1,169 @@
+
+        <div class="ud-profile-card">
+
+            <div class="ud-top">
+                <img src="images/avatar-girl.svg" class="avatar" />
+                <div class="name-box">
+                    <h4>Pooja Sharma</h4>
+                </div>
+                <button class="unlock-btn">
+                    <img src="images/unlock.svg" />
+                    Unlock
+                </button>
+            </div>
+
+            <div class="badge-row">
+                <div class="badge blue">
+                    <img src="images/icon-date.svg" />
+                </div>
+            </div>
+
+            <div class="info">
+                <p><img src="images/register.svg" /> Registration Number : 124545445</p>
+                <p><img src="images/icon-registration.svg" /> First Device IMEI Number : 1545454545</p>
+                <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
+                <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
+            </div>
+
+        </div>
+
+<style>
+/* Profile → Alternate No container */
+.ud-profile-card {
+  background:transparent;            
+  border-radius: 20px;
+  min-height: 420px;   
+  padding: 16px;
+  padding-top: 20px; 
+  margin-bottom: 20px;
+    margin-left: 12px;
+  margin-right: 12px;
+
+  /* soft shadow border */
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.08),
+   -8px -8px 16px rgba(255, 255, 255, 0.9);
+}
+/* TOP */
+.ud-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+/* User name heading */
+.name-box h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;          /* Semi Bold */
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize; /* Title case */
+  margin: 0;
+}
+/* Space between tabs and user name */
+.name-box {
+  margin-top: -8px;   /* increase vertical gap */
+}
+
+/* BADGES */
+.badge-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.badge img {
+  width: 300px; /* blank space in between name and rows of date*/
+  height: auto; 
+}
+.unlock-btn img {
+  width: 30px;
+  height: 30px;
+}
+/* User details rows (4 lines) */
+.info p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;      /* Semi Bold */
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.41px;
+  color: #000000;
+  
+}
+/* User details rows (4 lines) */
+.info p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;      /* Semi Bold */
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.41px;
+  color: #000000;
+  
+}
+
+/* User detail rows spacing */
+.ud-profile-card .info p {
+  padding-top: 8px;
+  padding-bottom: 14px;
+   border-bottom: 1px solid #D4D4D4; /* same as outer border */
+}
+.ud-profile-card {
+  background: transparent;
+  border: 1px solid #D4D4D4;     /* outline */
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow:
+    8px 8px 16px rgba(0,0,0,0.08),
+   -8px -8px 16px rgba(255,255,255,0.9);
+}
+/* Remove underline from last row */
+.ud-profile-card .info p:last-child {
+  border-bottom: none;
+}
+.unlock-btn {
+  width: 117px;
+  height: 45px;
+  background: transparent;
+  border: 1px solid #1b5e20;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #1b5e20;
+  font-size: 14px;
+}
+
+.unlock-btn img {
+  width: 30px;
+  height: 30px;
+}
+.badge-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.badge {
+    background: transparent;   /* remove grey block */
+  padding: 0;
+  border-radius: 12px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  font-size: 12px;
+}
+.badge img {
+  width: 100%;      /* let SVG control size */
+  height: auto;     /* prevent dark rectangle */
+}
+</style>
