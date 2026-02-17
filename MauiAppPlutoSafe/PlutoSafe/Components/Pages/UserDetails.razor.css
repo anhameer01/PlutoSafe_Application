@@ -1232,7 +1232,6 @@ label + .upload-grid {
   font-size: 20px;         /* bigger + */
   font-weight: 600;
 }
-
 /* Push it to right and bottom spacing */
 .guarantor-section + .add-icon-only {
   margin-top: 16px;

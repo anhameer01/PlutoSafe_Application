@@ -1,6 +1,8 @@
 @* @page "/" *@
 @page "/user-details"
 @using PlutoSafe.Components.Shared
+@using Microsoft.Maui.ApplicationModel;
+@using Microsoft.Maui.Media
 
 @inject NavigationManager Nav
 @* @inject JSRuntime JS *@
@@ -117,7 +119,9 @@
             </div>
 
             <!-- DOWNLOAD -->
-            <button class="download-btn">Download PDF</button>
+            <button class="download-btn" @onclick="OpenPdf">
+                Download PDF
+            </button>
 
             <!-- DOCUMENT -->
            <h5 class="doc-title">View Document's</h5>
@@ -446,15 +450,42 @@
                     <img src="images/icon-calendar.svg" />
                     <input placeholder="Enter First EMI Date" />
                 </div>
-
+@* 
                 <label>Upload Document’s</label>
                 <div class="upload-grid">
                     <button class="upload-item"><img src="images/plus.svg" /><span>Aadhaar Front</span></button>
                     <button class="upload-item"><img src="images/plus.svg" /><span>Aadhaar Back</span></button>
                     <button class="upload-item"><img src="images/plus.svg" /><span>Pan Card</span></button>
                     <button class="upload-item"><img src="images/plus.svg" /><span>Photo</span></button>
-                </div>
+                </div> *@
+        <label>Upload Document’s</label>
+        <div class="upload-grid">
 
+            <button type="button" class="upload-item"
+                    @onclick='() => PickImage("Aadhaar Front")'>
+                <img src="images/plus.svg" />
+                <span>Aadhaar Front</span>
+            </button>
+
+            <button type="button" class="upload-item"
+                    @onclick='() => PickImage("Aadhaar Back")'>
+                <img src="images/plus.svg" />
+                <span>Aadhaar Back</span>
+            </button>
+
+            <button type="button" class="upload-item"
+                    @onclick='() => PickImage("Pan Card")'>
+                <img src="images/plus.svg" />
+                <span>Pan Card</span>
+            </button>
+
+            <button type="button" class="upload-item"
+                    @onclick='() => PickImage("Photo")'>
+                <img src="images/plus.svg" />
+                <span>Photo</span>
+            </button>
+
+        </div>
                 <div class="guarantor-row">
                     <span class="guarantor-text">Do You Want To Add A Guarantor?</span>
                     @if(guarantors.Count <2){
@@ -492,7 +523,7 @@
                                 <span>Aadhaar Back</span>
                             </button>
                         </div>
-                        <button class="add-btn add-icon-only" @onclick="AddGuarantor">
+                        <button class=" add-icon-only" @onclick="AddGuarantor">
                             <span>+Add</span>
                         </button>
                     </div>
@@ -608,5 +639,53 @@
     private void RemoveGuarantor(int id)
     {
         guarantors.Remove(id);
+    }
+    private async Task OpenPdf()
+    {
+        using var stream = await FileSystem.OpenAppPackageFileAsync("UserLoanAgreementForm.pdf");
+
+        var filePath = Path.Combine(FileSystem.CacheDirectory, "UserLoanAgreementForm.pdf");
+
+        using var fileStream = File.Create(filePath);
+        await stream.CopyToAsync(fileStream);
+
+        await Launcher.Default.OpenAsync(new OpenFileRequest
+        {
+            File = new ReadOnlyFile(filePath)
+        });
+    }
+    private async Task PickImage(string type)
+    {
+        try
+        {
+            var action = await Application.Current.MainPage.DisplayActionSheet(
+                "Select Option",
+                "Cancel",
+                null,
+                "Camera",
+                "Gallery");
+
+            FileResult photo = null;
+
+            if (action == "Camera")
+            {
+                if (MediaPicker.Default.IsCaptureSupported)
+                    photo = await MediaPicker.Default.CapturePhotoAsync();
+            }
+            else if (action == "Gallery")
+            {
+                photo = await MediaPicker.Default.PickPhotoAsync();
+            }
+
+            if (photo != null)
+            {
+                var stream = await photo.OpenReadAsync();
+                Console.WriteLine($"Selected file: {photo.FileName}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
