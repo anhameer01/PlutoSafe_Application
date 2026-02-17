@@ -1,39 +1,26 @@
-let canvas;
-let ctx;
-let drawing = false;
+let signaturePad;
 
-window.initSignaturePad = function () {
-    canvas = document.getElementById("signatureCanvas");
-    if (!canvas) return;
+window.initSignature = (canvasId) => {
+    const canvas = document.getElementById(canvasId);
 
-    ctx = canvas.getContext("2d");
-    ctx.lineWidth = 3;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#000";
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
 
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-};
+    signaturePad = new SignaturePad(canvas, {
+        minWidth: 1,
+        maxWidth: 2,
+        penColor: "black"
+    });
 
-window.startDraw = function (x, y) {
-    if (!ctx) return;
-    drawing = true;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-};
+    // Prevent page scroll while signing
 
-window.draw = function (x, y) {
-    if (!drawing || !ctx) return;
-    ctx.lineTo(x, y);
-    ctx.stroke();
-};
+    canvas.style.touchAction="none";
+    canvas.addEventListener("touchstart", function (e) {
+        e.stopPropagation();
+    }, { passive: false });
 
-window.endDraw = function () {
-    drawing = false;
-};
-
-window.clearPad = function () {
-    if (!ctx || !canvas) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.addEventListener("touchmove", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }, { passive: false });
 };

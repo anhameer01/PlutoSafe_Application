@@ -1,3 +1,4 @@
+@* @page "/" *@
 @page "/removed-phone"
 @inject NavigationManager Nav
 
@@ -10,6 +11,14 @@
         <h3>Removed Phone</h3>
     </div>
 
+    <div class="search-box">
+    <input type="text"
+           placeholder="@Placeholder"
+           value="@Value"
+           @oninput="OnInput" />
+    </div>
+
+
     <!-- Non-navigating cards -->
     <UserActivationCard EnableNavigation="false"
                         UserName="Pooja Sharma"
@@ -21,6 +30,36 @@
 
 </div>
 
+@code {
+    [Parameter] public string Placeholder { get; set; } = "Search ..";
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        await ValueChanged.InvokeAsync(e.Value?.ToString());
+    }
+    
+}
+<style> 
+.search-box {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.search-box input {
+  width: 100%;
+  height: 54px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: transparent;        /* remove background */
+  border: 1px solid #F0F0F3;      /* outline color */
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  outline: none;
+}
+</style>
 <style>
 /* ===== HEADER ===== */
 .remove-header {

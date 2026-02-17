@@ -1,25 +1,10 @@
-.ud-bg {
-  background: #f6f7fb;
-  min-height: 100vh;
-  padding: 12px 12px;   /* reduced left/right */
+.ud-bg { 
+  /* background: #ffffff;   */
+    background: #ffffff;   
+   min-height: 100vh; 
+   padding: 12px 12px; 
+   /* reduced left/right */ 
 }
-
-/* HEADER */
-.ud-header {
-  display: flex;
-  align-items: center; 
-  justify-content: flex-start;
-  /* margin-bottom: 14px; */
-  gap:8px;
-  margin-left:0;
-}
-
-.ud-header h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-left:0px;
-}
-
 .back {
   font-size: 22px;
   cursor: pointer;
@@ -35,13 +20,15 @@
 }
 
 /* CARD */
-.ud-card {
-  background: #fff;
+ .ud-card { 
+    background: transparent;  
+  /* background:#ffffff;  */
   border-radius: 18px;
-  padding-left:22px;
-  padding-right:22px;
-  /* padding: 16px; */
-}
+  
+   padding-left:22px;
+    padding-right:22px; 
+    padding: 16px;  
+} 
 
 /* TOP */
 .ud-top {
@@ -79,17 +66,22 @@
 }
 
 .badge {
-  background: #f1f3f8;
+  /* background: #f1f3f8; */
   border-radius: 12px;
-  padding: 10px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
   gap: 8px;
   flex: 1;
   font-size: 12px;
+  line-height:1;
+}
+.badge img {
+  width: 300px; /* blank space in between name and rows of date*/
+  height: 80px; 
 }
 /* INFO */
-.info p {
+/* .info p {
   font-family: 'Inter', !important;
   font-weight: 600;
   font-size: 14px;
@@ -99,6 +91,17 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 18px;
+} */
+
+/* User details rows (4 lines) */
+.info p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;      /* Semi Bold */
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.41px;
+  color: #000000;
+  
 }
 
 /* QUICK ACTIONS */
@@ -110,7 +113,7 @@
 
 .quick-actions div {
   flex: 1;
-  background: #f1f2f6;
+  background: #F0F0F3;
   border-radius: 12px;
   padding: 12px;
   display: flex;
@@ -120,10 +123,10 @@
 }
 /* Features heading */
 .section {
-  margin-top:50px;
-  margin-left:-10px;
+  margin-top:80px;
+  margin-left:10px;
   padding-left: 0;
-  width: 350px;
+  width: 100%;
   height: 23px;
   font-family: 'InterSemiBold';
   font-weight: 700;          /* Bold / Semi Bold */
@@ -131,37 +134,36 @@
   line-height: 1;            /* 100% */
   letter-spacing: 0;
 }
-
 .feature-list {
-  margin-left:16px;
-  padding-left:0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
 }
 
 .feature {
-  background: #fff;
-  border-radius: 14px;
-  margin-left:8px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  line-height:100%;
-  font-family: 'InterSemiBold';
-  font-weight: 600;
-  letter-spacing:0 ;
-}
+  width: 100%;
+  height: 63px;
 
+  background: #EBEDF4;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 16px;   /* internal spacing only */
+  box-sizing: border-box;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  transition: all 300ms ease-out;
+}
 /* Unlock phone button – fixed size */
 .unlock-btn {
   width: 117px;
   height: 45px;
-
-  margin-left: auto;
-  background: #dff0e3;          /* 🔥 darker than before */
+  background: transparent;          
   border: 1px solid #1b5e20;
   border-radius: 999px;
 
@@ -170,9 +172,9 @@
   justify-content: center;
   gap: 6px;
 
-  color: #1b5e20;
+   color: #1b5e20; 
   font-size: 14px;
-}
+} 
 .unlock-btn img {
   width: 30px;
   height: 30px;
@@ -187,19 +189,10 @@
   gap: 56px;
   padding-right:16px;
   justify-content: flex-start;
-  margin-top: 30px;
-  margin-bottom: 16px;
-  margin-left: 20px;   /* 🔥 shifts whole tab row left */
-  margin-bottom: 16px;
+  margin-top: -20px; /*do dot change it gapping in header */
+  margin-left: 20px;   /* shifts whole tab row left */
+  margin-bottom: 40px;
 }
-/* Show Loan – Phone Lock Status vertical layout */
-.show-card .show-item:last-child {
-  flex-direction: column;     /* stack items vertically */
-  align-items: center;        /* center horizontally */
-  text-align: center;
-  padding-left: 12px;
-}
-
 .show-card .show-item:last-child img {
   margin-bottom: 6px;   /* small visual separation */
   align-self: center;
@@ -221,10 +214,6 @@
   align-self: center;
 }
 
-/* Shift Features items towards the right */
-.feature-list {
-  margin-left: 24px;   /* increase to move right */
-}
 
 .show-card .show-item span {
   margin-bottom: 2px;
@@ -264,16 +253,20 @@
 }
 
 .upload-item {
-  background: #f1f2f6;
-  border: none;
+  
+  border: 1px solid #F0F0F3;
   border-radius: 12px;
   padding: 14px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 12px;
   color: #333;
+  height: 110px;
+  background: transparent; 
+  justify-content: center;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .upload-item img {
@@ -287,7 +280,7 @@
 }
 /* Create Loan form alignment */
 .cl-form {
-  margin-left: 12px;    /* nudges inputs left */
+  margin-left: -12px;    /* nudges inputs left */
 }
 /* Create Loan – input text font */
 .cl-form .input-box input {
@@ -296,23 +289,42 @@
   font-size: 13px;
   line-height: 100%;
   letter-spacing: 0;
+  color: #000000;
   padding-left:20px;
   text-transform: capitalize; /* Title case */
+}
+.input-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize;
+  color: #000;
 }
 
 /* Space between input box and next label */
 .cl-form .input-box {
-  margin-bottom: 30px;   /* 🔥 adds vertical gap below each input */
+  margin-bottom: 30px;   /* adds vertical gap below each input */
 }
 
 /* Create Loan – move input icons to the right */
 .cl-form .input-box img {
-  margin-left: 16px;   /* 🔥 shifts icon right */
+  margin-left: 16px;   /*  shifts icon right */
 }
-
+.input-box img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
 /* Space between label text and input box */
 .cl-form label + .input-box {
-  margin-top: 30px;   /* 🔥 vertical gap */
+  margin-top: 30px;   /* vertical gap */
 }
 /* Create Loan – field headings (labels) */
 .cl-form label {
@@ -322,17 +334,18 @@
   line-height: 100%;          /* exact */
   letter-spacing: 0;
   text-transform: capitalize; /* Title case */
+  color: #000D2B;
 }
-/* Create Loan – input placeholder font */
+/* Create Loan – placeholder (LOCAL ONLY) */
 .cl-form .input-box input::placeholder {
   font-family: 'Inter', sans-serif;
-  font-weight: 500;           /* Medium */
+  font-weight: 500;
   font-size: 13px;
   line-height: 100%;
   letter-spacing: 0;
-  text-transform: capitalize; /* Title case */
-  color: #1f2937;             /* 🔥 dark grey (readable) */
-  opacity: 1;
+  text-transform: capitalize;
+  color: #000000;
+  opacity: 0.6;
 }
 .cl-form .input-box input::-webkit-input-placeholder {
   font-family: 'Inter', sans-serif;
@@ -448,13 +461,19 @@
 .signature-box {
   position: relative;
   width: 100%;
-  height: 150px;
+  height: 220px;
   background: #f3f3f5;
   border-radius: 14px;
+  overflow: hidden;
 }
-
+.signature-border {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 .edit-icon {
   position: absolute;
+  pointer-events:none;
   right: 10px;
   bottom: 10px;
   width: 22px;
@@ -519,15 +538,32 @@ label {
   margin-bottom: 14px;
 }
 
+/* Inner input box – exact Figma spec */
+.input-box {
+  display: flex;
+  align-items: center;
+
+  width: 358px;              /* FIXED */
+  height: 54px;              /* FIXED */
+
+  background: transparent;
+  border-radius: 10px;
+  border: 1px solid #F0F0F3;
+
+  padding-left: 12px;
+  padding-right: 12px;
+  gap: 10px;
+  padding:0 12px;
+  box-sizing: border-box;
+
+    /* subtle card feel (same family as user details) */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06)
+}
+
 .section,
 label + .upload-grid {
   margin-top: 10px;
 }
-/* Blur ONLY the background content */
-.blur-bg {
-  filter: blur(2px);
-}
-
 /* Agreement overlay sits ABOVE blur */
 .agreement-overlay {
   position: fixed;
@@ -548,11 +584,6 @@ label + .upload-grid {
 .agreement-overlay,
 .agreement-modal {
   pointer-events: auto;
-}
-
-/* User Details heading turns blue behind modal */
-.blur-bg .ud-header h3 {
-  color: #2563eb;
 }
 /* =========================
    BLUR BACKGROUND (MODAL)
@@ -584,6 +615,8 @@ label + .upload-grid {
 /* SHOW LOAN */
 .show-loan {
   margin-top: 12px;
+  margin-left: -12px;
+  margin-right: 16px;
 }
 
 /* PROFILE */
@@ -607,6 +640,9 @@ label + .upload-grid {
   margin-bottom: 16px;
   padding-top: 10px;
   padding-bottom:10px;
+    width: 100%;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .show-item {
@@ -642,6 +678,9 @@ label + .upload-grid {
   border-radius: 14px;
   padding: 14px;
   margin-bottom: 16px;
+    width: 100%;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 /* Move ONLY first Device Details up */
 .show-loan .show-section:first-of-type {
@@ -720,6 +759,8 @@ label + .upload-grid {
   padding: 12px;
   border-radius: 999px;
   margin-bottom: 16px;
+    width: calc(100% - 32px);
+  margin-left: 16px;
 }
 
 /* DOCUMENT */
@@ -839,7 +880,7 @@ label + .upload-grid {
   height: auto;
   flex-shrink: 0;
 }
-
+                          
 /* Documents container (4 items) */
 .doc-grid {
   display: grid;
@@ -851,7 +892,7 @@ label + .upload-grid {
 
 /* Single document card */
 .doc-item {
-  background: #f1f2f6;
+  background: #ffffff;
   border-radius: 14px; 
   display:flex;
   padding: 4px;
@@ -885,10 +926,14 @@ label + .upload-grid {
   margin-bottom: 12px;
 }
 
+/* Header title text */
 .ud-header h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;             /* 🔑 REQUIRED */
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;        /* Bold */
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0;
+  color: #000000;             /* keep default unless specified */
 }
 
 .ud-header .back {
@@ -903,8 +948,10 @@ label + .upload-grid {
   font-weight: 600;
   font-size: 14px;
   line-height: 1;
-  margin-left:0;
+  /* padding: 10px 14px; */
+  /* margin-left:0; */
   letter-spacing: 0;
+  background: #EBEDF4; 
   text-transform: capitalize; /* Title Case */
 }
 /* Space between the two Device Details rows */
@@ -960,44 +1007,170 @@ label + .upload-grid {
   display: block;
 }
 
-
-/* ===== Signature Pad ===== */
-
-/* .signature-border {
-    border: 1px solid #2f2f2f;
-    border-radius: 8px;
-    padding: 6px;
-    background: #ffffff;
-}
-
 .signature-container {
-    position: relative;
-    width: 100%;
+  position: relative;   /* VERY IMPORTANT */
+  width: 100%;
+  height: 220px;        /* give fixed height */
+  background: #f3f3f5;  /* your grey bg */
+  border-radius: 14px;
+  overflow: hidden;
 }
 
-.signature-canvas {
-    width: 100%;
-    height: 140px;
-    background: #ce3838;
-    border-radius: 6px;
-    touch-action: none; 
+.signature-container canvas {
+  width: 100%;
+  height: 100%;
 }
 
-.signature-placeholder {
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    color: #999;
-    pointer-events: none;
+.edit-icon {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;   /* keeps it bottom-right */
+  width: 26px;
+  height: 26px;
+  z-index: 10;
+  cursor: pointer;
+}
+.submit-btn {
+  width: 100%;
+  height: 54px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 14px;
+  background: #000;     /* solid black */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.clear-btn {
-    background: transparent;
+/* LEFT SIDE (icon + text) */
+ .feature-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+} 
+
+.feature-left img {
+  width: 54px;
+  height: 54px;
+  object-fit:contain;
+} 
+
+/* TOGGLE SWITCH */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider background */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #cbd5e1;
+  border-radius: 34px;
+  transition: .3s;
+}
+
+/* Circle */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+/* ACTIVE STATE — DEEP BLUE */
+.switch input:checked + .slider {
+  background-color: #0b1d4a;   /* deep blue */
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* .feature-left img {
+    width: 44px;
+    height: 44px;
     border: none;
-    color: #777;
-    font-size: 12px;
-    float: right;
-    margin-top: 6px;
-}  */
+} */
+
+.feature-left span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.feature:hover {
+  transform: translateY(-2px);
+}
+
+.feature:active {
+  transform: scale(0.98);
+}
+
+
+/* Tab headers */
+.ud-tabs span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;          /* Semi Bold */
+  font-size: 16px;           /* tab text size */
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize;
+  color: #9ca3af;            /* inactive */
+  cursor: pointer;
+}
+
+/* Active tab */
+.ud-tabs .active {
+  color: #000000;
+  font-weight: 600;
+  border-bottom: 2px solid #0b1d4a;
+  padding-bottom: 6px;
+}
+
+/* Profile → Alternate No container */
+.ud-profile-card {
+  background:transparent;            
+  border-radius: 20px;
+  min-height: 420px;   
+  padding: 16px;
+  padding-top: 20px; 
+  margin-bottom: 20px;
+
+  /* soft shadow border */
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.08),
+   -8px -8px 16px rgba(255, 255, 255, 0.9);
+}
+
+/* Align Date badge with avatar */
+.ud-profile-card .badge-row {
+  margin-left: 0;   /* 56px avatar + ~12px gap */
+}
+
+/* User detail rows spacing */
+.ud-profile-card .info p {
+  padding-top: 8px;
+  padding-bottom: 14px;
+   border-bottom: 1px solid #D4D4D4; /* same as outer border */
+}
+
+/* Remove underline from last row */
+.ud-profile-card .info p:last-child {
+  border-bottom: none;
+}

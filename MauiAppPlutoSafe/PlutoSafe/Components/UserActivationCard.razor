@@ -1,8 +1,8 @@
 @inject NavigationManager Nav
 
 <div class="ud-card">
-
-    <div class="ud-top">
+<div class="ud-card-box">
+   <div class="ud-top">
         <img src="images/avatar-girl.svg" class="avatar" />
 
         <div class="name-box">
@@ -29,46 +29,42 @@
         <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : @Imei2</p>
         <p><img src="images/call.svg" /> Alternate Mobile Number : @Phone</p>
     </div>
+    @if (ShowQrButton)
+    {
+        <div class="qr-long-wrapper">
+            <button class="qr-long-btn">
+                <span class="qr-circle">
+                    <img src="images/icon-qr.svg" />
+                </span>
+                Scan QR Code
+            </button>
+        </div>
+    }
+    @if (ShowLockActions)
+    {
 
-@if (ShowQrButton)
-{
-    <div class="qr-wrapper">
-        <button class="qr-btn">
-            <img src="images/icon-qr.svg" alt="QR" />
-        </button>
-        <p class="qr-text">Scan QR Code</p>
+            <div class="action-row">
+
+            <div class="action-row">
+
+                <button class="lock-btn pill">
+                    <span class="pill-circle red">
+                        <img src="images/lock.svg" />
+                    </span>
+                    Lock
+                </button>
+
+                <button class="unlock-btn pill">
+                    <span class="pill-circle green">
+                        <img src="images/unlock.svg" />
+                    </span>
+                    Unlock
+                </button>
+
+            </div>
+        </div>
+    }
     </div>
-}
-@if (ShowLockActions)
-{
-    @* <div class="action-row dual">
-        <button class="lock-btn">
-            <img src="images/lock.svg" />
-            <span>Lock</span>
-        </button>
-
-        <button class="unlock-btn">
-            <img src="images/unlock.svg" />
-            <span>Unlock</span>
-        </button>
-    </div> *@
-        <div class="action-row">
-        <button class="lock-btn pill">
-            <span class="pill-circle red">
-                <img src="images/lock.svg" />
-            </span>
-            Lock
-        </button>
-
-        <button class="unlock-btn pill">
-            <span class="pill-circle green">
-                <img src="images/unlock.svg" />
-            </span>
-            Unlock
-        </button>
-    </div>
-}
-
 </div>
 
 @code {

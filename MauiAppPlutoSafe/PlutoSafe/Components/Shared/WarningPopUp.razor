@@ -1,7 +1,7 @@
 @if (IsOpen)
 {
-    <div class="command-overlay">
-        <div class="command-modal">
+    <div class="command-overlay" @onclick="Close">
+        <div class="command-modal" @onclick:stopPropagation="true">
 
             <div class="command-header">
                 <span>Warning</span>

@@ -46,6 +46,12 @@
   background: #ffffff;
   border-radius: 18px;
   padding: 16px;
+  margin-bottom: 22px;
+  border: 1px solid #F0F0F3;
+
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.08),
+   -8px -8px 16px rgba(255, 255, 255, 0.9); 
 }
 
 /* TOP */
@@ -54,6 +60,7 @@
   align-items: center;
   gap: 14px;
   margin-bottom: 10px;
+  
 }
 
 /* AVATAR (INCREASED) */
@@ -67,7 +74,7 @@
 .user-top h4 {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 100%;
   letter-spacing: -0.41px;
   text-transform:capitalize;
@@ -99,7 +106,7 @@
 }
 
 .blue {
-  background: #e7f0ff;
+  background: transparent;
 }
 
 /* INFO LIST */
@@ -126,7 +133,7 @@
   background: #000;
   border: none;
   padding: 0;
-
+  margin-top:-20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,7 +200,7 @@
   padding-top: 6px;
 }
 .unlock-btn {
-  background: #fff;
+  /* background: #fff; */
   border: 1px solid #2e7d32;
   color: #2e7d32;
   border:none !important;
@@ -336,7 +343,7 @@
 
 /* COLORS */
 .pill-circle.red { background: #e53935; }
-.pill-circle.green { background: #2e7d32; }
+.pill-circle.green { background: #AEAEC066; }
 
 /* ICON */
 .pill-circle img {
@@ -403,4 +410,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* 🔥 FINAL OVERRIDE – ONLY UNLOCK BUTTON BACKGROUND */
+.action-row .unlock-btn {
+  background: #AEAEC066 !important;
 }

@@ -8,7 +8,7 @@
 
 .db-bg {
   min-height: 100vh;
-  background: #f6f7fb;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   overflow-y: auto;

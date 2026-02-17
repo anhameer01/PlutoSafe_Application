@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
+
 namespace PlutoSafe;
 
 public static class MauiProgram
@@ -16,6 +17,7 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddMauiBlazorWebView();
+
 
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();

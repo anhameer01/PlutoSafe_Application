@@ -1,6 +1,10 @@
+@* @page "/" *@
 @page "/user-details"
+@using PlutoSafe.Components.Shared
+
 @inject NavigationManager Nav
 @* @inject JSRuntime JS *@
+@inject IJSRuntime JS
 
 <link href="css/user-details.css" rel="stylesheet" />
 
@@ -20,22 +24,22 @@
         <div class="ud-tabs">
             <span class="@(activeTab == "details" ? "active" : "")"
                   @onclick='() => activeTab = "details"'>
-                User Details
+                USER DETAILS
             </span>
 
             <span class="@(activeTab == "loan" ? "active" : "")"
                   @onclick='() => activeTab = "loan"'>
-                Create Loan
+                CREATE LOAN
             </span>
 
             <span class="@(activeTab == "show" ? "active" : "")"
                   @onclick='() => activeTab = "show"'>
-                Show Loan
+                SHOW LOAN
             </span>
 
             <span class="@(activeTab == "emi" ? "active" : "")"
                   @onclick='() => activeTab = "emi"'>
-                EMI Reminder
+                EMI REMINDER
             </span>
         </div>
 
@@ -281,6 +285,9 @@
         <!-- USER DETAILS -->
         @if (activeTab == "details")
         {
+
+        <div class="ud-profile-card">
+
             <div class="ud-top">
                 <img src="images/avatar-girl.svg" class="avatar" />
                 <div class="name-box">
@@ -291,6 +298,7 @@
                     Unlock
                 </button>
             </div>
+
             <div class="badge-row">
                 <div class="badge blue">
                     <img src="images/icon-date.svg" />
@@ -304,20 +312,86 @@
                 <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
             </div>
 
-            <div class="quick-actions">
-                <div><img src="images/icon-contact.svg" /></div>
-                <div><img src="images/icon-location.svg" /></div>
+        </div>
+
+        <div class="quick-actions">
+            <div><img src="images/icon-contact.svg" /></div>
+            <div><img src="images/icon-location.svg" /></div>
+        </div>
+
+        <h4 class="section">Features</h4>
+
+        <div class="feature-list">
+
+            <!-- Set Wallpaper -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/set-wallpaper.png" />
+                    <span>Set Wallpaper</span>
+                </div>
+                <CommandToggle/>
             </div>
 
-            <h4 class="section">Features</h4>
-            <div class="feature-list">
-                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
-                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
-                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
-                <div class="feature"><img src="images/icon-mic.svg" /> Audio Message</div>
+
+            <!-- Lock Social Media -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/lock-social-media.png" />
+                    <span>Lock Social Media</span>
+                </div>
+                <CommandToggle />
             </div>
-        }
-    </div>
+            <!-- Track Location -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/icon-mic.svg" />
+                    <span>Track Location</span>
+                </div>
+                <CommandToggle />
+            </div>
+            <!-- Audio Reminder -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/icon-mic.svg" />
+                    <span>Audio Reminder</span>
+                </div>
+            </div>
+
+            <!-- Screen Reminder -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/lock-social-media.png" />
+                    <span>Screen Reminder</span>
+                </div>
+            </div>
+
+                        <!-- Offline App Lock -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/offline-app-lock.png" />
+                    <span>Offline App Lock</span>
+                </div>
+            </div>
+
+            <!-- Offline App Lock -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/applock.png" />
+                    <span>Offline App UnLock</span>
+                </div>
+            </div>
+
+            <!-- Remove -->
+            <div class="feature">
+                <div class="feature-left">
+                    <img src="images/icon-mic.svg" />
+                    <span>Remove</span>
+                </div>
+                <CommandToggle />
+            </div>
+
+        </div>          
+    }
 
     <!-- CREATE LOAN -->
     @if (activeTab == "loan")
@@ -403,147 +477,97 @@
                     </div>
                 </div>
 
-                <label class="signature-title">Signature</label>
-                <div class="signature-box">
-                    <img src="images/icon-edit.svg" class="edit-icon" /> 
-                    <div class="signature-border">
-         
-@* <div class="signature-border">
-    <div class="signature-container">
-        <canvas id="signatureCanvas"
-                class="signature-canvas"
-                @onpointerdown="StartDraw"
-                @onpointermove="Draw"
-                @onpointerup="EndDraw"
-                @onpointerleave="EndDraw">
-        </canvas>
-
-        @if (!hasSignature)
-        {
-            <div class="signature-placeholder">Sign here.</div>
-        }
-</div> *@
-
-    <button class="clear-btn" @onclick="ClearSignature">Clear</button>
-</div>        
-                </div>
-
-                <button class="submit-btn"
-                    @onclick='() => Nav.NavigateTo("/submit-success")'>
-                    Submit
-                </button>
+            <label class="signature-title">Signature</label>
+            <div class="signature-container" style="width:100%; height:100%;">
+                <canvas id="loanSignatureCanvas"
+                    style="width:100%; height:100%; background:#fef7f7; border:1px solid #f1eaea; border-radius:8px;">
+                    </canvas>
+                <img src="images/icon-edit.svg"
+                    class="edit-icon"
+                    @onclick="Clear" />
+            </div>
+            <button class="submit-btn"
+                @onclick='() => Nav.NavigateTo("/submit-success")'>
+                Submit
+            </button>
 
             </div>
         </div>
     }
 </div>
 
-<!-- ================= AGREEMENT MODAL (NOT BLURRED) ================= -->
-@if (showAgreement)
-{
-    <div class="agreement-overlay">
-        <div class="agreement-modal">
-            <div class="agreement-header">
-                <span>Agreement</span>
-                <span class="close" @onclick="CloseAgreement">×</span>
-            </div>
+    <!-- ================= AGREEMENT MODAL (NOT BLURRED) ================= -->
+    @if (showAgreement)
+    {
+        <div class="agreement-overlay">
+            <div class="agreement-modal">
+                <div class="agreement-header">
+                    <span>Agreement</span>
+                    <span class="close" @onclick="CloseAgreement">×</span>
+                </div>
 
-            <div class="agreement-body">
-                <p>
-                    this loan agreement is made and entered into by and between the lender
-                    and the borrower for the purpose of providing a personal or business loan.
-                    the borrower hereby acknowledges the receipt of the loan amount and agrees
-                    to repay the same, along with the applicable interest rate, within the
-                    period mutually agreed upon by both parties.
-                </p>
+                <div class="agreement-body">
+                    <p>
+                        this loan agreement is made and entered into by and between the lender
+                        and the borrower for the purpose of providing a personal or business loan.
+                        the borrower hereby acknowledges the receipt of the loan amount and agrees
+                        to repay the same, along with the applicable interest rate, within the
+                        period mutually agreed upon by both parties.
+                    </p>
 
-                <p>
-                    in the event of any delay or failure to make timely payments, the borrower
-                    shall be liable to pay late fees or additional charges in accordance with
-                    the lender’s policy.
-                </p>
+                    <p>
+                        in the event of any delay or failure to make timely payments, the borrower
+                        shall be liable to pay late fees or additional charges in accordance with
+                        the lender’s policy.
+                    </p>
 
-                <p>
-                    both parties confirm that the details and information shared during this
-                    agreement are accurate and truthful to the best of their knowledge.
-                </p>
+                    <p>
+                        both parties confirm that the details and information shared during this
+                        agreement are accurate and truthful to the best of their knowledge.
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 @code {
     string activeTab = "details";
     bool showAgreement = false;
- bool hasSignature = false;
     void OpenAgreement() => showAgreement = true;
     void CloseAgreement() => showAgreement = false;
 
-    // ===== Signature state =====
-   
-    @* bool isDrawing = false; *@
-
-    
-@* DateTime SignatureDate = DateTime.Today; *@
-    // ===== Signature events =====
-    @* void StartDraw()
-    {
-        isDrawing = true;
-        hasSignature = true;
-    }
-
-    void Draw()
-    {
-        if (!isDrawing)
-            return;
-
-        // Drawing will be handled via JS later
-    }
-
-    void EndDraw()
-    {
-        isDrawing = false;
-    } 
-
-    void ClearSignature()
-    {
-        hasSignature = false;
-        // Canvas clear via JS (optional later)
-    }
-
-   
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+  @* protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("initSignaturePad");
+            await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
+        }
+    } *@
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (activeTab == "loan")
+        {
+            await Task.Delay(100); // allow DOM render
+            await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
         }
     }
 
-    async Task StartDraw(PointerEventArgs e)
+    private async Task Clear()
     {
-        hasSignature = true;
-        await JS.InvokeVoidAsync("startDraw", e.OffsetX, e.OffsetY);
+        await JS.InvokeVoidAsync("clearSignature");
     }
 
-    async Task Draw(PointerEventArgs e)
+    private async Task Save()
     {
-        await JS.InvokeVoidAsync("draw", e.OffsetX, e.OffsetY);
+        var base64 = await JS.InvokeAsync<string>("getSignature");
+
+        if (!string.IsNullOrEmpty(base64))
+        {
+            Console.WriteLine(base64);
+        }
     }
-
-    async Task EndDraw(PointerEventArgs e)
-    {
-        await JS.InvokeVoidAsync("endDraw");
-    } *@
-    void ClearSignature()
-    {
-        hasSignature = false;
-        // Canvas clear via JS (optional later)
-    }
-
-
+    // ===== Signature state =====
+   
 }
- 
-    
-
-    
