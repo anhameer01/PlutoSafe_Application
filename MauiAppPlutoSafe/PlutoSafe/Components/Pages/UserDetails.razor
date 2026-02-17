@@ -333,7 +333,16 @@
                     <img src="images/set-wallpaper.png" />
                     <span>Set Wallpaper</span>
                 </div>
-                <CommandToggle/>
+                @* <CommandToggle/> *@
+                <div class="toggle-wrapper">
+    <label class="switch">
+        <input type="checkbox"
+               checked="@isChecked"
+               @onclick="HandleClick"
+               @onclick:preventDefault="true" />
+        <span class="slider"></span>
+    </label>
+</div>
             </div>
 
 
@@ -343,7 +352,16 @@
                     <img src="images/lock-social-media.png" />
                     <span>Lock Social Media</span>
                 </div>
-                <CommandToggle />
+                @* <CommandToggle /> *@
+                <div class="toggle-wrapper">
+    <label class="switch">
+        <input type="checkbox"
+               checked="@isChecked"
+               @onclick="HandleClick"
+               @onclick:preventDefault="true" />
+        <span class="slider"></span>
+    </label>
+</div>
             </div>
             <!-- Track Location -->
             <div class="feature">
@@ -351,7 +369,16 @@
                     <img src="images/icon-mic.svg" />
                     <span>Track Location</span>
                 </div>
-                <CommandToggle />
+                @* <CommandToggle /> *@
+                <div class="toggle-wrapper">
+    <label class="switch">
+        <input type="checkbox"
+               checked="@isChecked"
+               @onclick="HandleClick"
+               @onclick:preventDefault="true" />
+        <span class="slider"></span>
+    </label>
+</div>
             </div>
             <!-- Audio Reminder -->
             <div class="feature">
@@ -391,7 +418,16 @@
                     <img src="images/icon-mic.svg" />
                     <span>Remove</span>
                 </div>
-                <CommandToggle />
+                @* <CommandToggle /> *@
+                <div class="toggle-wrapper">
+    <label class="switch">
+        <input type="checkbox"
+               checked="@isChecked"
+               @onclick="HandleClick"
+               @onclick:preventDefault="true" />
+        <span class="slider"></span>
+    </label>
+</div>
             </div>
 
         </div>          
@@ -523,7 +559,7 @@
                                 <span>Aadhaar Back</span>
                             </button>
                         </div>
-                        <button class=" add-icon-only" @onclick="AddGuarantor">
+                        <button class=" add-btn add-icon-only" @onclick="AddGuarantor">
                             <span>+Add</span>
                         </button>
                     </div>
@@ -549,7 +585,7 @@
                 <label class="signature-title">Signature</label>
                 <div class="signature-container" style="width:100%; height:100%;">
                     <canvas id="loanSignatureCanvas"
-                        style="width:100%; height:100%; background:#fef7f7; border:1px solid #f1eaea; border-radius:8px;">
+                        style="width:100%; height:100%; background:#F0F0F3; border:1px solid #f1eaea; border-radius:8px;">
                         </canvas>
                     <img src="images/icon-edit.svg"
                         class="edit-icon"
@@ -599,7 +635,34 @@
     }
 </div>
 
+
+@if (showPopup)
+{
+    <div class="command-overlay">
+        <div class="command-modal">
+
+            <div class="command-header">
+                <span>Warning</span>
+                <span class="close" @onclick="ClosePopup">✕</span>
+            </div>
+
+            <div class="command-body">
+                <p>Are you sure you want to proceed?</p>
+
+                <div class="command-actions">
+                    <button class="yes-btn" @onclick="ConfirmAction">Yes</button>
+                    <button class="no-btn" @onclick="ClosePopup">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
 @code {
+    private bool isChecked;
+private bool showPopup;
+private bool pendingValue;
     string activeTab = "details";
     bool showAgreement = false;
     void OpenAgreement() => showAgreement = true;
@@ -688,4 +751,21 @@
             Console.WriteLine(ex.Message);
         }
     }
+
+    private void HandleClick()
+{
+    pendingValue = !isChecked;
+    showPopup = true;
+}
+
+private void ClosePopup()
+{
+    showPopup = false;
+}
+
+private void ConfirmAction()
+{
+    isChecked = pendingValue;
+    showPopup = false;
+}
 }

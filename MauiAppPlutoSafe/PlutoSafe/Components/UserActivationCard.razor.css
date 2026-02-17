@@ -296,7 +296,7 @@
 /* Floating black circle */
 .qr-circle {
   position: absolute;
-  top: -28px;
+  top: -36px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -313,7 +313,7 @@
 /* QR icon inside circle */
 .qr-circle img {
   width: 72px;     /* bigger icon */
-  height: 90px;    /* prevent squashing */
+  height: 72px;    /* prevent squashing */
 }
 .qr-long-btn {
   width: 80%;              /* reduced by 20% */
