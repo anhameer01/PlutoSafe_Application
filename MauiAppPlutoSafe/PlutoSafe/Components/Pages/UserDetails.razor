@@ -457,44 +457,81 @@
 
                 <div class="guarantor-row">
                     <span class="guarantor-text">Do You Want To Add A Guarantor?</span>
-                    <button class="add-btn"><span>+ADD</span></button>
+                    @if(guarantors.Count <2){
+                        <button class="add-btn" @onclick="AddGuarantor"><span>+ADD</span></button>
+                    }
                 </div>
+                @foreach (var g in guarantors)
+                {
+                    <div class="guarantor-section">
 
-                <div class="agreement-box">
-                    <p class="agreement-title">Agreement</p>
-                    <p class="agreement-text">
-                        This Loan Agreement is made and entered into by and between the Lender
-                        and the Borrower for the purpose of providing a personal or business loan.
-                        The Borrower hereby acknowledges the receipt of the loan amount and agrees
-                        to repay the same, along with the applicable interest rate
-                    </p>
+                        <label>Guarantor Name</label>
+                        <div class="input-box">
+                            <input class="g-input" placeholder="Name" />
+                        </div>
 
-                    <span class="see-more" @onclick="OpenAgreement">See More</span>
+                        <label>Guarantor Mobile Number</label>
+                        <div class="input-box">
+                            <input class="g-input" placeholder="Enter Mobile Number" />
+                        </div>
 
-                    <div class="agreement">
-                        <input type="checkbox" />
-                        <p>I have read and understood the above loan agreement.</p>
+                        <label>Address</label>
+                        <div class="input-box">
+                            <input class="g-input" placeholder="Enter Address" />
+                        </div>
+
+                        <label>Guarantor Upload Aadhar</label>
+                        <div class="upload-grid">
+                            <button class="upload-item">
+                                <img src="images/plus.svg" />
+                                <span>Aadhaar Front</span>
+                            </button>
+
+                            <button class="upload-item">
+                                <img src="images/plus.svg" />
+                                <span>Aadhaar Back</span>
+                            </button>
+                        </div>
+                        <button class="add-btn add-icon-only" @onclick="AddGuarantor">
+                            <span>+Add</span>
+                        </button>
                     </div>
-                </div>
+                }
+                    <div class="agreement-box">
+                        <p class="agreement-title">Agreement</p>
+           
+                     <p class="agreement-text">
+                            This Loan Agreement is made and entered into by and between the Lender
+                            and the Borrower for the purpose of providing a personal or business loan.
+                            The Borrower hereby acknowledges the receipt of the loan amount and agrees
+                            to repay the same, along with the applicable interest rate
+                        </p>
 
-            <label class="signature-title">Signature</label>
-            <div class="signature-container" style="width:100%; height:100%;">
-                <canvas id="loanSignatureCanvas"
-                    style="width:100%; height:100%; background:#fef7f7; border:1px solid #f1eaea; border-radius:8px;">
-                    </canvas>
-                <img src="images/icon-edit.svg"
-                    class="edit-icon"
-                    @onclick="Clear" />
+                        <span class="see-more" @onclick="OpenAgreement">See More</span>
+
+                        <div class="agreement">
+                            <input type="checkbox" />
+                            <p>I have read and understood the above loan agreement.</p>
+                        </div>
+                    </div>
+
+                <label class="signature-title">Signature</label>
+                <div class="signature-container" style="width:100%; height:100%;">
+                    <canvas id="loanSignatureCanvas"
+                        style="width:100%; height:100%; background:#fef7f7; border:1px solid #f1eaea; border-radius:8px;">
+                        </canvas>
+                    <img src="images/icon-edit.svg"
+                        class="edit-icon"
+                        @onclick="Clear" />
+                </div>
+               </div>
             </div>
+        }
             <button class="submit-btn"
                 @onclick='() => Nav.NavigateTo("/submit-success")'>
                 Submit
             </button>
-
-            </div>
-        </div>
-    }
-</div>
+    </div>
 
     <!-- ================= AGREEMENT MODAL (NOT BLURRED) ================= -->
     @if (showAgreement)
@@ -537,14 +574,6 @@
     void OpenAgreement() => showAgreement = true;
     void CloseAgreement() => showAgreement = false;
 
-  @* protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
-        }
-    } *@
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (activeTab == "loan")
@@ -568,6 +597,16 @@
             Console.WriteLine(base64);
         }
     }
-    // ===== Signature state =====
-   
+    private List<int> guarantors = new List<int>();
+
+    private void AddGuarantor()
+    {
+        if (guarantors.Count < 2)
+            guarantors.Add(guarantors.Count + 1);
+    }
+
+    private void RemoveGuarantor(int id)
+    {
+        guarantors.Remove(id);
+    }
 }
