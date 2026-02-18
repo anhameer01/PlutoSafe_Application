@@ -1,3 +1,4 @@
+
 @* @page "/" *@
 @page "/user-details"
 @using PlutoSafe.Components.Shared
@@ -334,15 +335,15 @@
                     <span>Set Wallpaper</span>
                 </div>
                 @* <CommandToggle/> *@
-                <div class="toggle-wrapper">
-    <label class="switch">
-        <input type="checkbox"
-               checked="@isChecked"
-               @onclick="HandleClick"
-               @onclick:preventDefault="true" />
-        <span class="slider"></span>
-    </label>
-</div>
+       <div class="toggle-wrapper">
+            <label class="switch">
+                <input type="checkbox"
+                       checked="@wallpaperToggle"
+                       @onclick="() => HandleClick(nameof(wallpaperToggle))"
+                       @onclick:preventDefault="true" />
+                <span class="slider"></span>
+            </label>
+        </div>
             </div>
 
 
@@ -352,16 +353,15 @@
                     <img src="images/lock-social-media.png" />
                     <span>Lock Social Media</span>
                 </div>
-                @* <CommandToggle /> *@
-                <div class="toggle-wrapper">
-    <label class="switch">
-        <input type="checkbox"
-               checked="@isChecked"
-               @onclick="HandleClick"
-               @onclick:preventDefault="true" />
-        <span class="slider"></span>
-    </label>
-</div>
+                        <div class="toggle-wrapper">
+            <label class="switch">
+                <input type="checkbox"
+                       checked="@socialToggle"
+                       @onclick="() => HandleClick(nameof(socialToggle))"
+                       @onclick:preventDefault="true" />
+                <span class="slider"></span>
+            </label>
+        </div>
             </div>
             <!-- Track Location -->
             <div class="feature">
@@ -369,16 +369,15 @@
                     <img src="images/icon-mic.svg" />
                     <span>Track Location</span>
                 </div>
-                @* <CommandToggle /> *@
                 <div class="toggle-wrapper">
-    <label class="switch">
-        <input type="checkbox"
-               checked="@isChecked"
-               @onclick="HandleClick"
-               @onclick:preventDefault="true" />
-        <span class="slider"></span>
-    </label>
-</div>
+            <label class="switch">
+                <input type="checkbox"
+                       checked="@locationToggle"
+                       @onclick="() => HandleClick(nameof(locationToggle))"
+                       @onclick:preventDefault="true" />
+                <span class="slider"></span>
+            </label>
+        </div>
             </div>
             <!-- Audio Reminder -->
             <div class="feature">
@@ -418,16 +417,15 @@
                     <img src="images/icon-mic.svg" />
                     <span>Remove</span>
                 </div>
-                @* <CommandToggle /> *@
-                <div class="toggle-wrapper">
-    <label class="switch">
-        <input type="checkbox"
-               checked="@isChecked"
-               @onclick="HandleClick"
-               @onclick:preventDefault="true" />
-        <span class="slider"></span>
-    </label>
-</div>
+                        <div class="toggle-wrapper">
+            <label class="switch">
+                <input type="checkbox"
+                       checked="@removeToggle"
+                       @onclick="() => HandleClick(nameof(removeToggle))"
+                       @onclick:preventDefault="true" />
+                <span class="slider"></span>
+            </label>
+        </div>
             </div>
 
         </div>          
@@ -667,6 +665,12 @@ private bool pendingValue;
     bool showAgreement = false;
     void OpenAgreement() => showAgreement = true;
     void CloseAgreement() => showAgreement = false;
+    private bool wallpaperToggle;
+    private bool socialToggle;
+    private bool locationToggle;
+    private bool removeToggle;
+
+    private string currentToggle;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -752,20 +756,49 @@ private bool pendingValue;
         }
     }
 
-    private void HandleClick()
-{
-    pendingValue = !isChecked;
-    showPopup = true;
-}
 
 private void ClosePopup()
 {
     showPopup = false;
 }
+private void HandleClick(string toggleName)
+{
+    currentToggle = toggleName;
+
+    pendingValue = toggleName switch
+    {
+        nameof(wallpaperToggle) => !wallpaperToggle,
+        nameof(socialToggle) => !socialToggle,
+        nameof(locationToggle) => !locationToggle,
+        nameof(removeToggle) => !removeToggle,
+        _ => false
+    };
+
+    showPopup = true;
+}
 
 private void ConfirmAction()
 {
-    isChecked = pendingValue;
+    switch (currentToggle)
+    {
+        case nameof(wallpaperToggle):
+            wallpaperToggle = pendingValue;
+            break;
+
+        case nameof(socialToggle):
+            socialToggle = pendingValue;
+            break;
+
+        case nameof(locationToggle):
+            locationToggle = pendingValue;
+            break;
+
+        case nameof(removeToggle):
+            removeToggle = pendingValue;
+            break;
+    }
+
     showPopup = false;
 }
+
 }
