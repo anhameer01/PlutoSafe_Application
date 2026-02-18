@@ -1347,3 +1347,151 @@ label + .upload-grid {
   border-radius: 12px;
   border: none;
 }
+
+/* ===== META CARDS EXACT DESIGN ===== */
+.ud-meta {
+  display: flex;
+  gap: 6px;
+
+  margin-top: 6px;      /* keep small top space */
+  margin-left: 2px;
+  margin-right: 4px;
+  margin-bottom: 4px;   /* 👈 reduced bottom gap */
+}
+.meta-card {
+  flex: 1;              /* let flex calculate automatically */
+  min-width: 0;         /* prevents overflow */
+  padding: 6px 10px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* TOP ROW (icon + label) */
+.meta-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;   /* lighter */
+  font-size: 11px;    /* smaller */
+  color: #333;        /* softer black */
+}
+
+.meta-top img {
+  width: 20px;
+  height: 12px;
+}
+
+/* BIG VALUE */
+.meta-value {
+  margin-top: 2px;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;   /* lighter than 700 */
+  font-size: 14px;    /* reduced */
+  color: #000;
+}
+/* DIFFERENT BACKGROUND COLORS */
+
+.meta-date {
+  background: #D7E3FF;   /* soft blue */
+}
+
+.meta-time {
+  background: #F5DEFF;   /* soft purple */
+}
+
+.meta-code {
+  background: #C8FEE0;   /* soft green */
+}
+
+/* ================= EMI MODAL OVERLAY ================= */
+
+.emi-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999999;
+}
+
+.emi-modal {
+  width: 90%;
+  max-width: 420px;
+
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* Header */
+.emi-header {
+  background: #071a3d;
+  color: #fff;
+  padding: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;  
+  font-weight: 600;
+}
+
+.emi-close {
+  position: absolute;
+  right: 16px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Body */
+.emi-body {
+  padding: 22px 20px;
+}
+
+.emi-row {
+  display: grid;
+  grid-template-columns: 110px auto;  /* label width fixed */
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 15px;
+}
+
+.emi-row select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.emi-actions {
+  display: flex;
+  justify-content: center;   /* bring buttons toward center */
+  gap: 60px;                 /* control distance between them */
+  margin-top: 30px;
+}
+
+.emi-cancel {
+   background: #071a3d;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+}
+
+.emi-ok {
+  background: #071a3d;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+}

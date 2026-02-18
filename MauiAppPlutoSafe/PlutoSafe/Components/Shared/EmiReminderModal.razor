@@ -1,0 +1,128 @@
+@if (IsVisible)
+{
+    <div class="emi-overlay">
+        <div class="emi-modal">
+
+            <div class="emi-header">
+                <span>EMI Details</span>
+                <span class="emi-close" @onclick="Close">✕</span>
+            </div>
+
+            <div class="emi-body">
+
+                <div class="emi-row">
+                    <label>Amount</label>
+                    <span>: @Amount</span>
+                </div>
+
+                <div class="emi-row">
+                    <label>EMI Date</label>
+                    <span>: @EmiDate.ToString("yyyy-MM-dd")</span>
+                </div>
+
+                <div class="emi-row">
+                    <label>Payment Mode</label>
+                    <select @bind="SelectedMode">
+                        <option value="">Select</option>
+                        @foreach (var mode in PaymentModes)
+                        {
+                            <option value="@mode">@mode</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="emi-actions">
+                    <button class="emi-cancel" @onclick="Close">Cancel</button>
+                    <button class="emi-ok" @onclick="Submit">OK</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public decimal Amount { get; set; }
+    [Parameter] public DateTime EmiDate { get; set; }
+    [Parameter] public List<string> PaymentModes { get; set; } = new();
+
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback<string> OnSubmit { get; set; }
+
+    private string SelectedMode = "";
+
+    private async Task Close()
+    {
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task Submit()
+    {
+        await OnSubmit.InvokeAsync(SelectedMode);
+    }
+}
+
+<style>
+    .emi-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.emi-modal {
+  width: 90%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.emi-header {
+  background: #2f3b59;
+  color: #fff;
+  padding: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+.emi-body {
+  padding: 20px;
+}
+
+.emi-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.emi-row select {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+}
+
+.emi-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.emi-cancel,
+.emi-ok {
+  width: 45%;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+}
+
+</style>

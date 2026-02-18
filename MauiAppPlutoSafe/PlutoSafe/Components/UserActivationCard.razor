@@ -17,10 +17,43 @@
         }
     </div>
 
-    <div class="badge-row">
+    @* <div class="badge-row">
         <div class="badge blue">
             <img src="images/icon-date.svg" />
         </div>
+        </div> *@
+    <div class="ud-meta">
+
+        <div class="meta-card meta-date">
+            <div class="meta-top">
+                <img src="images/icon-calendar.svg" />
+                <span>Date</span>
+            </div>
+            <div class="meta-value">
+                @DateTime.Now.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+
+        <div class="meta-card meta-time">
+            <div class="meta-top">
+                <img src="images/icon-clock.svg" />
+                <span>Time</span>
+            </div>
+            <div class="meta-value">
+                @DateTime.Now.ToString("HH:mm tt")
+            </div>
+        </div>
+
+        <div class="meta-card meta-code">
+            <div class="meta-top">
+                <img src="images/secure-code.svg" />
+                <span>Secure code</span>
+            </div>
+            <div class="meta-value">
+                @RegNo
+            </div>
+        </div>
+
     </div>
 
     <div class="info">

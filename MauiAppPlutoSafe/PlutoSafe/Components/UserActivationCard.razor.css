@@ -57,8 +57,8 @@
 /* DATE / TIME / CODE chips spacing */
 .ud-meta {
   display: flex;
-  gap: 12px;                /* space between chips */
-  margin: 12px 0 16px;
+  gap: 10px;      /* reduce */
+  margin: 16px 16px;
 }
 
 /* keep label + number in one line */
@@ -66,6 +66,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -319,4 +320,61 @@
   width: 80%;              /* reduced by 20% */
   margin: 0 auto;          /* center horizontally */
   height: 60px;
+}
+
+/* ===== META CARDS EXACT DESIGN ===== */
+
+.ud-meta {
+  display: flex;
+  gap: 8px;
+  margin: 16px 22px;
+}
+.meta-card {
+  flex: 1;              /* let flex calculate automatically */
+  min-width: 0;         /* prevents overflow */
+  padding: 6px 10px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* TOP ROW (icon + label) */
+.meta-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;   /* lighter */
+  font-size: 11px;    /* smaller */
+  color: #333;        /* softer black */
+}
+
+.meta-top img {
+  width: 20px;
+  height: 12px;
+}
+
+/* BIG VALUE */
+.meta-value {
+  margin-top: 2px;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;   /* lighter than 700 */
+  font-size: 14px;    /* reduced */
+  color: #000;
+}
+/* DIFFERENT BACKGROUND COLORS */
+
+.meta-date {
+  background: #D7E3FF;   /* soft blue */
+}
+
+.meta-time {
+  background: #F5DEFF;   /* soft purple */
+}
+
+.meta-code {
+  background: #C8FEE0;   /* soft green */
 }

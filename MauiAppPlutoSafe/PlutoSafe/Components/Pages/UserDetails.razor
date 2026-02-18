@@ -151,7 +151,7 @@
             </div>
     }
 
-    @if (activeTab == "emi")
+    @* @if (activeTab == "emi")
     {
         <div class="emi-list">
 
@@ -285,8 +285,45 @@
                 </div>
             </div>
         </div>
-    }
+    } *@
+    @if (activeTab == "emi")
+    {
+        <div class="emi-list">
 
+            @foreach (var emi in EmiList)
+            {
+                <div class="emi-card @(emi.IsPaid ? "paid" : "unpaid highlight")">
+                    <span class="emi-index">@emi.Index</span>
+
+                    <div class="emi-left">
+                        <img src="@(emi.IsPaid ? "images/paid.svg" : "images/unpaid.svg")"
+                            class="emi-stamp" />
+
+                        <div class="emi-info">
+                            <p>Date</p>
+                            <p>Mode</p>
+                            <p>Amount</p>
+                        </div>
+                    </div>
+
+                    <div class="emi-right">
+                        <p>@emi.Date.ToString("dd/MM/yyyy")</p>
+                        <p>@(emi.Mode ?? "—")</p>
+                        <p>@emi.Amount</p>
+
+                        @if (!emi.IsPaid)
+                        {
+                            <button class="update-btn"
+                                    @onclick="() => OpenEmiModal(emi)">
+                                Update
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
         <!-- USER DETAILS -->
         @if (activeTab == "details")
         {
@@ -303,12 +340,46 @@
                     Unlock
                 </button>
             </div>
-
+@* 
             <div class="badge-row">
                 <div class="badge blue">
                     <img src="images/icon-date.svg" />
                 </div>
+            </div> *@
+               <div class="ud-meta">
+
+            <div class="meta-card meta-date">
+                <div class="meta-top">
+                    <img src="images/icon-calendar.svg" />
+                    <span>Date</span>
+                </div>
+                <div class="meta-value">
+                    @DateTime.Now.ToString("dd/MM/yyyy")
+                </div>
             </div>
+
+            <div class="meta-card meta-time">
+                <div class="meta-top">
+                    <img src="images/icon-clock.svg" />
+                    <span>Time</span>
+                </div>
+                <div class="meta-value">
+                    @DateTime.Now.ToString("HH:mm tt")
+                </div>
+            </div>
+
+            <div class="meta-card meta-code">
+                <div class="meta-top">
+                    <img src="images/secure-code.svg" />
+                    <span>Secure code</span>
+                </div>
+                <div class="meta-value">
+                    @RegNo
+                </div>
+            </div>
+
+        </div>
+
 
             <div class="info">
                 <p><img src="images/register.svg" /> Registration Number : 124545445</p>
@@ -596,7 +667,51 @@
                 @onclick='() => Nav.NavigateTo("/submit-success")'>
                 Submit
             </button>
-    </div>
+
+    </div>   <!-- closes ud-card -->
+
+    @if (showEmiModal && SelectedEmi != null)
+    {
+        <div class="emi-overlay">
+            <div class="emi-modal">
+
+                <div class="emi-header">
+                    <span>EMI Details</span>
+                    <span class="emi-close" @onclick="CloseEmiModal">✕</span>
+                </div>
+
+                <div class="emi-body">
+
+                    <div class="emi-row">
+                        <label>Amount</label>
+                        <span>: @SelectedEmi.Amount</span>
+                    </div>
+
+                    <div class="emi-row">
+                        <label>EMI Date</label>
+                        <span>: @SelectedEmi.Date.ToString("yyyy-MM-dd")</span>
+                    </div>
+
+                    <div class="emi-row">
+                        <label>Payment Mode</label>
+                        <select @bind="SelectedPaymentMode">
+                            <option value="">Select</option>
+                            <option>Online</option>
+                            <option>UPI</option>
+                            <option>Cash</option>
+                            <option>Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <div class="emi-actions">
+                        <button class="emi-cancel" @onclick="CloseEmiModal">Cancel</button>
+                        <button class="emi-ok" @onclick="SubmitEmi">OK</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
 
     <!-- ================= AGREEMENT MODAL (NOT BLURRED) ================= -->
     @if (showAgreement)
@@ -633,7 +748,6 @@
     }
 </div>
 
-
 @if (showPopup)
 {
     <div class="command-overlay">
@@ -665,6 +779,7 @@ private bool pendingValue;
     bool showAgreement = false;
     void OpenAgreement() => showAgreement = true;
     void CloseAgreement() => showAgreement = false;
+    [Parameter] public string RegNo { get; set; } = "124545445";
     private bool wallpaperToggle;
     private bool socialToggle;
     private bool locationToggle;
@@ -800,5 +915,46 @@ private void ConfirmAction()
 
     showPopup = false;
 }
+    private List<EmiModel> EmiList = new()
+    {
+        new EmiModel { Index = 1, Date = DateTime.Parse("2025-08-20"), Mode = "Online", Amount = 3254, IsPaid = true },
+        new EmiModel { Index = 2, Date = DateTime.Parse("2025-09-20"), Mode = null, Amount = 3254, IsPaid = false },
+        new EmiModel { Index = 3, Date = DateTime.Parse("2025-10-20"), Mode = null, Amount = 3254, IsPaid = false }
+    };
 
+    private EmiModel? SelectedEmi;
+    private bool showEmiModal = false;
+
+    private void OpenEmiModal(EmiModel emi)
+    {
+        SelectedEmi = emi;
+        showEmiModal = true;
+    }
+
+    private void CloseEmiModal()
+    {
+        showEmiModal = false;
+    }
+
+    private void SubmitEmi()
+    {
+        if (SelectedEmi != null)
+        {
+            SelectedEmi.Mode = SelectedPaymentMode;
+            SelectedEmi.IsPaid = true;
+        }
+
+        showEmiModal = false;
+    }
+
+    private string SelectedPaymentMode = "";
+
+    public class EmiModel
+    {
+        public int Index { get; set; }
+        public DateTime Date { get; set; }
+        public string? Mode { get; set; }
+        public decimal Amount { get; set; }
+        public bool IsPaid { get; set; }
+    }
 }
