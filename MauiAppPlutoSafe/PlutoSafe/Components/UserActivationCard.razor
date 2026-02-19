@@ -65,7 +65,9 @@
     @if (ShowQrButton)
     {
         <div class="qr-long-wrapper">
-            <button class="qr-long-btn">
+            @* <button class="qr-long-btn"> *@
+                <button class="qr-long-btn"
+            @onclick='() => Nav.NavigateTo("/qr-code")'>
                 <span class="qr-circle">
                     <img src="images/icon-qr.svg" />
                 </span>
@@ -93,7 +95,6 @@
                     </span>
                     Unlock
                 </button>
-
             </div>
         </div>
     }

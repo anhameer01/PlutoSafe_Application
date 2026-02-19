@@ -164,6 +164,7 @@
   width: 117px;
   height: 45px;
   background: transparent;          
+
   border: 1px solid #1b5e20;
   border-radius: 999px;
 
@@ -175,9 +176,27 @@
    color: #1b5e20; 
   font-size: 14px;
 } 
+
+/* Green circle ONLY */
+.unlock-circle {
+  width: 28px;
+  height: 28px;
+  background: #2E7D32;   /* green */
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Lock icon inside circle */
+.unlock-circle img {
+  width: 12px;
+  height: 12px;
+  filter: brightness(0) invert(1);  /* make white */
+}
 .unlock-btn img {
-  width: 30px;
-  height: 30px;
+  width: 6px;
+  height: 6px;
 }
 .ud-tabs {
   display: flex;
@@ -919,13 +938,19 @@ label + .upload-grid {
 }
 
 /* HEADER */
-.ud-header {
+ .ud-header {
   display: flex;
   align-items: center;   /* arrow + heading same line */
   gap: 8px;
   margin-bottom: 12px;
-}
-
+} 
+/* .ud-header .back {
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+} */
 /* Header title text */
 .ud-header h3 {
   font-family: 'Inter', sans-serif;
@@ -1102,18 +1127,15 @@ label + .upload-grid {
   transform: translateX(22px);
 }
 
-/* .feature-left img {
-    width: 44px;
-    height: 44px;
-    border: none;
-} */
-
 .feature-left span {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;        /* Semi Bold */
+  font-size: 14px;         /* 14px */
+  line-height: 100%;       /* 1 */
+  letter-spacing: 0;       /* 0% */
+  text-transform: capitalize; /* Title Case */
+  color: #000000;          /* Black */
 }
-
 .feature:hover {
   transform: translateY(-2px);
 }
@@ -1494,4 +1516,40 @@ label + .upload-grid {
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
+}
+
+
+
+/* header */
+.ud-header {
+  display: flex;
+  align-items: center;   /* vertical alignment */
+  gap: 10px;
+  padding-top: 6px;
+}
+
+/* remove default browser spacing */
+.ud-header h3 {
+  margin: 0;               /* 🔥 THIS fixes the level issue */
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  color: #000;
+}
+
+.ud-header .back {
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.unlock-btn img {
+  width: 28px;
+  height: 28px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  transform: translateZ(10);
 }

@@ -125,7 +125,6 @@
         if (string.IsNullOrWhiteSpace(Email)) { emailError = "error"; hasError = true; }
         if (string.IsNullOrWhiteSpace(Imei1)) { imei1Error = "error"; hasError = true; }
         if (!isIphone && string.IsNullOrWhiteSpace(Imei2)) { imei2Error = "error"; hasError = true; }
-
         if (hasError) return;
 
         Nav.NavigateTo("/dashboard");

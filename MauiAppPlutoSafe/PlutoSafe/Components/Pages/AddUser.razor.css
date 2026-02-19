@@ -96,20 +96,17 @@
   font-size: 18px;
 }
 
-/* IMEI */
-/* IMEI – scan button */
 .scan-btn {
   background: #0b1d4a;
   border: none;
   border-radius: 10px;
   padding: 8px;
   width: 56px;      /* fixed unit */
-  height: 56px;
-
+  width: 52px;
+  height:78px;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 /* 🔥 Bigger scan image */
@@ -205,4 +202,76 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+/* Add User – Placeholder Exact Figma Match */
+.form input::placeholder {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;          /* Medium */
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize;   /* Title Case */
+  color: #000000;
+  opacity: 0.6;
+}
+
+/* Safari / Chrome */
+.form input::-webkit-input-placeholder {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: capitalize;
+}
+
+.input-box input,
+.imei-box input {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0;
+}
+
+/* IMEI ROW LAYOUT */
+.imei-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+/* QR BUTTON */
+.scan-btn {
+  width: 60px;
+  height: 78px;
+  border-radius: 16px;
+  background: #052632;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scan-btn img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* INPUT CARD */
+.imei-box {
+  flex: 1;
+  height: 80px;
+  background: #f3f4f6;
+  border-radius: 16px;
+  width:100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
 }
