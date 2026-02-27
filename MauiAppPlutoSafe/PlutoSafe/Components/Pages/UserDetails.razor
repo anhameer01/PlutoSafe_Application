@@ -1,15 +1,17 @@
 
 @* @page "/" *@
-@page "/user-details"
+@page "/user-details/{SerialNumber}"
 @using PlutoSafe.Components.Shared
 @using Microsoft.Maui.ApplicationModel;
 @using Microsoft.Maui.Media
+@using System.Net.Http.Headers;
+@using System.Text.Json
 
 @inject NavigationManager Nav
 @* @inject JSRuntime JS *@
 @inject IJSRuntime JS
 
-<link href="css/user-details.css" rel="stylesheet" />
+<link href="user-details.css" rel="stylesheet" />
 
 <!-- ================= PAGE CONTENT (BLURRED) ================= -->
 <div class="ud-bg @(showAgreement ? "blur-bg" : "")">
@@ -53,7 +55,7 @@
             <!-- PROFILE -->
             <div class="show-profile">
                 <img src="images/avatar-girl.svg" class="show-avatar" />
-                <h4>Sunita Agrawal</h4>
+                <h4>@userDetail?.name</h4>
             </div>
 
             <!-- LOAN + STATUS CARD -->
@@ -62,7 +64,7 @@
                     <img src="images/down.svg" />
                     <div>
                         <span>Loan ID</span>
-                        <strong>1235456545</strong>
+                        <strong>@showLoanData?.loanId</strong>
                     </div>
                 </div>
 
@@ -70,7 +72,7 @@
                     <img src="images/lockstatus.svg" />
                     <div>
                         <span>Phone Lock Status</span>
-                        <strong class="unlock">Unlock</strong>
+                        <strong class="unlock">@showLoanData?.phoneLockStatus</strong>
                     </div>
                 </div>
             </div>
@@ -102,20 +104,20 @@
                 <h5>Device Details</h5>
 
                 <div class="loan-grid">
-                    <div>Product Price <strong>₹ 15,000.00</strong></div>
-                    <div>Down Payment <strong>₹ 15,000.00</strong></div>
+                    <div>Product Price <strong>@showLoanData?.productPrice</strong></div>
+                    <div>Down Payment <strong>@showLoanData?.downPayment</strong></div>
 
-                    <div>EMI Amount <strong>₹ 15,000.00</strong></div>
-                    <div>Number Of EMI <strong>15</strong></div>
+                    <div>EMI Amount <strong>@showLoanData?.emiAmount</strong></div>
+                    <div>Number Of EMI <strong>@showLoanData?.numberOfEmi</strong></div>
 
-                    <div>Processing fees <strong>₹ 15,000.00</strong></div>
-                    <div>Loan Amount <strong>₹ 15,000.00</strong></div>
+                    <div>Processing fees <strong>@showLoanData?.processingFee</strong></div>
+                    <div>Loan Amount <strong>@showLoanData?.loanAmount</strong></div>
 
-                    <div>Total Paid Amount <strong>₹ 15,000.00</strong></div>
-                    <div>Balance Amount <strong>₹ 15,000.00</strong></div>
+                    <div>Total Paid Amount <strong>@showLoanData?.totalPaidAmount</strong></div>
+                    <div>Balance Amount <strong>@showLoanData?.balanceAmount</strong></div>
 
-                    <div>EMI Due Amount <strong>₹ 0.00</strong></div>
-                    <div>Penalty Amount <strong>₹ 15,000.00</strong></div>
+                    <div>EMI Due Amount <strong>@showLoanData?.emiDueAmount</strong></div>
+                    <div>Penalty Amount <strong>@showLoanData?.penaltyAmount</strong></div>
                 </div>
             </div>
 
@@ -151,141 +153,6 @@
             </div>
     }
 
-    @* @if (activeTab == "emi")
-    {
-        <div class="emi-list">
-
-            <!-- EMI ITEM 1 : PAID -->
-            <div class="emi-card paid">
-                <span class="emi-index">1</span>
-
-                <div class="emi-left">
-                    <img src="images/paid.svg" class="emi-stamp" />
-
-                    <div class="emi-info">
-                        <p>Date</p>
-                        <p>Mode</p>
-                        <p>Amount</p>
-                    </div>
-                </div>
-
-                <div class="emi-right">
-                    <p>20/08/2025</p>
-                    <p>Online</p>
-                    <p>3254</p>
-                </div>
-            </div>
-
-            <!-- EMI ITEM 2 : UNPAID WITH UPDATE -->
-            <div class="emi-card unpaid highlight">
-                <span class="emi-index">2</span>
-
-                <div class="emi-left">
-                    <img src="images/unpaid.svg" class="emi-stamp" />
-
-                    <div class="emi-info">
-                        <p>Date</p>
-                        <p>Mode</p>
-                        <p>Amount</p>
-                    </div>
-                </div>
-
-                <div class="emi-right">
-                    <p>20/09/2025</p>
-                    <p>—</p>
-                    <p>3254</p>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
-
-            <!-- EMI ITEM 3 -->
-            <div class="emi-card unpaid highlight">
-                <span class="emi-index">2</span>
-
-                <div class="emi-left">
-                    <img src="images/unpaid.svg" class="emi-stamp" />
-
-                    <div class="emi-info">
-                        <p>Date</p>
-                        <p>Mode</p>
-                        <p>Amount</p>
-                    </div>
-                </div>
-
-                <div class="emi-right">
-                    <p>20/09/2025</p>
-                    <p>—</p>
-                    <p>3254</p>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
-
-            <!-- EMI ITEM 4 -->
-            <div class="emi-card unpaid highlight">
-                <span class="emi-index">2</span>
-
-                <div class="emi-left">
-                    <img src="images/unpaid.svg" class="emi-stamp" />
-
-                    <div class="emi-info">
-                        <p>Date</p>
-                        <p>Mode</p>
-                        <p>Amount</p>
-                    </div>
-                </div>
-
-                <div class="emi-right">
-                    <p>20/09/2025</p>
-                    <p>—</p>
-                    <p>3254</p>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
-
-            <!-- EMI ITEM 5 -->
-            <div class="emi-card unpaid highlight">
-                <span class="emi-index">2</span>
-
-                <div class="emi-left">
-                    <img src="images/unpaid.svg" class="emi-stamp" />
-
-                    <div class="emi-info">
-                        <p>Date</p>
-                        <p>Mode</p>
-                        <p>Amount</p>
-                    </div>
-                </div>
-
-                <div class="emi-right">
-                    <p>20/09/2025</p>
-                    <p>—</p>
-                    <p>3254</p>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
-
-            <div class="emi-card unpaid highlight">
-                <span class="emi-index">2</span>
-
-                <div class="emi-left">
-                    <img src="images/unpaid.svg" class="emi-stamp" />
-
-                    <div class="emi-info">
-                        <p>Date</p>
-                        <p>Mode</p>
-                        <p>Amount</p>
-                    </div>
-                </div>
-
-                <div class="emi-right">
-                    <p>20/09/2025</p>
-                    <p>—</p>
-                    <p>3254</p>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
-        </div>
-    } *@
     @if (activeTab == "emi")
     {
         <div class="emi-list">
@@ -333,12 +200,9 @@
             <div class="ud-top">
                 <img src="images/avatar-girl.svg" class="avatar" />
                 <div class="name-box">
-                    <h4>Pooja Sharma</h4>
+                    <h4>@userDetail?.name</h4>
                 </div>
-                @* <button class="unlock-btn">
-                    <img src="images/unlock.svg" />
-                    Unlock
-                </button> *@
+                
                 <button class="unlock-btn">
                     <span class="unlock-circle">
                         <img src="images/unlock.svg" />
@@ -346,12 +210,7 @@
                     Unlock
                 </button>
             </div>
-            @* 
-            <div class="badge-row">
-                <div class="badge blue">
-                    <img src="images/icon-date.svg" />
-                </div>
-            </div> *@
+            
                <div class="ud-meta">
 
             <div class="meta-card meta-date">
@@ -386,12 +245,10 @@
 
         </div>
 
-
             <div class="info">
-                <p><img src="images/register.svg" /> Registration Number : 124545445</p>
-                <p><img src="images/icon-registration.svg" /> First Device IMEI Number : 1545454545</p>
-                <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : 1545454545</p>
-                <p><img src="images/call.svg" /> Alternate Mobile Number : +91 1234567892</p>
+                <p><img src="images/register.svg" /> Registration Number : @userDetail?.loanAccountNumber</p>
+                <p><img src="images/icon-registration.svg" /> Serial No : @userDetail?.serialNumber</p>
+                <p><img src="images/call.svg" /> Alternate Mobile Number : @userDetail?.alternateMobile</p>
             </div>
 
         </div>
@@ -515,60 +372,53 @@
             <div class="cl-form">
 
                 <label>Product Name</label>
-                <div class="input-box">
-                    <img src="images/icon-box.svg" />
-                    <input placeholder="Enter Product Name" />
-                </div>
+        <div class="input-box">
+            <img src="images/icon-box.svg" />
+            <input @bind="productName" placeholder="Enter Product Name" />
+        </div>
 
-                <label>Product Price</label>
-                <div class="input-box">
-                    <img src="images/icon-rupee.svg" />
-                    <input placeholder="Enter Product Price" />
-                </div>
+        <label>Product Price</label>
+        <div class="input-box">
+            <img src="images/icon-rupee.svg" />
+            <input type="number" @bind="productPrice" />
+        </div>
 
-                <label>Processing Fees</label>
-                <div class="input-box">
-                    <img src="images/icon-rupee.svg" />
-                    <input placeholder="Enter Processing Fees" />
-                </div>
+        <label>Processing Fees</label>
+        <div class="input-box">
+            <img src="images/icon-rupee.svg" />
+            <input type="number" @bind="processingFee" />
+        </div>
 
-                <label>Down Payment</label>
-                <div class="input-box">
-                    <img src="images/icon-wallet.svg" />
-                    <input placeholder="Enter Down Payment" />
-                </div>
+        <label>Down Payment</label>
+        <div class="input-box">
+            <img src="images/icon-wallet.svg" />
+            <input type="number" @bind="downPayment" />
+        </div>
 
-                <label>Loan Amount</label>
-                <div class="input-box">
-                    <img src="images/icon-rupee.svg" />
-                    <input placeholder="Enter Loan Amount" />
-                </div>
+        <label>Loan Amount</label>
+        <div class="input-box">
+            <img src="images/icon-rupee.svg" />
+            <input type="number" @bind="loanAmount" />
+        </div>
 
-                <label>Number Of EMI</label>
-                <div class="input-box">
-                    <img src="images/icon-emi.svg" />
-                    <input placeholder="Enter No. of EMI" />
-                </div>
+        <label>Number Of EMI</label>
+        <div class="input-box">
+            <img src="images/icon-emi.svg" />
+            <input type="number" @bind="numberOfEmi" />
+        </div>
 
-                <label>Actual EMI</label>
-                <div class="input-box">
-                    <img src="images/emi-no.svg" />
-                    <input placeholder="Enter Actual EMI" />
-                </div>
+        <label>Actual EMI</label>
+        <div class="input-box">
+            <img src="images/emi-no.svg" />
+            <input type="number" @bind="actualEmi" />
+        </div>
 
-                <label>First EMI Date</label>
-                <div class="input-box">
-                    <img src="images/icon-calendar.svg" />
-                    <input placeholder="Enter First EMI Date" />
-                </div>
-@* 
-                <label>Upload Document’s</label>
-                <div class="upload-grid">
-                    <button class="upload-item"><img src="images/plus.svg" /><span>Aadhaar Front</span></button>
-                    <button class="upload-item"><img src="images/plus.svg" /><span>Aadhaar Back</span></button>
-                    <button class="upload-item"><img src="images/plus.svg" /><span>Pan Card</span></button>
-                    <button class="upload-item"><img src="images/plus.svg" /><span>Photo</span></button>
-                </div> *@
+        <label>First EMI Date</label>
+        <div class="input-box">
+            <img src="images/icon-calendar.svg" />
+            <input type="date" @bind="firstEmiDate" />
+        </div>      
+
         <label>Upload Document’s</label>
         <div class="upload-grid">
 
@@ -670,7 +520,8 @@
             </div>
         }
             <button class="submit-btn"
-                @onclick='() => Nav.NavigateTo("/submit-success")'>
+                @onclick="CreateLoan" 
+                >
                 Submit
             </button>
 
@@ -779,8 +630,16 @@
 
 @code {
     private bool isChecked;
-private bool showPopup;
-private bool pendingValue;
+    private bool showPopup;
+    private bool pendingValue;
+
+    [Inject] HttpClient Http { get; set; }
+    [Inject] UserSession Session { get; set; }
+
+    IosUserDetail? userDetail;
+
+    [Parameter] 
+    public string SerialNumber { get; set; }  // pass this from previous page
     string activeTab = "details";
     bool showAgreement = false;
     void OpenAgreement() => showAgreement = true;
@@ -790,21 +649,88 @@ private bool pendingValue;
     private bool socialToggle;
     private bool locationToggle;
     private bool removeToggle;
+    ShowLoanData? showLoanData;
+
+    private string productName;
+    private decimal productPrice;
+    private decimal processingFee;
+    private decimal downPayment;
+    private decimal loanAmount;
+    private int numberOfEmi;
+    private decimal actualEmi;
+    private DateTime firstEmiDate;
+    public string customerId { get; set; }
 
     private string currentToggle;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+   protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
+            await LoadUserDetail();
+            StateHasChanged();
+        }
+
         if (activeTab == "loan")
         {
-            await Task.Delay(100); // allow DOM render
+            await Task.Delay(100);
             await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
+        }
+    }
+
+    async Task LoadShowLoan()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(SerialNumber))
+                return;
+
+            Http.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<ShowLoanResponse>(
+                $"https://devmobileapi.plutosafe.in/api/YOUR_SHOW_LOAN_API?serialNumber={SerialNumber}");
+
+            if (response != null && response.isSuccess)
+            {
+                showLoanData = response.data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
     private async Task Clear()
     {
         await JS.InvokeVoidAsync("clearSignature");
+    }
+
+    async Task LoadUserDetail()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(SerialNumber))
+                return;
+
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<UserDetailResponse>(
+                $"https://devmobileapi.plutosafe.in/api/IOSCustomer/GetiOSUserDetail?serialNumber={SerialNumber}");
+
+            if (response != null && response.isSuccess)
+            {
+                userDetail = response.data;
+                socialToggle = userDetail.isSocialMediaLock;
+                removeToggle = userDetail.isRemoveApp;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private async Task Save()
@@ -878,49 +804,49 @@ private bool pendingValue;
     }
 
 
-private void ClosePopup()
-{
-    showPopup = false;
-}
-private void HandleClick(string toggleName)
-{
-    currentToggle = toggleName;
-
-    pendingValue = toggleName switch
+    private void ClosePopup()
     {
-        nameof(wallpaperToggle) => !wallpaperToggle,
-        nameof(socialToggle) => !socialToggle,
-        nameof(locationToggle) => !locationToggle,
-        nameof(removeToggle) => !removeToggle,
-        _ => false
-    };
-
-    showPopup = true;
-}
-
-private void ConfirmAction()
-{
-    switch (currentToggle)
+        showPopup = false;
+    }
+    private void HandleClick(string toggleName)
     {
-        case nameof(wallpaperToggle):
-            wallpaperToggle = pendingValue;
-            break;
+        currentToggle = toggleName;
 
-        case nameof(socialToggle):
-            socialToggle = pendingValue;
-            break;
+        pendingValue = toggleName switch
+        {
+            nameof(wallpaperToggle) => !wallpaperToggle,
+            nameof(socialToggle) => !socialToggle,
+            nameof(locationToggle) => !locationToggle,
+            nameof(removeToggle) => !removeToggle,
+            _ => false
+        };
 
-        case nameof(locationToggle):
-            locationToggle = pendingValue;
-            break;
-
-        case nameof(removeToggle):
-            removeToggle = pendingValue;
-            break;
+        showPopup = true;
     }
 
-    showPopup = false;
-}
+    private void ConfirmAction()
+    {
+        switch (currentToggle)
+        {
+            case nameof(wallpaperToggle):
+                wallpaperToggle = pendingValue;
+                break;
+
+            case nameof(socialToggle):
+                socialToggle = pendingValue;
+                break;
+
+            case nameof(locationToggle):
+                locationToggle = pendingValue;
+                break;
+
+            case nameof(removeToggle):
+                removeToggle = pendingValue;
+                break;
+        }
+
+        showPopup = false;
+    }
     private List<EmiModel> EmiList = new()
     {
         new EmiModel { Index = 1, Date = DateTime.Parse("2025-08-20"), Mode = "Online", Amount = 3254, IsPaid = true },
@@ -962,5 +888,141 @@ private void ConfirmAction()
         public string? Mode { get; set; }
         public decimal Amount { get; set; }
         public bool IsPaid { get; set; }
+    }
+
+    public class UserDetailResponse
+    {
+        public bool isSuccess { get; set; }
+        public IosUserDetail data { get; set; }
+    }
+
+    public class IosUserDetail
+    {
+        public string customerId { get; set; }   // ← MUST BE FIRST OR ANYWHERE INSIDE
+
+        public string loanAccountNumber { get; set; }
+        public string name { get; set; }
+        public string mobile { get; set; }
+        public string alternateMobile { get; set; }
+        public string serialNumber { get; set; }
+
+        public bool isLock { get; set; }
+        public bool isCameraLock { get; set; }
+        public bool isRemoveApp { get; set; }
+        public bool isRestrictions { get; set; }
+        public bool isActivation { get; set; }
+        public bool isSocialMediaLock { get; set; }
+    }
+     public class ShowLoanResponse
+    {
+        public bool isSuccess { get; set; }
+        public ShowLoanData data { get; set; }
+    } 
+
+    public class ShowLoanData
+    {
+        public string loanId { get; set; }
+        public string phoneLockStatus { get; set; }
+        public string productPrice { get; set; }
+        public string downPayment { get; set; }
+        public string emiAmount { get; set; }
+        public string numberOfEmi { get; set; }
+        public string processingFee { get; set; }
+        public string loanAmount { get; set; }
+        public string totalPaidAmount { get; set; }
+        public string balanceAmount { get; set; }
+        public string emiDueAmount { get; set; }
+        public string penaltyAmount { get; set; }
+    }
+
+  private async Task CreateLoan()
+{
+    try
+    {
+        if (string.IsNullOrWhiteSpace(Session.DealerProfileId) ||
+            string.IsNullOrWhiteSpace(userDetail?.customerId) ||
+            string.IsNullOrWhiteSpace(productName) ||
+            string.IsNullOrWhiteSpace(SerialNumber))
+        {
+            Console.WriteLine("Required fields missing");
+            return;
+        }
+
+        var form = new MultipartFormDataContent();
+
+        form.Add(new StringContent(Session.DealerProfileId), "DealerId");
+        form.Add(new StringContent(userDetail.customerId), "CustomerId");
+        form.Add(new StringContent(userDetail.name ?? ""), "CustomerName");
+
+        form.Add(new StringContent(productName), "ProductName");
+        form.Add(new StringContent(productPrice.ToString()), "ProductPrice");
+        form.Add(new StringContent(processingFee.ToString()), "ProcessingFee");
+        form.Add(new StringContent(downPayment.ToString()), "DownPayment");
+        form.Add(new StringContent(loanAmount.ToString()), "LoanAmount");
+        form.Add(new StringContent(numberOfEmi.ToString()), "NumberOfEmi");
+        form.Add(new StringContent(actualEmi.ToString()), "ActualEmi");
+
+        form.Add(new StringContent(firstEmiDate.ToString("yyyy-MM-ddTHH:mm:ss")), "FirstEmiDate");
+
+        form.Add(new StringContent("0"), "Interest"); // REQUIRED
+        form.Add(new StringContent(SerialNumber), "SerialNumber");
+
+        Http.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", Session.Token);
+
+        var response = await Http.PostAsync(
+            "https://devmobileapi.plutosafe.in/api/IOSCustomerLoan/AddIOSCustomerLoan",
+            form);
+
+        var result = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(result);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("API Failed");
+            return;
+        }
+
+        var loanResponse = JsonSerializer.Deserialize<CreateLoanResponse>(
+            result,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        if (loanResponse?.isSuccess == true)
+        {
+            Nav.NavigateTo("/submit-success");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
+    public class CreateLoanResponse
+    {
+        public bool isSuccess { get; set; }
+        public CreateLoanData data { get; set; }
+        public string message { get; set; }
+    }
+
+    public class CreateLoanData
+    {
+        public Loan loan { get; set; }
+        public bool isActiveLoan { get; set; }
+    }
+
+    public class Loan
+    {
+        public string dealerId { get; set; }
+        public string customerId { get; set; }
+        public string productName { get; set; }
+        public decimal productPrice { get; set; }
+        public decimal processingFee { get; set; }
+        public decimal downPayment { get; set; }
+        public decimal loanAmount { get; set; }
+        public int numberOfEmi { get; set; }
+        public decimal actualEmi { get; set; }
+        public DateTime firstEmiDate { get; set; }
+        public decimal interest { get; set; }
+        public string id { get; set; }
     }
 }

@@ -1,6 +1,10 @@
 @* @page "/" *@
 @page "/removed-phone"
+
+@inject UserSession Session
+@inject HttpClient Http
 @inject NavigationManager Nav
+
 
 <link href="css/user-details.css" rel="stylesheet" />
 
@@ -18,28 +22,83 @@
            @oninput="OnInput" />
     </div>
 
-
-    <!-- Non-navigating cards -->
-    <UserActivationCard EnableNavigation="false"
-                        UserName="Pooja Sharma"
-                        ShowQrButton="true"/>
-
-    <UserActivationCard EnableNavigation="false"
-                        UserName="Sunita Agrawal" 
-                        ShowQrButton="true"/>
+    @if (removedCount == null)
+  {
+      <p style="padding:16px;">Loading...</p>
+  }
+  else
+  {
+      <div style="padding:16px; font-size:18px; font-weight:600;">
+          Total Removed Phones: @removedCount
+      </div>
+  }
 
 </div>
 
 @code {
+
     [Parameter] public string Placeholder { get; set; } = "Search ..";
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    int? removedCount = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRemovedCount();
+    }
+
+    async Task LoadRemovedCount()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            if (string.IsNullOrEmpty(dealerId))
+            {
+                removedCount = 0;
+                return;
+            }
+
+            // attach token if required
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<RemovedCountResponse>(
+                $"api/IOSDashboardDevicesList/GetRemovedIOSDeviceCount/{dealerId}");
+
+            if (response != null && response.isSuccess)
+            {
+                removedCount = response.data;
+
+                // 🔥 Store in session so dashboard can use it
+                Session.RemovedCount = response.data;
+            }
+            else
+            {
+                removedCount = 0;
+                Session.RemovedCount = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("ERROR: " + ex.ToString());
+            removedCount = 0;
+            Session.RemovedCount = 0;
+        }
+    }
 
     private async Task OnInput(ChangeEventArgs e)
     {
         await ValueChanged.InvokeAsync(e.Value?.ToString());
     }
-    
+
+    public class RemovedCountResponse
+    {
+        public bool isSuccess { get; set; }
+        public int data { get; set; }
+        public string message { get; set; }
+    }
 }
 <style> 
 .search-box {

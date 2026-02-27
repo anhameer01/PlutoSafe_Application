@@ -1,6 +1,8 @@
 @* @page "/" *@
 @page "/lock-phone"
 @inject NavigationManager Nav
+@inject UserSession Session
+@inject HttpClient Http
 
 <link href="css/user-details.css" rel="stylesheet" />
 
@@ -18,25 +20,76 @@
            @oninput="OnInput" />
     </div>
 
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Ravi Kumar" 
-                        ShowLockActions="true"/>
-
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Anita Verma" 
-                        ShowLockActions="true"/>
-
+    @if (lockedCount == null)
+    {
+        <p style="padding:16px;">Loading...</p>
+    }
+    else
+    {
+        <div style="padding:16px; font-size:18px; font-weight:600;">
+            Total Locked Phones: @lockedCount
+        </div>
+    }
 </div>
 @code {
+
     [Parameter] public string Placeholder { get; set; } = "Search ..";
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    int? lockedCount = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLockedCount();
+    }
+
+    async Task LoadLockedCount()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            if (string.IsNullOrEmpty(dealerId))
+            {
+                lockedCount = 0;
+                return;
+            }
+
+            // If endpoint requires token
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<LockedCountResponse>(
+                $"api/IOSDashboardDevicesList/GetLockedIOSDeviceCount/{dealerId}");
+
+            if (response != null && response.isSuccess)
+            {
+                lockedCount = response.data;
+            }
+            else
+            {
+                lockedCount = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("ERROR: " + ex.ToString());
+            lockedCount = 0;
+        }
+    }
 
     private async Task OnInput(ChangeEventArgs e)
     {
         await ValueChanged.InvokeAsync(e.Value?.ToString());
     }
-    
+
+    public class LockedCountResponse
+    {
+        public bool isSuccess { get; set; }
+        public int data { get; set; }
+        public string message { get; set; }
+    }
 }
 <style> 
 .search-box {

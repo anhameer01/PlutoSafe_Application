@@ -445,3 +445,12 @@
   border: none !important;
   color: #2e7d32;
 }
+.meta-card {
+    overflow: hidden;
+}
+
+.meta-value {
+    word-break: break-word;      /* allows breaking long text */
+    overflow-wrap: anywhere;     /* ensures wrap even without space */
+    white-space: normal;         /* allow wrapping */
+}

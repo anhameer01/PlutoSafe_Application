@@ -40,7 +40,7 @@
   border: 1px solid #D4D4D4;
   border-radius: 20px;
   /* padding: 12px 12px; */
-  min-height:500px;
+   min-height:420px; 
   width: calc(100% + 16px);   /* increases width */
   margin-left: -10px;
   margin-right: -10px;
@@ -188,7 +188,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-    padding-top: -20px;     /* inside top spacing */
+  padding-top: -50px;     /* inside top spacing */
   padding-bottom: 10px; 
 }
 
@@ -237,7 +237,6 @@
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 16px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,8 +274,8 @@
 /* ===== QR SECTION ===== */
 
 .qr-wrapper {
-  margin-top: 16px;
-  margin-bottom: 20px;
+  margin-top: 50px;
+  margin-bottom: 8px;
   padding: 0 12px;
 }
 
@@ -401,4 +400,12 @@
 .pill-circle.green {
   background: #2E7D32;
   border-radius: 50%;
+}
+.secure-code-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.info p:last-child {
+  border-bottom: none;
 }

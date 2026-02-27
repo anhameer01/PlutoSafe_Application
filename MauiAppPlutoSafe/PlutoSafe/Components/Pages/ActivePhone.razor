@@ -1,6 +1,8 @@
 @* @page "/" *@
 @page "/active-phone"
 @inject NavigationManager Nav
+@inject UserSession Session
+@inject HttpClient Http 
 
 <link href="css/user-details.css" rel="stylesheet" />
 
@@ -17,26 +19,75 @@
            value="@Value"
            @oninput="OnInput" />
     </div>
-
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Pooja Sharma" 
-                        ShowLockActions="true"/>
-
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Sunita Agrawal" 
-                        ShowLockActions="true"/>
-
+   @if (users == null)
+    {
+        <p style="padding:16px;">Loading...</p>
+    }
+    else if (users.Count == 0)
+    {
+        <p style="padding:16px;">No activation phones found.</p>
+    }
+    else
+    {
+        foreach (var user in users)
+        {
+            <UserActivationCard EnableNavigation="true"
+                                UserName="@user.userName"
+                                ShowLockActions="true" />
+        }
+    }
 </div>
 @code {
     [Parameter] public string Placeholder { get; set; } = "Search ..";
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
+    private List<ActiveUser> users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadActiveUsers();
+    }
+
+    async Task LoadActiveUsers()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            if (string.IsNullOrEmpty(dealerId))
+                return;
+
+            var response = await Http.GetFromJsonAsync<ActiveUsersResponse>(
+                $"api/IOSDashboardDevicesList/active-users?dealerId={dealerId}&pageNumber=1&pageSize=10");
+
+            if (response != null && response.data != null)
+            {
+                users = response.data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
     private async Task OnInput(ChangeEventArgs e)
     {
         await ValueChanged.InvokeAsync(e.Value?.ToString());
     }
-    
+
+    public class ActiveUsersResponse
+    {
+        public bool isSuccess { get; set; }
+        public List<ActiveUser> data { get; set; }
+        public string message { get; set; }
+    }
+
+    public class ActiveUser
+    {
+        public string userName { get; set; }
+    }
 }
 <style> 
 .search-box {
@@ -69,7 +120,6 @@
   margin: 0;
   font-size: 20px;
 }
-
 .ap-page {
   padding-bottom: 16px;
 }

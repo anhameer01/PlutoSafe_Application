@@ -1,5 +1,6 @@
-@* @page "/" *@
 @page "/unlock-phone"
+@inject UserSession Session
+@inject HttpClient Http
 @inject NavigationManager Nav
 
 <link href="css/user-details.css" rel="stylesheet" />
@@ -12,32 +13,170 @@
     </div>
 
     <div class="search-box">
-    <input type="text"
-           placeholder="@Placeholder"
-           value="@Value"
-           @oninput="OnInput" />
+        <input type="text"
+               placeholder="Search .."
+               @bind="searchText"
+               @bind:event="oninput" />
     </div>
 
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Karan Mehta" 
-                        ShowLockActions="true"/>
+    @if (unlockedCount == null)
+    {
+        <p style="padding:16px;">Loading...</p>
+    }
+    else
+    {
+        <div style="padding:16px; font-size:18px; font-weight:600;">
+            Total Unlocked Phones: @unlockedCount
+        </div>
+    }
+    @if (users != null && users.Any())
+    {
+        @foreach (var user in users)
+        {
+            <UserActivationCard
+                EnableNavigation="true"
+                UserName="@user.customer.name"
+                RegNo="@user.customer.loanAccountNumber"
+                Imei1="@user.customer.serialNumber"
+                Phone="@user.customer.mobile"
+                ShowLockActions="true" />
+        }
+    }
 
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Neha Singh" 
-                        ShowLockActions="true"/>
+    else if (users != null && !users.Any())
+    {
+        <p style="padding:16px;">No users found.</p>
+    }
 
 </div>
 @code {
-    [Parameter] public string Placeholder { get; set; } = "Search ..";
-    [Parameter] public string Value { get; set; }
-    [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
-    private async Task OnInput(ChangeEventArgs e)
+    int? unlockedCount = null;
+    List<UnlockedUser>? users;
+
+    string _searchText = "";
+    string searchText
     {
-        await ValueChanged.InvokeAsync(e.Value?.ToString());
+        get => _searchText;
+        set
+        {
+            if (_searchText != value)
+            {
+                _searchText = value;
+                FilterUsers();
+            }
+        }
     }
-    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUnlockedCount();
+        await LoadUsers();
+    }
+
+    async Task LoadUnlockedCount()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<UnlockedCountResponse>(
+                $"api/IOSDashboardDevicesList/GetUnlockedIOSDeviceCount/{dealerId}");
+
+            if (response != null && response.isSuccess)
+                unlockedCount = response.data;
+            else
+                unlockedCount = 0;
+        }
+        catch
+        {
+            unlockedCount = 0;
+        }
+    }
+
+    async Task LoadUsers()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<UnlockedUsersResponse>(
+                $"api/IOSDashboardDevicesList/GetUnlockedIOSUsersByDealer/{dealerId}");
+
+            if (response != null && response.isSuccess)
+                users = response.data;
+            else
+                users = new List<UnlockedUser>();
+        }
+        catch
+        {
+            users = new List<UnlockedUser>();
+        }
+    }
+
+    void FilterUsers()
+    {
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            _ = LoadUsers();
+            return;
+        }
+
+        users = users?
+            .Where(x => x.customer.name
+                .Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    public class UnlockedCountResponse
+    {
+        public bool isSuccess { get; set; }
+        public int data { get; set; }
+        public string message { get; set; }
+    }
+
+    public class UnlockedUsersResponse
+    {
+        public bool isSuccess { get; set; }
+        public List<UnlockedUser> data { get; set; }
+        public string message { get; set; }
+    }
+
+    public class UnlockedUser
+    {
+        public Customer customer { get; set; }
+        public AppSecurity appSecurity { get; set; }
+        public DeviceStatus deviceStatus { get; set; }
+    }
+
+    public class Customer
+    {
+        public string loanAccountNumber { get; set; }
+        public string name { get; set; }
+        public string mobile { get; set; }
+        public string alternateMobile { get; set; }
+        public string serialNumber { get; set; }
+        public DateTime createdDate { get; set; }
+    }
+
+    public class AppSecurity
+    {
+        public bool isLock { get; set; }
+        public bool isActivation { get; set; }
+    }
+
+    public class DeviceStatus
+    {
+        public bool enrollment_Status { get; set; }
+    }
 }
+
 <style>
 .unlock-header {
   display: flex;

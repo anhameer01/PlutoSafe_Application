@@ -1,5 +1,6 @@
-@* @page "/" *@
 @page "/pending-phone"
+@inject UserSession Session
+@inject HttpClient Http
 @inject NavigationManager Nav
 
 <link href="css/user-activation.css" rel="stylesheet" />
@@ -9,31 +10,129 @@
 
     <div class="ud-header">
         <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
-        <h3>Pending Phone</h3>
     </div>
 
     <div class="search-box">
-    <input type="text"
-           placeholder="@Placeholder"
-           value="@Value"
-           @oninput="OnInput" />
+        <input type="text"
+       placeholder="Search .."
+       @bind="searchText"
+       @bind:event="oninput" />
     </div>
 
-    <!-- cards -->
-    <UserActivationCard EnableNavigation="false" ShowQrButton="true" />
-    <UserActivationCard EnableNavigation="false" ShowQrButton="true"/>
+    @if (customers == null)
+    {
+        <p style="padding:16px;">Loading...</p>
+    }
+    else if (!customers.Any())
+    {
+        <p style="padding:16px;">No users found.</p>
+    }
+    else
+    {
+        @foreach (var user in customers)
+        {
+            <UserActivationCard
+                EnableNavigation="true"
+                UserName="@user.name"
+                RegNo="@user.loanAccountNumber"
+                Imei1="@user.serialNumber"
+                Phone="@user.mobile"
+                ShowQrButton="true" />
+        }
+    }
 
 </div>
-@code {
-    [Parameter] public string Placeholder { get; set; } = "Search ..";
-    [Parameter] public string Value { get; set; }
-    [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
-    private async Task OnInput(ChangeEventArgs e)
+@code {
+
+    List<Customer>? customers;
+    string searchText="";
+
+    async Task SearchUsers()
     {
-        await ValueChanged.InvokeAsync(e.Value?.ToString());
+        try
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                await LoadUsers();
+                return;
+            }
+
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<SearchResponse>(
+                $"api/IOSCustomer/search?searchText={searchText}&pageNumber=1&pageSize=10");
+
+            if (response != null && response.isSuccess)
+            {
+                customers = response.data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
-    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    async Task LoadUsers()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            if (string.IsNullOrEmpty(dealerId))
+                return;
+
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<UserListResponse>(
+                $"api/IOSCustomer/GetIosUserList/{dealerId}?pageNumber=1&pageSize=10");
+
+            if (response != null)
+            {
+                customers = response.customers;
+                Session.PendingCount = response.totalRecords;
+            }
+            else
+            {
+                customers = new List<Customer>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            customers = new List<Customer>();
+        }
+    }
+
+    public class UserListResponse
+    {
+        public int totalRecords { get; set; }
+        public int pageNumber { get; set; }
+        public int pageSize { get; set; }
+        public List<Customer> customers { get; set; }
+    }
+
+    public class SearchResponse
+    {
+        public bool isSuccess { get; set; }
+        public List<Customer> data { get; set; }
+    }
+
+    public class Customer
+    {
+        public string loanAccountNumber { get; set; }
+        public string name { get; set; }
+        public string mobile { get; set; }
+        public string serialNumber { get; set; }
+    }
 }
 
 <style> 

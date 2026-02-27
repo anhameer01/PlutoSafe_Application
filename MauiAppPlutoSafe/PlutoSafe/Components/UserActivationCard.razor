@@ -17,11 +17,6 @@
         }
     </div>
 
-    @* <div class="badge-row">
-        <div class="badge blue">
-            <img src="images/icon-date.svg" />
-        </div>
-        </div> *@
     <div class="ud-meta">
 
         <div class="meta-card meta-date">
@@ -49,7 +44,7 @@
                 <img src="images/secure-code.svg" />
                 <span>Secure code</span>
             </div>
-            <div class="meta-value">
+            <div class="meta-value secure-code-value">
                 @RegNo
             </div>
         </div>
@@ -58,8 +53,12 @@
 
     <div class="info">
         <p><img src="images/register.svg" /> Registration Number : @RegNo</p>
-        <p><img src="images/icon-registration.svg" /> First Device IMEI Number : @Imei1</p>
-        <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : @Imei2</p>
+        @* <p><img src="images/icon-registration.svg" /> First Device IMEI Number : @Imei1</p>
+        <p><img src="images/icon-registration.svg" /> Second Device IMEI Number : @Imei2</p> *@
+        <p>
+            <img src="images/icon-registration.svg" />
+            Serial Number : @Imei1
+        </p>
         <p><img src="images/call.svg" /> Alternate Mobile Number : @Phone</p>
     </div>
     @if (ShowQrButton)
@@ -78,7 +77,6 @@
     @if (ShowLockActions)
     {
 
-            <div class="action-row">
 
             <div class="action-row">
 
@@ -96,7 +94,6 @@
                     Unlock
                 </button>
             </div>
-        </div>
     }
     </div>
 </div>
@@ -105,8 +102,8 @@
     [Parameter] public bool EnableNavigation { get; set; }
     [Parameter] public string UserName { get; set; } = "Pooja Sharma";
     [Parameter] public string RegNo { get; set; } = "124545445";
-    [Parameter] public string Imei1 { get; set; } = "1545454545";
-    [Parameter] public string Imei2 { get; set; } = "1545454545";
+    [Parameter] public string Imei1 { get; set; } 
+    [Parameter] public string Imei2 { get; set; } 
     [Parameter] public string Phone { get; set; } = "+91 1234567892";
     [Parameter] public bool ShowQrButton { get; set; }
     [Parameter] public bool ShowLockActions { get; set; }

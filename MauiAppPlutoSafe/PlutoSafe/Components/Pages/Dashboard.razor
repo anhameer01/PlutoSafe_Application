@@ -1,6 +1,9 @@
-@page "/" 
+@* @page "/"  *@
 @page "/dashboard"
+@using System.Threading.Tasks
 @inject NavigationManager Nav
+@inject UserSession Session
+@inject HttpClient Http
 
 <link href="css/dashboard-main.css" rel="stylesheet" />
 
@@ -57,35 +60,35 @@
         <div class="status-list">
             <div class="status-blue" @onclick='() => Nav.NavigateTo("/today-activation")'>
                 <img src="images/icon-activation.svg" />
-                <span>Today's Activation</span><b>450</b>
+                <span>Today's Activation</span><b>@Session.TodayActivationCount</b>
             </div>
             <div class="status-purple" @onclick='() => Nav.NavigateTo("/pending-phone")'>
                 <img src="images/icon-pending-phone.svg" />
-                <span>Pending Phone</span><b>450</b>
+                <span>Pending Phone</span><b>@Session.PendingCount</b>
             </div>
             <div class="status-green" @onclick='() => Nav.NavigateTo("/active-phone")'>
                 <img src="images/icon-active-phone.svg" />
-                <span>Active Phone</span><b>450</b>
+                <span>Active Phone</span><b>@Session.ActiveCount</b>
             </div>
             <div class="status-cyan" @onclick='() => Nav.NavigateTo("/lock-phone")'>
                 <img src="images/icon-lock-phone.svg" />
-                <span>Lock Phone</span><b>450</b>
+                <span>Lock Phone</span><b>@Session.LockedCount</b>
             </div>
             <div class="status-yellow" @onclick='() => Nav.NavigateTo("/removed-phone")'>
                 <img src="images/icon-removed-phone.svg" />
-                <span>Removed Phone</span><b>450</b>
+                <span>Removed Phone</span><b>@Session.RemovedCount</b>
             </div>
             <div class="status-lime" @onclick='() => Nav.NavigateTo("/unlock-phone")'>
                 <img src="images/icon-unlock-phone.svg" />
-                <span>Unlock Phone</span><b>450</b>
+                <span>Unlock Phone</span><b>@Session.UnlockedCount</b>
             </div>
             <div class="status-orange" @onclick='() => Nav.NavigateTo("/remaining-key")'>
                 <img src="images/icon-remaining-phone.svg" />
-                <span>Remaining Key</span><b>450</b>
+                <span>Remaining Key</span><b>@Session.RemainingKeyCount</b>
             </div>
             <div class="status-pink">
                 <img src="images/icon-unassigned-phone.svg" />
-                <span>Unassigned Phone</span><b>450</b>
+                <span>Unassigned Phone</span><b>@Session.UnassignedCount</b>
             </div>
         </div>
 
@@ -158,9 +161,57 @@
         ? "images/iphone.svg"
         : "images/android.svg";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        StartSlider();
+        StartSlider();          // keep slider working
+        await LoadDashboardCounts();  // load API counts
+    }
+    async Task LoadDashboardCounts()
+    {
+        var dealerId = Session.DealerProfileId;
+
+        if (string.IsNullOrEmpty(dealerId))
+            return;
+
+        Http.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+        try
+        {
+            var pending = await Http.GetFromJsonAsync<CountResponse>(
+                $"api/IOSDashboardDevicesList/GetPendingIOSDeviceCount/{dealerId}");
+
+            var locked = await Http.GetFromJsonAsync<CountResponse>(
+                $"api/IOSDashboardDevicesList/GetLockedIOSDeviceCount/{dealerId}");
+
+            var removed = await Http.GetFromJsonAsync<CountResponse>(
+                $"api/IOSDashboardDevicesList/GetRemovedIOSDeviceCount/{dealerId}");
+
+            var unlocked = await Http.GetFromJsonAsync<CountResponse>(
+                $"api/IOSDashboardDevicesList/GetUnlockedIOSDeviceCount/{dealerId}");
+
+            var remaining = await Http.GetFromJsonAsync<CountResponse>(
+                $"api/IOSDashboardDevicesList/GetRemainingIOSKeys/{dealerId}");
+
+            if (pending != null) Session.PendingCount = pending.data;
+            if (locked != null) Session.LockedCount = locked.data;
+            if (removed != null) Session.RemovedCount = removed.data;
+            if (unlocked != null) Session.UnlockedCount = unlocked.data;
+            if (remaining != null) Session.RemainingKeyCount = remaining.data;
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public class CountResponse
+    {
+        public bool isSuccess { get; set; }
+        public int data { get; set; }
+        public string message { get; set; }
     }
 
     void ToggleDevice()

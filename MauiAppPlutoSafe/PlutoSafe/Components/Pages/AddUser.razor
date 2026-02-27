@@ -1,5 +1,9 @@
 @page "/add-user"
 @inject NavigationManager Nav
+@inject HttpClient Http
+
+@inject UserSession Session
+
 <link href="css/add-user.css" rel="stylesheet" />
 
 <div class="adduser-bg">
@@ -12,7 +16,7 @@
 
     <!-- PROFILE IMAGE -->
     <div class="profile-section">
-        <img src="images/avatar-girl.svg" class="profile-img" />
+        <img src="images/NewUser.png" class="profile-img" />
         <div class="camera-icon">
             <img src="images/camera_icon.svg" />
         </div>
@@ -46,6 +50,15 @@
             <img src="images/icon-mobile.svg" />
             <input placeholder="Enter Mobile Number" @bind="Mobile" />
             @if (!string.IsNullOrEmpty(mobileError))
+            {
+                <span class="error-icon">i</span>
+            }
+        </div>
+        <label>Alternate Mobile Number</label>
+        <div class="input-box @(string.IsNullOrEmpty(alternateError) ? "" : "error")">
+            <img src="images/icon-mobile.svg" />
+            <input placeholder="Enter Alternate Mobile Number" @bind="AlternateMobile" />
+            @if (!string.IsNullOrEmpty(alternateError))
             {
                 <span class="error-icon">i</span>
             }
@@ -105,6 +118,8 @@
     string Mobile = "";
     string Email = "";
     string Imei1 = "";
+    string AlternateMobile = "";
+    string alternateError = "";
     string Imei2 = "";
 
     string regError = "";
@@ -114,19 +129,85 @@
     string imei1Error = "";
     string imei2Error = "";
 
-    void Submit()
+    async Task Submit()
+{
+    regError = nameError = mobileError = emailError = imei1Error = imei2Error = "";
+    bool hasError = false;
+
+    if (string.IsNullOrWhiteSpace(RegNo)) { regError = "error"; hasError = true; }
+    if (string.IsNullOrWhiteSpace(UserName)) { nameError = "error"; hasError = true; }
+    if (string.IsNullOrWhiteSpace(Email)) { emailError = "error"; hasError = true; }
+    if (string.IsNullOrWhiteSpace(Imei1)) { imei1Error = "error"; hasError = true; }
+    if (!isIphone && string.IsNullOrWhiteSpace(Imei2)) { imei2Error = "error"; hasError = true; }
+
+    if (!isIphone && string.IsNullOrWhiteSpace(AlternateMobile))
     {
-        regError = nameError = mobileError = emailError = imei1Error = imei2Error = "";
-        bool hasError = false;
-
-        if (string.IsNullOrWhiteSpace(RegNo)) { regError = "error"; hasError = true; }
-        if (string.IsNullOrWhiteSpace(UserName)) { nameError = "error"; hasError = true; }
-        if (string.IsNullOrWhiteSpace(Mobile)) { mobileError = "error"; hasError = true; }
-        if (string.IsNullOrWhiteSpace(Email)) { emailError = "error"; hasError = true; }
-        if (string.IsNullOrWhiteSpace(Imei1)) { imei1Error = "error"; hasError = true; }
-        if (!isIphone && string.IsNullOrWhiteSpace(Imei2)) { imei2Error = "error"; hasError = true; }
-        if (hasError) return;
-
-        Nav.NavigateTo("/dashboard");
+        alternateError = "error";
+        hasError = true;
     }
+
+    if (hasError) return;
+
+    try
+    {
+        var content = new MultipartFormDataContent();
+        string apiUrl;
+
+        Http.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+        if (isIphone)
+        {
+            // IOS API
+            apiUrl = "api/IOSCustomer/AddIOSCustomer";
+
+            content.Add(new StringContent(UserName), "Name");
+            content.Add(new StringContent(Mobile), "Mobile");
+            content.Add(new StringContent(Email), "Email");
+
+            content.Add(new StringContent(
+                string.IsNullOrWhiteSpace(AlternateMobile) ? "" : AlternateMobile
+            ), "AlternateMobile");
+
+            // IOS expects SerialNumber
+            content.Add(new StringContent(Imei1), "SerialNumber");
+
+            content.Add(new StringContent(Session.DealerProfileId), "DealerId");
+        }
+        else
+        {
+            // 🤖 Android API
+            apiUrl = "api/Customer/AddCustomer";
+
+            content.Add(new StringContent(UserName), "Name");
+            content.Add(new StringContent(Mobile), "Mobile");
+            content.Add(new StringContent(Mobile), "AlternateMobile");
+            content.Add(new StringContent(Email), "Email");
+
+            // Android expects IMEI numbers
+            content.Add(new StringContent(Imei1), "FirstIMEINumber");
+            content.Add(new StringContent(Imei2), "SecondIMEINumber");
+
+            content.Add(new StringContent(Session.DealerProfileId), "Dealerid");
+        }
+
+        Console.WriteLine("Calling API: " + apiUrl);
+
+        var response = await Http.PostAsync(apiUrl, content);
+
+        var responseText = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("STATUS: " + response.StatusCode);
+        Console.WriteLine("RESPONSE: " + responseText);
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Go back to dashboard and reload everything
+            Nav.NavigateTo("/dashboard", true);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("ERROR: " + ex.Message);
+    }
+}
 }

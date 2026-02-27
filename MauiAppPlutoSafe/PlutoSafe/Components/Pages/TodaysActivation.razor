@@ -1,9 +1,10 @@
 @* @page "/" *@
 @page "/today-activation"
+@inject HttpClient Http 
+@inject UserSession Session
 @inject NavigationManager Nav
 
 <link href="css/user-activation.css" rel="stylesheet" />
-@* <link href="css/user-details.css" rel="stylesheet" /> *@
 
 <div class="ud-bg">
 
@@ -19,29 +20,72 @@
            @oninput="OnInput" />
     </div>
 
-    <!-- Navigating cards -->
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Pooja Sharma"
-                        ShowLockActions="true"/>
-
-    <UserActivationCard EnableNavigation="true"
-                        UserName="Sunita Agrawal"
-                        ShowLockActions="true" />
+   @if (users == null)
+  {
+      <p style="padding:16px;">Loading...</p>
+  }
+  else if (users.Count == 0)
+  {
+      <p style="padding:16px;">No activations today.</p>
+  }
+  else
+  {
+      foreach (var user in users)
+      {
+          <UserActivationCard EnableNavigation="true"
+                              UserName="@user.userName"
+                              ShowLockActions="true" />
+      }
+  }
 
 </div>
 
 @code {
+
     [Parameter] public string Placeholder { get; set; } = "Search ..";
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    private List<TodayUser> users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTodayUsers();
+    }
+
+    async Task LoadTodayUsers()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            if (string.IsNullOrEmpty(dealerId))
+                return;
+
+            var response = await Http.GetFromJsonAsync<List<TodayUser>>(
+                $"api/IOSDashboardDevicesList/GetTodayActivatedIOSUsers/{dealerId}");
+
+            if (response != null)
+            {
+                users = response;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
 
     private async Task OnInput(ChangeEventArgs e)
     {
         await ValueChanged.InvokeAsync(e.Value?.ToString());
     }
-    
-}
 
+    public class TodayUser
+    {
+        public string userName { get; set; }
+    }
+}
 <style>
     /* ===== FIX HEADER ROW (ARROW + TITLE SAME LINE) ===== */
 .ud-header {
