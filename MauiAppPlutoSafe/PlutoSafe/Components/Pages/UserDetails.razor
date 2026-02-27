@@ -38,7 +38,7 @@
             </span>
 
             <span class="@(activeTab == "show" ? "active" : "")"
-                  @onclick='() => activeTab = "show"'>
+                  @onclick='async() => { activeTab = "show"; await LoadShowLoan();}'>
                 SHOW LOAN
             </span>
 
@@ -64,7 +64,7 @@
                     <img src="images/down.svg" />
                     <div>
                         <span>Loan ID</span>
-                        <strong>@showLoanData?.loanId</strong>
+                        <strong>@showLoanData?.id</strong>
                     </div>
                 </div>
 
@@ -72,7 +72,9 @@
                     <img src="images/lockstatus.svg" />
                     <div>
                         <span>Phone Lock Status</span>
-                        <strong class="unlock">@showLoanData?.phoneLockStatus</strong>
+                        <strong class="unlock">
+                            @(showLoanData?.isActive == true ? "Active" : "Inactive")
+                        </strong>
                     </div>
                 </div>
             </div>
@@ -84,17 +86,18 @@
                 <div class="show-row">
                     <img src="images/devicedetail.svg" />
                     <div>
-                        <p>EMEI NO.</p>
-                        <strong>895656655455</strong>
+                        <p>Sereal No</p>
+                        <strong>@SerialNumber</strong>
                     </div>
                 </div>
 
                 <div class="show-row">
                     <img src="images/devicedetail.svg" />
                     <div>
-                        <p>Device info</p>
-                        <span>Model No - OPPO A78 5G</span><br />
-                        <span>Android Version - 14, SDK - 34</span>
+                        <p>Product Name</p>
+                        <strong>
+                            @(showLoanData!=null ? showLoanData.productName : "_")
+                        </strong>
                     </div>
                 </div>
             </div>
@@ -107,17 +110,17 @@
                     <div>Product Price <strong>@showLoanData?.productPrice</strong></div>
                     <div>Down Payment <strong>@showLoanData?.downPayment</strong></div>
 
-                    <div>EMI Amount <strong>@showLoanData?.emiAmount</strong></div>
+                    <div>EMI Amount <strong>@showLoanData?.actualEmi</strong></div>
                     <div>Number Of EMI <strong>@showLoanData?.numberOfEmi</strong></div>
 
-                    <div>Processing fees <strong>@showLoanData?.processingFee</strong></div>
+                    <div>Processing Fees <strong>@showLoanData?.processingFee</strong></div>
                     <div>Loan Amount <strong>@showLoanData?.loanAmount</strong></div>
 
-                    <div>Total Paid Amount <strong>@showLoanData?.totalPaidAmount</strong></div>
-                    <div>Balance Amount <strong>@showLoanData?.balanceAmount</strong></div>
+                    <div>Total Paid Amount <strong>@TotalPaidAmount</strong></div>
+                    <div>Balance Amount <strong>@BalanceAmount</strong></div>
 
-                    <div>EMI Due Amount <strong>@showLoanData?.emiDueAmount</strong></div>
-                    <div>Penalty Amount <strong>@showLoanData?.penaltyAmount</strong></div>
+                    <div>EMI Due Amount <strong>@EmiDueAmount</strong></div>
+                    <div>Penalty Amount <strong>@PenaltyAmount</strong></div>
                 </div>
             </div>
 
@@ -682,18 +685,18 @@
     {
         try
         {
-            if (string.IsNullOrEmpty(SerialNumber))
+            if (string.IsNullOrEmpty(userDetail?.customerId))
                 return;
 
             Http.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", Session.Token);
 
             var response = await Http.GetFromJsonAsync<ShowLoanResponse>(
-                $"https://devmobileapi.plutosafe.in/api/YOUR_SHOW_LOAN_API?serialNumber={SerialNumber}");
+                $"https://devmobileapi.plutosafe.in/api/IOSCustomerLoan/GetIOSCustomerLoan/{userDetail.customerId}");
 
-            if (response != null && response.isSuccess)
+            if (response != null && response.isSuccess && response.data?.Any() == true)
             {
-                showLoanData = response.data;
+                showLoanData = response.data.FirstOrDefault();
             }
         }
         catch (Exception ex)
@@ -916,25 +919,24 @@
      public class ShowLoanResponse
     {
         public bool isSuccess { get; set; }
-        public ShowLoanData data { get; set; }
+        public List<ShowLoanData> data { get; set; }
+        public string message{get; set;}
     } 
-
     public class ShowLoanData
     {
-        public string loanId { get; set; }
-        public string phoneLockStatus { get; set; }
-        public string productPrice { get; set; }
-        public string downPayment { get; set; }
-        public string emiAmount { get; set; }
-        public string numberOfEmi { get; set; }
-        public string processingFee { get; set; }
-        public string loanAmount { get; set; }
-        public string totalPaidAmount { get; set; }
-        public string balanceAmount { get; set; }
-        public string emiDueAmount { get; set; }
-        public string penaltyAmount { get; set; }
+        public string id { get; set; }
+        public string customerId { get; set; }
+        public string productName { get; set; }
+        public decimal productPrice { get; set; }
+        public decimal processingFee { get; set; }
+        public decimal downPayment { get; set; }
+        public decimal loanAmount { get; set; }
+        public int numberOfEmi { get; set; }
+        public decimal actualEmi { get; set; }
+        public DateTime firstEmiDate { get; set; }
+        public bool isActive { get; set; }
+        public decimal interest { get; set; }
     }
-
   private async Task CreateLoan()
 {
     try
@@ -1025,4 +1027,9 @@
         public decimal interest { get; set; }
         public string id { get; set; }
     }
+
+    decimal TotalPaidAmount => 0; 
+    decimal BalanceAmount => showLoanData?.loanAmount ?? 0;
+    decimal EmiDueAmount => showLoanData?.actualEmi ?? 0;
+    decimal PenaltyAmount => 0;
 }
