@@ -18,7 +18,7 @@
 
     <!-- HEADER -->
     <div class="ud-header">
-        <span class="back" @onclick='() => Nav.NavigateTo("/dashboard")'>&larr;</span>
+        <span class="back" @onclick='() => Nav.NavigateTo("/user-list")'>&larr;</span>
         <h3>User Details</h3>
     </div>
 
@@ -32,10 +32,28 @@
                 USER DETAILS
             </span>
 
-            <span class="@(activeTab == "loan" ? "active" : "")"
-                  @onclick='() => activeTab = "loan"'>
+            @* <span class="@(activeTab == "loan" ? "active" : "")"
+                @onclick='async () =>
+                {
+                    activeTab = "loan";
+                    await Task.Delay(100);
+                    await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
+                }'>
                 CREATE LOAN
-            </span>
+            </span> *@
+
+            @if (!hasLoan)
+            {
+                <span class="@(activeTab == "loan" ? "active" : "")"
+                    @onclick='async () =>
+                    {
+                        activeTab = "loan";
+                        await Task.Delay(100);
+                        await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
+                    }'>
+                    CREATE LOAN
+                </span>
+            }
 
             <span class="@(activeTab == "show" ? "active" : "")"
                   @onclick='async() => { activeTab = "show"; await LoadShowLoan();}'>
@@ -636,6 +654,8 @@
     private bool showPopup;
     private bool pendingValue;
 
+    bool hasLoan => showLoanData != null;
+
     [Inject] HttpClient Http { get; set; }
     [Inject] UserSession Session { get; set; }
 
@@ -666,18 +686,13 @@
 
     private string currentToggle;
 
-   protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnParametersSetAsync()
     {
-        if (firstRender)
+        Console.WriteLine("SerialNumber received: " + SerialNumber);
+
+        if (!string.IsNullOrEmpty(SerialNumber))
         {
             await LoadUserDetail();
-            StateHasChanged();
-        }
-
-        if (activeTab == "loan")
-        {
-            await Task.Delay(100);
-            await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
         }
     }
 
@@ -718,7 +733,7 @@
                 return;
 
             Http.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+                new AuthenticationHeaderValue("Bearer", Session.Token);
 
             var response = await Http.GetFromJsonAsync<UserDetailResponse>(
                 $"https://devmobileapi.plutosafe.in/api/IOSCustomer/GetiOSUserDetail?serialNumber={SerialNumber}");
@@ -728,6 +743,9 @@
                 userDetail = response.data;
                 socialToggle = userDetail.isSocialMediaLock;
                 removeToggle = userDetail.isRemoveApp;
+
+                //  THIS LINE MUST BE INSIDE THIS BLOCK
+                await LoadShowLoan();
             }
         }
         catch (Exception ex)
@@ -938,67 +956,69 @@
         public decimal interest { get; set; }
     }
   private async Task CreateLoan()
-{
-    try
     {
-        if (string.IsNullOrWhiteSpace(Session.DealerProfileId) ||
-            string.IsNullOrWhiteSpace(userDetail?.customerId) ||
-            string.IsNullOrWhiteSpace(productName) ||
-            string.IsNullOrWhiteSpace(SerialNumber))
+        try
         {
-            Console.WriteLine("Required fields missing");
-            return;
+            if (string.IsNullOrWhiteSpace(Session.DealerProfileId) ||
+                string.IsNullOrWhiteSpace(userDetail?.customerId) ||
+                string.IsNullOrWhiteSpace(productName) ||
+                string.IsNullOrWhiteSpace(SerialNumber))
+            {
+                Console.WriteLine("Required fields missing");
+                return;
+            }
+
+            var form = new MultipartFormDataContent();
+
+            form.Add(new StringContent(Session.DealerProfileId), "DealerId");
+            form.Add(new StringContent(userDetail.customerId), "CustomerId");
+            form.Add(new StringContent(userDetail.name ?? ""), "CustomerName");
+
+            form.Add(new StringContent(productName), "ProductName");
+            form.Add(new StringContent(productPrice.ToString()), "ProductPrice");
+            form.Add(new StringContent(processingFee.ToString()), "ProcessingFee");
+            form.Add(new StringContent(downPayment.ToString()), "DownPayment");
+            form.Add(new StringContent(loanAmount.ToString()), "LoanAmount");
+            form.Add(new StringContent(numberOfEmi.ToString()), "NumberOfEmi");
+            form.Add(new StringContent(actualEmi.ToString()), "ActualEmi");
+
+            form.Add(new StringContent(firstEmiDate.ToString("yyyy-MM-ddTHH:mm:ss")), "FirstEmiDate");
+
+            form.Add(new StringContent("0"), "Interest"); // REQUIRED
+            form.Add(new StringContent(SerialNumber), "SerialNumber");
+
+            Http.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.PostAsync(
+                "https://devmobileapi.plutosafe.in/api/IOSCustomerLoan/AddIOSCustomerLoan",
+                form);
+
+            var result = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(result);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("API Failed");
+                return;
+            }
+
+            var loanResponse = JsonSerializer.Deserialize<CreateLoanResponse>(
+                result,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (loanResponse?.isSuccess == true)
+            {
+               await LoadShowLoan();
+                activeTab = "show";
+                StateHasChanged();
+            }
         }
-
-        var form = new MultipartFormDataContent();
-
-        form.Add(new StringContent(Session.DealerProfileId), "DealerId");
-        form.Add(new StringContent(userDetail.customerId), "CustomerId");
-        form.Add(new StringContent(userDetail.name ?? ""), "CustomerName");
-
-        form.Add(new StringContent(productName), "ProductName");
-        form.Add(new StringContent(productPrice.ToString()), "ProductPrice");
-        form.Add(new StringContent(processingFee.ToString()), "ProcessingFee");
-        form.Add(new StringContent(downPayment.ToString()), "DownPayment");
-        form.Add(new StringContent(loanAmount.ToString()), "LoanAmount");
-        form.Add(new StringContent(numberOfEmi.ToString()), "NumberOfEmi");
-        form.Add(new StringContent(actualEmi.ToString()), "ActualEmi");
-
-        form.Add(new StringContent(firstEmiDate.ToString("yyyy-MM-ddTHH:mm:ss")), "FirstEmiDate");
-
-        form.Add(new StringContent("0"), "Interest"); // REQUIRED
-        form.Add(new StringContent(SerialNumber), "SerialNumber");
-
-        Http.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", Session.Token);
-
-        var response = await Http.PostAsync(
-            "https://devmobileapi.plutosafe.in/api/IOSCustomerLoan/AddIOSCustomerLoan",
-            form);
-
-        var result = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(result);
-
-        if (!response.IsSuccessStatusCode)
+        catch (Exception ex)
         {
-            Console.WriteLine("API Failed");
-            return;
-        }
-
-        var loanResponse = JsonSerializer.Deserialize<CreateLoanResponse>(
-            result,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-        if (loanResponse?.isSuccess == true)
-        {
-            Nav.NavigateTo("/submit-success");
+            Console.WriteLine(ex.Message);
         }
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.Message);
-    }
-}
     public class CreateLoanResponse
     {
         public bool isSuccess { get; set; }
@@ -1033,3 +1053,7 @@
     decimal EmiDueAmount => showLoanData?.actualEmi ?? 0;
     decimal PenaltyAmount => 0;
 }
+
+
+
+

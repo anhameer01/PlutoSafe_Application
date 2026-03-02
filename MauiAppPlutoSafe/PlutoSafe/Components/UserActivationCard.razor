@@ -9,9 +9,11 @@
             <h4>@UserName</h4>
         </div>
 
-        @if (EnableNavigation)
-        {
-       <button class="details-btn" @onclick='() => Nav.NavigateTo("/user-details")'>
+        @if (EnableNavigation){
+        @* 
+       <button class="details-btn" @onclick='() => Nav.NavigateTo("/user-details")'> *@
+       <button class="details-btn"
+        @onclick='() => Nav.NavigateTo($"/user-details/{Imei1}")'>
                 →
             </button>     
         }

@@ -26,161 +26,20 @@
     {
         <p style="padding:16px;">Loading...</p>
     }
-    else
-    {
+    else{
         @foreach (var user in customers)
         {
-
-            <!-- ================= CARD 1 : QR ONLY ================= -->
-            <div class="user-card">
-
-                <div class="user-top">
-                    <img src="images/avatar-girl.svg" class="avatar" />
-                    <h4>Hi, @user.Name</h4>
-                </div>
-
-                <!-- DATE / TIME / CODE -->
-                <div class="badge-row">
-
-                    <div class="badge blue">
-                        <img src="images/icon-date.svg" />
-                        <div>
-                            <span>Date</span>
-                            <b>@user.CreatedDate?.ToString("dd/MM/yyyy")</b>
-                        </div>
-                    </div>
-
-                    <div class="badge purple">
-                        <img src="images/icon-time.svg" />
-                        <div>
-                            <span>Time</span>
-                            <b>@user.CreatedDate?.ToString("hh:mm tt")</b>
-                        </div>
-                    </div>
-
-                    @if (!Session.IsIphone)
-                    {
-                        <div class="badge green">
-                            <img src="images/icon-code.svg" />
-                            <div>
-                                <span>Secure code</span>
-                                <b>@user.UnlockCode</b>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-
-                <div class="info-list">
-                    <p>
-                        <img src="images/register.svg" />
-                        Registration Number : @user.LoanAccountNumber
-                    </p>
-
-                    
-                        <p>
-                        <img src="images/icon-registration.svg" />
-                        Serial Number : @user.SerialNumber
-                    </p>
-
-                    <p>
-                        <img src="images/call.svg" />
-                        Alternate Mobile Number : @user.AlternateMobile
-                    </p>
-                </div>
-
-                <!-- QR -->
-                <div class="qr-wrapper">
-                    <button class="qr-btn">
-                        <img src="images/icon-qr.svg" />
-                    </button>
-                    <p class="qr-text">Scan QR Code</p>
-                </div>
-
-            </div>
-
-
-            <!-- ================= CARD 2 : LOCK / UNLOCK ================= -->
-            <div class="user-card">
-
-                <div class="user-top">
-                    <img src="images/avatar-girl.svg" class="avatar" />
-                    <h4>Hi, @user.Name</h4>
-
-                    <button class="details-btn"
-                            @onclick='() => Nav.NavigateTo($"/user-details/{user.SerialNumber}")'>
-                        →
-                    </button>
-                </div>
-
-                <!-- SAME BADGE ROW HERE -->
-                <div class="badge-row">
-
-                    <div class="badge blue">
-                        <img src="images/icon-date.svg" />
-                        <div>
-                            <span>Date</span>
-                            <b>@user.CreatedDate?.ToString("dd/MM/yyyy")</b>
-                        </div>
-                    </div>
-
-                    <div class="badge purple">
-                        <img src="images/icon-time.svg" />
-                        <div>
-                            <span>Time</span>
-                            <b>@user.CreatedDate?.ToString("hh:mm tt")</b>
-                        </div>
-                    </div>
-
-                    @if (!Session.IsIphone)
-                    {
-                        <div class="badge green">
-                            <img src="images/icon-code.svg" />
-                            <div>
-                                <span>Secure code</span>
-                                <b>@user.UnlockCode</b>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-
-                <div class="info-list">
-                    <p>
-                        <img src="images/register.svg" />
-                        Registration Number : @user.LoanAccountNumber
-                    </p>
-
-                    <p>
-                            <img src="images/icon-registration.svg" />
-                            Serial Number : @user.SerialNumber
-                        </p>
-
-                    <p>
-                        <img src="images/call.svg" />
-                        Alternate Mobile Number : @user.AlternateMobile
-                    </p>
-                </div>
-
-                <div class="action-row">
-                    <button class="lock-btn pill">
-                        <span class="pill-circle red">
-                            <img src="images/lock.svg" />
-                        </span>
-                        Lock
-                    </button>
-
-                    <button class="unlock-btn pill">
-                        <span class="pill-circle green">
-                            <img src="images/unlock.svg" />
-                        </span>
-                        Unlock
-                    </button>
-                </div>
-            </div>
-
+            <UserActivationCard
+                EnableNavigation="true"
+                UserName="@user.Name"
+                RegNo="@user.LoanAccountNumber"
+                Imei1="@user.SerialNumber"
+                Phone="@user.AlternateMobile"
+                ShowQrButton="@( !user.IsActivated )"
+                ShowLockActions="@( user.IsActivated )" />
         }
     }
+    
 </div>
 
 @code {
@@ -191,56 +50,7 @@
     {
         await LoadUsers();
     }
-
-    @* async Task LoadUsers()
-    {
-        var dealerId = Session.DealerProfileId;
-
-        if (string.IsNullOrEmpty(dealerId))
-            return;
-
-        Http.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
-
-        if (Session.IsIphone)
-        {
-            var response = await Http.GetFromJsonAsync<IosResponse>(
-                $"api/IOSCustomer/GetIosUserList/{dealerId}?pageNumber=1&pageSize=50");
-
-            if (response != null)
-            {
-                customers = response.customers.Select(x => new UserModel
-                {
-                    Name = x.name,
-                    LoanAccountNumber = x.loanAccountNumber,
-                    AlternateMobile = x.alternateMobile,
-                    SerialNumber = x.serialNumber,
-                    CreatedDate = x.createdDate
-                }).ToList();
-            }
-        }
-        else
-        {
-            var response = await Http.GetFromJsonAsync<AndroidResponse>(
-                $"api/Customer/GetAllCustomer?dealerId={dealerId}");
-
-            if (response != null && response.isSuccess)
-            {
-                customers = response.data.Select(x => new UserModel
-                {
-                    Name = x.name,
-                    LoanAccountNumber = x.loanAccountNumber,
-                    AlternateMobile = x.alternateMobile,
-                    FirstIMEI = x.firstIMEINumber,
-                    SecondIMEI = x.secondIMEINumber,
-                    CreatedDate = x.createdDate,
-                    UnlockCode = x.unlockCode
-                }).ToList();
-            }
-        }
-    } *@
-
-        async Task LoadUsers()
+    async Task LoadUsers()
     {
         try
         {
@@ -252,24 +62,25 @@
             Http.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
 
-            var response = await Http.GetFromJsonAsync<IosResponse>(
-                $"api/IOSCustomer/GetIosUserList/{dealerId}?pageNumber=1&pageSize=10");
+           var response = await Http.GetFromJsonAsync<IosUserListResponse>(
+    $"api/IOSCustomer/GetIosUserList/{dealerId}?pageNumber=1&pageSize=10");
 
-            if (response != null)
-            {
-                customers = response.customers.Select(x => new UserModel
-                {
-                    Name = x.name,
-                    LoanAccountNumber = x.loanAccountNumber,
-                    AlternateMobile = x.alternateMobile,
-                    SerialNumber = x.serialNumber,
-                    CreatedDate = x.createdDate
-                }).ToList();
-            }
-            else
-            {
-                customers = new List<UserModel>();
-            }
+    if (response != null && response.customers != null)
+    {
+        customers = response.customers.Select(x => new UserModel
+        {
+            Name = x.name,
+            LoanAccountNumber = x.loanAccountNumber,
+            AlternateMobile = x.alternateMobile,
+            SerialNumber = x.serialNumber,
+            CreatedDate = x.createdDate,
+            IsActivated = true   // This API does NOT give activation status
+        }).ToList();
+    }
+    else
+    {
+        customers = new List<UserModel>();
+    }
         }
         catch (Exception ex)
         {
@@ -277,47 +88,66 @@
             customers = new List<UserModel>();
         }
     }
-
     public class UserModel
     {
         public string Name { get; set; }
         public string LoanAccountNumber { get; set; }
         public string AlternateMobile { get; set; }
         public string SerialNumber { get; set; }
-        public string FirstIMEI { get; set; }
-        public string SecondIMEI { get; set; }
+        public bool IsActivated {get; set;}
         public DateTime? CreatedDate { get; set; }
         public int UnlockCode { get; set; }
     }
 
-    public class AndroidResponse
+
+    public class ActiveUsersResponse
     {
         public bool isSuccess { get; set; }
-        public List<AndroidCustomer> data { get; set; }
+        public ActiveUsersData data { get; set; }
     }
 
-    public class AndroidCustomer
+    public class ActiveUsersData
     {
-        public string name { get; set; }
+        public int totalRecords { get; set; }
+        public int pageNumber { get; set; }
+        public int pageSize { get; set; }
+        public List<ActiveUserItem> data { get; set; }
+    }
+
+    public class ActiveUserItem
+    {
+        public Customer customer { get; set; }
+        public AppSecurity appSecurity { get; set; }
+    }
+
+    public class Customer
+    {
         public string loanAccountNumber { get; set; }
-        public string alternateMobile { get; set; }
-        public string firstIMEINumber { get; set; }
-        public string secondIMEINumber { get; set; }
-        public DateTime createdDate { get; set; }
-        public int unlockCode { get; set; }
-    }
-
-    public class IosResponse
-    {
-        public List<IosCustomer> customers { get; set; }
-    }
-
-    public class IosCustomer
-    {
         public string name { get; set; }
-        public string loanAccountNumber { get; set; }
+        public string mobile { get; set; }
         public string alternateMobile { get; set; }
         public string serialNumber { get; set; }
         public DateTime createdDate { get; set; }
     }
+
+    public class AppSecurity
+    {
+        public bool isActivation { get; set; }
+    }
+    public class IosUserListResponse
+{
+    public int totalRecords { get; set; }
+    public int pageNumber { get; set; }
+    public int pageSize { get; set; }
+    public List<IosCustomer> customers { get; set; }
+}
+
+public class IosCustomer
+{
+    public string name { get; set; }
+    public string loanAccountNumber { get; set; }
+    public string alternateMobile { get; set; }
+    public string serialNumber { get; set; }
+    public DateTime createdDate { get; set; }
+}
 }
