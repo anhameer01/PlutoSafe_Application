@@ -166,9 +166,11 @@
         StartSlider();          // keep slider working
         await LoadDashboardCounts();  // load API counts
     }
-    async Task LoadDashboardCounts()
+    @* async Task LoadDashboardCounts()
     {
         var dealerId = Session.DealerProfileId;
+        var active = await Http.GetFromJsonAsync<CountResponse>(
+    $"api/IOSDashboardDevicesList/GetActiveIOSDeviceCount/{dealerId}");
 
         if (string.IsNullOrEmpty(dealerId))
             return;
@@ -205,7 +207,55 @@
         {
             Console.WriteLine(ex.Message);
         }
+    } *@
+
+    async Task LoadDashboardCounts()
+{
+    var dealerId = Session.DealerProfileId;
+
+    if (string.IsNullOrEmpty(dealerId))
+        return;
+
+    Http.DefaultRequestHeaders.Authorization =
+        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+    try
+    {
+        var pending = await Http.GetFromJsonAsync<CountResponse>(
+            $"api/IOSDashboardDevicesList/GetPendingIOSDeviceCount/{dealerId}");
+
+        var activeUsers = await Http.GetFromJsonAsync<ActiveUsersResponse>(
+            $"api/IOSDashboardDevicesList/active-users?dealerId={dealerId}&pageNumber=1&pageSize=10");
+
+        var locked = await Http.GetFromJsonAsync<CountResponse>(
+            $"api/IOSDashboardDevicesList/GetLockedIOSDeviceCount/{dealerId}");
+
+        var removed = await Http.GetFromJsonAsync<CountResponse>(
+            $"api/IOSDashboardDevicesList/GetRemovedIOSDeviceCount/{dealerId}");
+
+        var unlocked = await Http.GetFromJsonAsync<CountResponse>(
+            $"api/IOSDashboardDevicesList/GetUnlockedIOSDeviceCount/{dealerId}");
+
+        var remaining = await Http.GetFromJsonAsync<CountResponse>(
+            $"api/IOSDashboardDevicesList/GetRemainingIOSKeys/{dealerId}");
+
+        if (pending != null) Session.PendingCount = pending.data;
+
+        if (activeUsers != null && activeUsers.data != null)
+            Session.ActiveCount = activeUsers.data.totalRecords;
+
+        if (locked != null) Session.LockedCount = locked.data;
+        if (removed != null) Session.RemovedCount = removed.data;
+        if (unlocked != null) Session.UnlockedCount = unlocked.data;
+        if (remaining != null) Session.RemainingKeyCount = remaining.data;
+
+        StateHasChanged();
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
 
     public class CountResponse
     {
@@ -262,6 +312,20 @@
             new(){Image="images/icon-all-loans.png",IsFullImage=false},
             new(){Image="images/image2.svg",IsFullImage=true}
         };
+
+        public class ActiveUsersResponse
+    {
+        public bool isSuccess { get; set; }
+        public ActiveUsersData data { get; set; }
+    }
+
+    public class ActiveUsersData
+    {
+        public int totalRecords { get; set; }
+        public int pageNumber { get; set; }
+        public int pageSize { get; set; }
+        public List<object> data { get; set; }
+    }
 
     Slide CurrentSlide => Slides[activeIndex];
 }

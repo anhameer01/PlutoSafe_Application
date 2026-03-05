@@ -32,16 +32,6 @@
                 USER DETAILS
             </span>
 
-            @* <span class="@(activeTab == "loan" ? "active" : "")"
-                @onclick='async () =>
-                {
-                    activeTab = "loan";
-                    await Task.Delay(100);
-                    await JS.InvokeVoidAsync("initSignature", "loanSignatureCanvas");
-                }'>
-                CREATE LOAN
-            </span> *@
-
             @if (!hasLoan)
             {
                 <span class="@(activeTab == "loan" ? "active" : "")"
@@ -61,7 +51,11 @@
             </span>
 
             <span class="@(activeTab == "emi" ? "active" : "")"
-                  @onclick='() => activeTab = "emi"'>
+                @onclick='async () =>
+                {
+                    activeTab = "emi";
+                    await LoadEmiList();
+                }'>
                 EMI REMINDER
             </span>
         </div>
@@ -546,7 +540,9 @@
                 Submit
             </button>
 
-    </div>   <!-- closes ud-card -->
+    </div>
+
+   <!-- closes ud-card -->
 
     @if (showEmiModal && SelectedEmi != null)
     {
@@ -868,12 +864,7 @@
 
         showPopup = false;
     }
-    private List<EmiModel> EmiList = new()
-    {
-        new EmiModel { Index = 1, Date = DateTime.Parse("2025-08-20"), Mode = "Online", Amount = 3254, IsPaid = true },
-        new EmiModel { Index = 2, Date = DateTime.Parse("2025-09-20"), Mode = null, Amount = 3254, IsPaid = false },
-        new EmiModel { Index = 3, Date = DateTime.Parse("2025-10-20"), Mode = null, Amount = 3254, IsPaid = false }
-    };
+    private List<EmiModel> EmiList = new();
 
     private EmiModel? SelectedEmi;
     private bool showEmiModal = false;
@@ -889,15 +880,102 @@
         showEmiModal = false;
     }
 
-    private void SubmitEmi()
+  private async Task SubmitEmi()
     {
-        if (SelectedEmi != null)
+        if (SelectedEmi == null)
+            return;
+
+        var form = new MultipartFormDataContent();
+
+        form.Add(new StringContent(SelectedEmi.InstallmentId), "Id");
+        form.Add(new StringContent(SelectedEmi.Amount.ToString()), "EmiAmount");
+        form.Add(new StringContent(SelectedPaymentMode), "PaymentMode");
+        form.Add(new StringContent("done"), "Remark");
+
+        Http.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", Session.Token);
+
+        var response = await Http.PostAsync(
+            "https://devmobileapi.plutosafe.in/api/IOSCustomerLoan/UpdateIOSCustomerInstallment",
+            form);
+
+        if (response.IsSuccessStatusCode)
         {
-            SelectedEmi.Mode = SelectedPaymentMode;
-            SelectedEmi.IsPaid = true;
+            await LoadEmiList();
         }
 
         showEmiModal = false;
+    }
+
+    public class InstallmentResponse
+    {
+        public bool isSuccess { get; set; }
+        public InstallmentData data { get; set; }
+    }
+
+    public class InstallmentData
+    {
+        public List<InstallmentItem> installments { get; set; }
+    }
+
+    public class InstallmentItem
+    {
+        public string id { get; set; }
+        public string emiAmount { get; set; }
+        public string paymentMode { get; set; }
+        public DateTime emiDate { get; set; }
+    }
+
+    async Task LoadEmiList()
+    {
+        try
+        {
+            var response = await Http.GetFromJsonAsync<InstallmentResponse>(
+                $"https://devmobileapi.plutosafe.in/api/IOSCustomerLoan/GetIOSCustomerInstallment/{SerialNumber}");
+
+            if (response != null && response.isSuccess)
+            {
+                var installments = response.data.installments;
+
+                EmiList = new List<EmiModel>();
+
+                int totalEmi = showLoanData?.numberOfEmi ?? installments.Count;
+
+                for (int i = 0; i < totalEmi; i++)
+                {
+                    if (i < installments.Count)
+                    {
+                        var x = installments[i];
+
+                        EmiList.Add(new EmiModel
+                        {
+                            Index = i + 1,
+                            Date = x.emiDate,
+                            Amount = Convert.ToDecimal(x.emiAmount),
+                            Mode = x.paymentMode,
+                            InstallmentId = x.id,
+                            IsPaid = !string.IsNullOrEmpty(x.paymentMode)
+                        });
+                    }
+                    else
+                    {
+                        EmiList.Add(new EmiModel
+                        {
+                            Index = i + 1,
+                            Date = DateTime.Now,
+                            Amount = showLoanData?.actualEmi ?? 0,
+                            Mode = null,
+                            InstallmentId = null,
+                            IsPaid = false
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private string SelectedPaymentMode = "";
@@ -909,6 +987,8 @@
         public string? Mode { get; set; }
         public decimal Amount { get; set; }
         public bool IsPaid { get; set; }
+
+        public string InstallmentId { get; set; }   // important
     }
 
     public class UserDetailResponse
@@ -1053,7 +1133,3 @@
     decimal EmiDueAmount => showLoanData?.actualEmi ?? 0;
     decimal PenaltyAmount => 0;
 }
-
-
-
-

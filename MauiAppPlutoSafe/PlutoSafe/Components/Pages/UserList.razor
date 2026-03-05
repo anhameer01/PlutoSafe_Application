@@ -19,7 +19,9 @@
     <!-- SEARCH -->
     <div class="search-box">
         <input type="text"
-               placeholder="Search .." />
+            placeholder="Search .."
+            @bind="searchText"
+            @bind:event="oninput" />
     </div>
 
     @if (customers == null)
@@ -38,11 +40,22 @@
                 ShowQrButton="@( !user.IsActivated )"
                 ShowLockActions="@( user.IsActivated )" />
         }
-    }
-    
+    }  
 </div>
 
 @code {
+
+    string _searchText = "";
+
+    string searchText
+    {
+        get => _searchText;
+        set
+        {
+            _searchText = value;
+            _ = SearchUsers();
+        }
+    }
 
     List<UserModel>? customers;
 
@@ -67,7 +80,7 @@
 
     if (response != null && response.customers != null)
     {
-        customers = response.customers.Select(x => new UserModel
+         customers = response.customers.Select(x => new UserModel
         {
             Name = x.name,
             LoanAccountNumber = x.loanAccountNumber,
@@ -88,6 +101,43 @@
             customers = new List<UserModel>();
         }
     }
+
+    async Task SearchUsers()
+    {
+        try
+        {
+            var dealerId = Session.DealerProfileId;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                await LoadUsers();
+                return;
+            }
+
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
+
+            var response = await Http.GetFromJsonAsync<SearchResponse>(
+                $"api/IOSCustomer/search?dealerId={dealerId}&searchText={searchText}&pageNumber=1&pageSize=10");
+
+            if (response != null && response.data != null)
+            {
+                customers = response.data.Select(x => new UserModel
+                {
+                    Name = x.name,
+                    LoanAccountNumber = x.loanAccountNumber,
+                    AlternateMobile = x.alternateMobile,
+                    SerialNumber = x.serialNumber,
+                    CreatedDate = x.createdDate,
+                    IsActivated = true
+                }).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
     public class UserModel
     {
         public string Name { get; set; }
@@ -98,7 +148,6 @@
         public DateTime? CreatedDate { get; set; }
         public int UnlockCode { get; set; }
     }
-
 
     public class ActiveUsersResponse
     {
@@ -112,6 +161,12 @@
         public int pageNumber { get; set; }
         public int pageSize { get; set; }
         public List<ActiveUserItem> data { get; set; }
+    }
+
+    public class SearchResponse
+    {
+        public bool isSuccess { get; set; }
+        public List<IosCustomer> data { get; set; }
     }
 
     public class ActiveUserItem
@@ -135,19 +190,19 @@
         public bool isActivation { get; set; }
     }
     public class IosUserListResponse
-{
-    public int totalRecords { get; set; }
-    public int pageNumber { get; set; }
-    public int pageSize { get; set; }
-    public List<IosCustomer> customers { get; set; }
-}
+    {
+        public int totalRecords { get; set; }
+        public int pageNumber { get; set; }
+        public int pageSize { get; set; }
+        public List<IosCustomer> customers { get; set; }
+    }
 
-public class IosCustomer
-{
-    public string name { get; set; }
-    public string loanAccountNumber { get; set; }
-    public string alternateMobile { get; set; }
-    public string serialNumber { get; set; }
-    public DateTime createdDate { get; set; }
-}
+    public class IosCustomer
+    {
+        public string name { get; set; }
+        public string loanAccountNumber { get; set; }
+        public string alternateMobile { get; set; }
+        public string serialNumber { get; set; }
+        public DateTime createdDate { get; set; }
+    }
 }

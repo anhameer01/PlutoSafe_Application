@@ -32,8 +32,11 @@
         foreach (var user in users)
         {
             <UserActivationCard EnableNavigation="true"
-                                UserName="@user.userName"
-                                ShowLockActions="true" />
+                    UserName="@user.userName"
+                    RegNo="@user.loanAccountNumber"
+                    Imei1="@user.serialNumber"
+                    Phone="@user.alternateMobile"
+                    ShowLockActions="true" />
         }
     }
 </div>
@@ -58,12 +61,23 @@
             if (string.IsNullOrEmpty(dealerId))
                 return;
 
-            var response = await Http.GetFromJsonAsync<ActiveUsersResponse>(
-                $"api/IOSDashboardDevicesList/active-users?dealerId={dealerId}&pageNumber=1&pageSize=10");
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Session.Token);
 
-            if (response != null && response.data != null)
+            var response = await Http.GetFromJsonAsync<ActiveUsersResponse>(
+                $"https://devmobileapi.plutosafe.in/api/IOSDashboardDevicesList/active-users?dealerId={dealerId}&pageNumber=1&pageSize=10");
+
+            if (response != null && response.data?.data != null)
             {
-                users = response.data;
+                users = response.data.data
+                    .Select(x => new ActiveUser
+                    {
+                        userName = x.customer.name,
+                        loanAccountNumber = x.customer.loanAccountNumber,
+                        alternateMobile = x.customer.alternateMobile,
+                        serialNumber = x.customer.serialNumber
+                    })
+                    .ToList();
             }
         }
         catch (Exception ex)
@@ -77,17 +91,52 @@
         await ValueChanged.InvokeAsync(e.Value?.ToString());
     }
 
-    public class ActiveUsersResponse
+    @* public class ActiveUsersResponse
     {
         public bool isSuccess { get; set; }
         public List<ActiveUser> data { get; set; }
         public string message { get; set; }
-    }
+    } *@
 
     public class ActiveUser
     {
         public string userName { get; set; }
+        public string loanAccountNumber { get; set; }
+        public string alternateMobile { get; set; }
+        public string serialNumber { get; set; }
     }
+    public class ActiveUsersResponse
+    {
+        public bool isSuccess { get; set; }
+        public ActiveUsersData data { get; set; }
+    }
+
+    public class ActiveUsersData
+    {
+        public int totalRecords { get; set; }
+        public int pageNumber { get; set; }
+        public int pageSize { get; set; }
+        public List<ActiveUserItem> data { get; set; }
+    }
+    public class ActiveUserItem
+    {
+        public Customer customer { get; set; }
+        public AppSecurity appSecurity { get; set; }
+    }
+    public class Customer
+    {
+        public string name { get; set; }
+        public string loanAccountNumber { get; set; }
+        public string alternateMobile { get; set; }
+        public string serialNumber { get; set; }
+    }
+
+
+    public class AppSecurity
+    {
+        public bool isActivation { get; set; }
+    }
+
 }
 <style> 
 .search-box {
