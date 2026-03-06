@@ -80,18 +80,6 @@
   width: 300px; /* blank space in between name and rows of date*/
   height: 80px; 
 }
-/* INFO */
-/* .info p {
-  font-family: 'Inter', !important;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 100%;
-  letter-spacing: -0.41px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-} */
 
 /* User details rows (4 lines) */
 .info p {
@@ -1169,11 +1157,10 @@ label + .upload-grid {
 .ud-profile-card {
   background:transparent;            
   border-radius: 20px;
-  min-height: 420px;   
+  /* min-height: 420px;    */
   padding: 16px;
-  padding-top: 20px; 
+  padding-top: 12px; 
   margin-bottom: 20px;
-
   /* soft shadow border */
   box-shadow:
     8px 8px 16px rgba(0, 0, 0, 0.08),
